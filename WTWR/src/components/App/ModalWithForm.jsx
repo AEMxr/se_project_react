@@ -9,6 +9,7 @@ function ModalWithForm({
   onSubmit,
   children,
   isOpen,
+  isSubmitDisabled = false,
 }) {
   // Close on Escape key
   useEffect(() => {
@@ -47,7 +48,11 @@ function ModalWithForm({
           autoComplete="off"
         >
           {children}
-          <button className="modal__submit" type="submit">
+          <button
+            className="modal__submit"
+            type="submit"
+            disabled={isSubmitDisabled}
+          >
             {buttonText}
           </button>
         </form>
