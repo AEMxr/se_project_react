@@ -1,16 +1,31 @@
 import { useEffect, useState } from "react";
 import { fetchWeather } from "../utils/weatherApi.js";
+import { defaultClothingItems } from "../utils/constants.js";
 import "./App.css";
 import Header from "./App/Header.jsx";
+import Main from "./App/Main.jsx";
+import Footer from "./App/Footer.jsx";
 import ModalWithForm from "./App/ModalWithForm.jsx";
-// import Main from "./App/Main.jsx";
-// import Footer from "./App/Footer.jsx";
+import ItemModal from "./App/ItemModal.jsx";
 
 function App() {
   const [weather, setWeather] = useState({ city: "", temperature: null });
 
   useEffect(() => {
-    fetchWeather().then(setWeather).catch(console.error);
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          fetchWeather(position.coords.latitude, position.coords.longitude)
+            .then(setWeather)
+            .catch(console.error);
+        },
+        (error) => {
+          fetchWeather().then(setWeather).catch(console.error);
+        }
+      );
+    } else {
+      fetchWeather().then(setWeather).catch(console.error);
+    }
   }, []);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,6 +37,9 @@ function App() {
   });
 
   const [touched, setTouched] = useState({ name: false, image: false });
+
+  // For ItemModal
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const nameIsValid = /[A-Za-z0-9]/.test(form.name);
   const imageIsValid = /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp|svg)$/i.test(
@@ -37,6 +55,7 @@ function App() {
     setIsModalOpen(false);
     setForm({ name: "", image: "", weather: "" });
     setTouched({ name: false, image: false });
+    setSelectedItem(null);
   }
 
   function handleFormSubmit(e) {
@@ -62,11 +81,21 @@ function App() {
     }));
   }
 
+  // For ItemCard click
+  function handleCardClick(item) {
+    setSelectedItem(item);
+  }
+
   return (
     <>
       <Header city={weather.city} onAddClothes={handleAddClothesClick} />
-      {/* <Main />
-      <Footer /> */}
+      <Main
+        weather={weather}
+        clothingItems={defaultClothingItems}
+        onCardClick={handleCardClick}
+      />
+      <Footer />
+      <ItemModal item={selectedItem} onClose={handleCloseModal} />
       <ModalWithForm
         title="New garment"
         name="add-clothes"

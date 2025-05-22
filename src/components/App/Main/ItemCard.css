@@ -1,0 +1,31 @@
+.card {
+  /* display: flex; */
+}
+
+.card__image-container {
+  position: relative;
+  width: 325px;
+}
+
+.card__image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.card__title {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.card-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}

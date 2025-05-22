@@ -1,0 +1,25 @@
+.weather-card {
+  max-width: 1360px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  align-items: flex-start;
+  width: 100%;
+  border: 2px solid red;
+  position: relative;
+}
+
+.weather-card__image {
+  width: 100%;
+  max-width: 1360px;
+  height: auto;
+  display: block;
+  border: 2px solid blue;
+}
+
+.weather-card__temp {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+}

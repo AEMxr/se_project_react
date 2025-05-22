@@ -1,1 +1,25 @@
-//The WeatherCard receives data from its parent (props chain example: App → Main → WeatherCard). The weather data itself can be a big object, but we only need the temperature to render in the card. The measurement units aren’t important at this stage. We’ll only use Fahrenheit for now.
+import { weatherConditions } from "../../../utils/constants.js";
+import "./WeatherCard.css";
+
+function WeatherCard({ temperature, condition, time }) {
+  const weatherImage = weatherConditions.find(
+    (c) => c.condition === condition && c.time === time
+  );
+
+  return (
+    <section className="weather-card">
+      {weatherImage && (
+        <img
+          className="weather-card__image"
+          src={`${import.meta.env.BASE_URL}weatherConditions/${
+            weatherImage.imageUrl
+          }`}
+          alt={condition}
+        />
+      )}
+      <span className="weather-card__temp">{temperature}°F</span>
+    </section>
+  );
+}
+
+export default WeatherCard;

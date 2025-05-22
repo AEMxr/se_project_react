@@ -44,3 +44,57 @@ export const DEFAULT_COORDS = {
   latitude: "40.7128", // Example: New York City
   longitude: "-74.0060",
 };
+
+export const clothingItemsData = [
+  {
+    _id: "1",
+    name: "T-Shirt",
+    imageUrl: "tshirt.svg",
+    weather: "hot",
+  },
+  {
+    _id: "2",
+    name: "Shorts",
+    imageUrl: "shorts.svg",
+    weather: "hot",
+  },
+  {
+    _id: "3",
+    name: "Cap",
+    imageUrl: "cap.svg",
+    weather: "hot",
+  },
+  {
+    _id: "4",
+    name: "Sneakers",
+    imageUrl: "sneakers.svg",
+    weather: "warm",
+  },
+  {
+    _id: "5",
+    name: "Custom Cap",
+    imageUrl: "customCap.svg",
+    weather: "hot",
+  },
+  {
+    _id: "6",
+    name: "Custom Sneakers",
+    imageUrl: "customSneakers.png",
+    weather: "warm",
+  },
+];
+
+export const weatherConditions = [
+  { _id: "1", time: "day", condition: "Sunny", imageUrl: "daySunny.svg" },
+  { _id: "2", time: "day", condition: "Cloudy", imageUrl: "dayCloudy.svg" },
+  { _id: "3", time: "day", condition: "Rain", imageUrl: "dayRain.svg" },
+  { _id: "4", time: "day", condition: "Storm", imageUrl: "dayStorm.svg" },
+  { _id: "5", time: "day", condition: "Snow", imageUrl: "daySnow.svg" },
+  { _id: "6", time: "day", condition: "Fog", imageUrl: "dayFog.svg" },
+  { _id: "7", time: "night", condition: "Sunny", imageUrl: "nightSunny.svg" },
+  { _id: "8", time: "night", condition: "Cloudy", imageUrl: "nightCloudy.svg" },
+  { _id: "9", time: "night", condition: "Rain", imageUrl: "nightRain.svg" },
+  { _id: "10", time: "night", condition: "Storm", imageUrl: "nightStorm.svg" },
+  { _id: "11", time: "night", condition: "Snow", imageUrl: "nightSnow.svg" },
+  { _id: "12", time: "night", condition: "Fog", imageUrl: "nightFog.svg" },
+];
