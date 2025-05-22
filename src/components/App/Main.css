@@ -5,5 +5,6 @@
   /* width: 1360px;
   margin: 0 auto; */
   align-items: flex-start;
-  margin: 28px 40px auto;
+  margin: 28px auto;
+  max-width: 1360px;
 }
