@@ -1,16 +1,20 @@
 .card {
-  /* display: flex; */
+  width: 100%;
 }
 
 .card__image-container {
   position: relative;
-  width: 325px;
+  width: 100%;
+  cursor: pointer;
 }
 
 .card__image {
   width: 100%;
   height: auto;
   display: block;
+  border-radius: 16px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 
 .card__title {
@@ -19,13 +23,19 @@
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
+  background-color: white;
+  padding: 2px 12px;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
-.card-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+@media (max-width: 767px) {
+  .card__image-container {
+    min-width: 164px;
+  }
+
+  .card__title {
+    font-size: 12px;
+    padding: 1px 8px;
+  }
 }

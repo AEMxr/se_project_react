@@ -5,7 +5,7 @@ function ItemCard({ item, onCardClick }) {
     <li className="card">
       <div className="card__image-container">
         <img
-          // src={`${import.meta.env.BASE_URL}items/${item.imageUrl}`}
+          // src={`${import.meta.env.BASE_URL}items/${item.imageUrl}`} keep for later use when changing database
           src={item.link}
           alt={item.name}
           className="card__image"

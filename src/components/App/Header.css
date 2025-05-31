@@ -2,12 +2,13 @@
 
 .header {
   line-height: 24px;
+  max-width: 1360px;
 }
 
 .header__container {
   display: flex;
   align-items: center;
-  margin: 32px 40px auto;
+  margin: 32px auto auto;
 }
 
 .header__logo {
@@ -17,7 +18,6 @@
   background-position: center;
   width: 89px;
   height: 40px;
-  margin: auto 0px;
 }
 
 .header__date-location {
@@ -50,4 +50,43 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+}
+
+.header__menu-button {
+  display: none;
+}
+
+.header__menu-icon {
+  width: 44px;
+  height: 44px;
+}
+
+@media (max-width: 767px) {
+  .header__container {
+    margin-top: 0;
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header__menu-button {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+  }
+
+  .header__add-clothes-button,
+  .header__user {
+    display: none;
+  }
+
+  .header__date-location {
+    margin: 32px 0 0 0;
+    height: auto;
+  }
 }

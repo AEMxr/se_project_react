@@ -11,7 +11,6 @@ function ModalWithForm({
   isOpen,
   isSubmitDisabled = false,
 }) {
-  // Close on Escape key
   useEffect(() => {
     if (!isOpen) return;
     function handleEsc(e) {
@@ -21,7 +20,6 @@ function ModalWithForm({
     return () => document.removeEventListener("keydown", handleEsc);
   }, [isOpen, onClose]);
 
-  // Close on overlay click
   function handleOverlayClick(e) {
     if (e.target === e.currentTarget) onClose();
   }

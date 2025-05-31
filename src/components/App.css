@@ -1,15 +1,31 @@
 body,
 #root {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  margin: 0;
+  padding: 0;
 }
 
 .app {
-  flex: 1;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
+
+  padding: 18px 16px 20px;
+
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
-.footer {
+@media (min-width: 768px) {
+  .app {
+    padding: 0;
+    margin: 0 auto;
+  }
+
+  .app > .header,
+  .app > .main,
+  .app > .footer {
+    margin-left: 40px !important;
+    margin-right: 40px !important;
+  }
 }

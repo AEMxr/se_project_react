@@ -14,7 +14,6 @@
   padding: 28px 28px 36px;
   position: relative;
   min-width: 496px;
-  /* height: 436px; */
   line-height: 20px;
   font-size: 16px;
 }
@@ -40,7 +39,6 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  /* margin: auto 16px; */
 }
 
 .modal__form-label {
@@ -93,7 +91,6 @@
 
 .modal__submit {
   margin-top: 8px;
-  /* padding: 8px 16px; */
   background: #000000;
   color: #fff;
   border: none;
@@ -111,4 +108,15 @@
 .modal__submit:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+@media (max-width: 767px) {
+  .modal {
+    align-items: flex-end;
+  }
+
+  .modal__content {
+    min-width: 325px;
+    border-radius: 20px 20px 0 0;
+  }
 }
