@@ -44,7 +44,7 @@ export const defaultClothingItems = [
   },
 ];
 
-export const API_KEY = "fd485a5230f45716ba6db534b6745df9";
+// export const API_KEY = "fd485a5230f45716ba6db534b6745df9";
 export const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
 export const DEFAULT_COORDS = {
   latitude: "40.7128", // Example: New York City

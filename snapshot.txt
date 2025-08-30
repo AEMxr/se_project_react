@@ -1,0 +1,2760 @@
+===== BEGIN ./db.json =====
+{
+  "items": [
+    {
+      "_id": "0",
+      "name": "Beanie",
+      "weather": "cold",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Beanie.png?etag=bc10497cc80fa557f036e94f9999f7b2"
+    },
+    {
+      "_id": "1",
+      "name": "Boot",
+      "weather": "cold",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Boot.png?etag=0953a2ea59f1c6ebc832fabacdc9c70e"
+    },
+    {
+      "_id": "2",
+      "name": "Cap",
+      "weather": "hot",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Cap.png?etag=f3dad389b22909cafa73cff9f9a3d591"
+    },
+    {
+      "_id": "3",
+      "name": "Coat",
+      "weather": "cold",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Coat.png?etag=298717ed89d5e40b1954a1831ae0bdd4"
+    },
+    {
+      "_id": "4",
+      "name": "Dress",
+      "weather": "hot",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Dress.png?etag=1f9cd32a311ab139cab43494883720bf"
+    },
+    {
+      "_id": "5",
+      "name": "Hoodie",
+      "weather": "cold",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Hoodie.png?etag=5f52451d0958ccb1016c78a45603a4e8"
+    },
+    {
+      "_id": "6",
+      "name": "Jacket",
+      "weather": "cold",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Jacket.png?etag=f4bb188deaa25ac84ce2338be2d404ad"
+    },
+    {
+      "_id": "7",
+      "name": "Jeans",
+      "weather": "warm",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Jeans.png?etag=58345e8bef1ce5f95ac882e71d309e6c"
+    },
+    {
+      "_id": "8",
+      "name": "Loafers",
+      "weather": "warm",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Loafers.png?etag=dc2d6e1ca7b297597406e35c40aef030"
+    },
+    {
+      "_id": "9",
+      "name": "Sandals",
+      "weather": "hot",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Sandals.png?etag=9bea85a77c0306586d2b71a33b626d41"
+    },
+    {
+      "_id": "10",
+      "name": "Scarf",
+      "weather": "cold",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Scarf.png?etag=74efbee93810c926b5507e862c6cb76c"
+    },
+    {
+      "_id": "11",
+      "name": "Shorts",
+      "weather": "Hot",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Shorts.png?etag=d728c496643f610de8d8fea92dd915ba"
+    },
+    {
+      "_id": "12",
+      "name": "Skirt",
+      "weather": "hot",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Skirt.png?etag=27a6bea7e1b63218820d615876fa31d1"
+    },
+    {
+      "_id": "13",
+      "name": "Sneakers",
+      "weather": "warm",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Sneakers.png?etag=3efeec41c1c78b8afe26859ca7fa7b6f"
+    },
+    {
+      "_id": "14",
+      "name": "Sunglasses",
+      "weather": "hot",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Sunglasses.png?etag=a1bced9e331d36cb278c45df51150432"
+    },
+    {
+      "_id": "15",
+      "name": "Sweatshirt",
+      "weather": "warm",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Sweatshirt.png?etag=008a9674757bea2e0bdb31242e364be0"
+    },
+    {
+      "_id": "16",
+      "name": "T-Shirt",
+      "weather": "hot",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09"
+    },
+    {
+      "name": "GG jersey jacquard shorts",
+      "imageUrl": "https://media.gucci.com/style/DarkGray_Center_0_0_1200x1200/1752768942/814221_XJHFV_3266_001_100_0000_Light-gg-jersey-jacquard-shorts.jpg",
+      "weather": "hot",
+      "_id": "LamqRHj"
+    }
+  ]
+}
+===== END ./db.json =====
+
+===== BEGIN ./eslint.config.js =====
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+
+export default [
+  { ignores: ['dist'] },
+  {
+    files: ['**/*.{js,jsx}'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module',
+      },
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+      ...reactHooks.configs.recommended.rules,
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+    },
+  },
+]
+
+===== END ./eslint.config.js =====
+
+===== BEGIN ./index.html =====
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/wtwr°.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WTWR°</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
+===== END ./index.html =====
+
+===== BEGIN ./package.json =====
+{
+  "name": "wtwr",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "homepage": "https://AEMxr.github.io/se_project_react/",
+  "scripts": {
+    "dev": "vite --open",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "api": "json-server --watch db.json --id _id --port 3001",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.8.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.0",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "eslint": "^9.25.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "gh-pages": "^6.3.0",
+    "globals": "^16.0.0",
+    "vite": "^6.3.5"
+  }
+}
+
+===== END ./package.json =====
+
+===== BEGIN ./src/components/AddItemModal/AddItemModal.jsx =====
+import { useState } from "react";
+import ModalWithForm from "../App/ModalWithForm";
+import useForm from "../../hooks/useForm.js";
+import formValidation from "../../hooks/formValidation.js";
+import useTouch from "../../hooks/useTouch.js";
+
+const initialValues = { name: "", image: "", weather: "warm" };
+
+const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { values: form, setValues: setForm } = useForm(initialValues);
+  const { touched, handleBlur, resetTouched } = useTouch({
+    name: false,
+    image: false,
+  });
+
+  const { nameIsValid, imageIsValid, isFormValid } = formValidation(form);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!isFormValid || isSubmitting) return;
+    setIsSubmitting(true);
+    onAddItem(form)
+      .then(() => {
+        setForm(initialValues);
+        resetTouched();
+        onCloseModal && onCloseModal();
+      })
+      .catch((e) => {
+        console.error(e);
+      })
+      .finally(() => setIsSubmitting(false));
+  };
+
+  return (
+    <ModalWithForm
+      title="New garment"
+      name="add-clothes"
+      buttonText="Add garment"
+      onClose={onCloseModal}
+      onSubmit={handleSubmit}
+      isOpen={isOpen}
+      isSubmitDisabled={isSubmitting || !isFormValid}
+    >
+      <label
+        className={`modal__form-label${
+          touched.name && !nameIsValid ? " modal__form-label--invalid" : ""
+        }`}
+      >
+        Name
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          className={`modal__input${
+            touched.name && !nameIsValid ? " modal__input--invalid" : ""
+          }`}
+          required
+          value={form.name}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+      </label>
+      <label
+        className={`modal__form-label${
+          touched.image && !imageIsValid ? " modal__form-label--invalid" : ""
+        }`}
+      >
+        Image
+        <input
+          type="url"
+          name="image"
+          placeholder="Image URL"
+          className={`modal__input${
+            touched.image && !imageIsValid ? " modal__input--invalid" : ""
+          }`}
+          required
+          value={form.image}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+      </label>
+      <label className="modal__form-label">
+        Select the weather type:
+        <div className="modal__weather-radio-group">
+          {["hot", "warm", "cold"].map((type) => (
+            <label
+              key={type}
+              className={`modal__weather-radio${
+                form.weather === type ? " modal__weather-radio--active" : ""
+              }`}
+            >
+              <input
+                type="radio"
+                name="weather"
+                value={type}
+                required
+                checked={form.weather === type}
+                onChange={handleChange}
+                className="modal__weather-radio-input"
+              />
+
+              {type[0].toUpperCase() + type.slice(1)}
+            </label>
+          ))}
+        </div>
+      </label>
+    </ModalWithForm>
+  );
+};
+
+export default AddItemModal;
+
+===== END ./src/components/AddItemModal/AddItemModal.jsx =====
+
+===== BEGIN ./src/components/App.css =====
+body,
+#root {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  padding: 18px 16px 20px;
+
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .app {
+    padding: 0;
+    margin: 0 auto;
+  }
+
+  .app > .header,
+  .app > .main,
+  .app > .footer {
+    margin-left: 40px !important;
+    margin-right: 40px !important;
+  }
+}
+
+===== END ./src/components/App.css =====
+
+===== BEGIN ./src/components/App.jsx =====
+import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { fetchWeather } from "../utils/weatherApi.js";
+// import { defaultClothingItems } from "../utils/constants.js";
+import { getItems, createItem, removeItem } from "../utils/api.js";
+import "./App.css";
+import Header from "./App/Header.jsx";
+import Main from "./App/Main.jsx";
+import Footer from "./App/Footer.jsx";
+// import ModalWithForm from "./App/ModalWithForm.jsx";
+import ItemModal from "./App/ItemModal.jsx";
+import MobileMenu from "./App/MobileMenu.jsx";
+import Profile from "./App/Profile.jsx";
+import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext.js";
+import AddItemModal from "../components/AddItemModal/AddItemModal.jsx";
+import DeleteConfirmationModal from "./App/DeleteConfirmationModal.jsx";
+
+const Router = import.meta.env.PROD ? HashRouter : BrowserRouter;
+
+function App() {
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+
+  function openConfirmationModal(item) {
+    setItemToDelete(item);
+    setIsConfirmOpen(true);
+  }
+  function closeConfirmationModal() {
+    setIsConfirmOpen(false);
+    setItemToDelete(null);
+  }
+
+  function handleConfirmDelete() {
+    if (!itemToDelete?._id) return Promise.resolve();
+    return removeItem(itemToDelete._id)
+      .then(() => {
+        setClothingItems((prev) =>
+          prev.filter((i) => i._id !== itemToDelete._id)
+        );
+        setSelectedItem(null);
+        closeConfirmationModal();
+      })
+      .catch(console.error);
+  }
+
+  // Temp Switch
+  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+
+  const handleToggleSwitchChange = () => {
+    setCurrentTemperatureUnit((u) => (u === "F" ? "C" : "F"));
+  };
+
+  // Weather condition based on browser location
+  const [weather, setWeather] = useState({
+    city: "",
+    condition: undefined,
+    time: undefined,
+    temperature: { F: null, C: null },
+  });
+
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          fetchWeather(position.coords.latitude, position.coords.longitude)
+            .then(setWeather)
+            .catch(console.error);
+        },
+        (error) => {
+          fetchWeather().then(setWeather).catch(console.error);
+        }
+      );
+    } else {
+      fetchWeather().then(setWeather).catch(console.error);
+    }
+  }, []);
+
+  // Form modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [form, setForm] = useState({
+  //   name: "",
+  //   image: "",
+  //   weather: "",
+  // });
+  // const [touched, setTouched] = useState({ name: false, image: false });
+
+  // For ItemModal
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  // Form validation
+  // const nameIsValid = /[A-Za-z0-9]/.test(form.name);
+  // const imageIsValid = /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp|svg)$/i.test(
+  //   form.image
+  // );
+  // const isFormValid = nameIsValid && imageIsValid && form.weather.trim() !== "";
+
+  // Form modal handlers
+  function handleAddClothesClick() {
+    setIsModalOpen(true);
+  }
+
+  function handleCloseAddModal() {
+    setIsModalOpen(false);
+  }
+
+  // const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  const [clothingItems, setClothingItems] = useState([]);
+
+  useEffect(() => {
+    getItems()
+      .then((items) => {
+        setClothingItems(
+          items.map((i) => ({
+            ...i,
+            link: i.imageUrl,
+            weather: (i.weather || "any").toLowerCase(),
+          }))
+        );
+      })
+      .catch(console.error);
+  }, []);
+
+  function handleAddItem(values) {
+    return createItem(values)
+      .then((created) => {
+        const normalized = {
+          ...created,
+          link: created.imageUrl,
+          condition: ["any"],
+          weather: (created.weather || "any").toLowerCase(),
+        };
+        setClothingItems((prev) => [normalized, ...prev]);
+        setIsModalOpen(false);
+      })
+      .catch(console.error);
+  }
+
+  // function handleItemDelete(item) {
+  //   if (!item?._id) return;
+  //   removeItem(item._id)
+  //     .then(() => {
+  //       setClothingItems((prev) => prev.filter((i) => i._id !== item._id));
+  //       setSelectedItem(null);
+  //     })
+  //     .catch(console.error);
+  // }
+
+  // function handleAddItem(values) {
+  //   const newItem = {
+  //     _id: Date.now(),
+  //     name: values.name,
+  //     weather: values.weather,
+  //     link: values.image,
+  //     condition: ["any"],
+  //   };
+  //   setClothingItems((prev) => [newItem, ...prev]);
+  //   setIsModalOpen(false);
+  // }
+
+  // function handleCloseModal() {
+  //   setIsModalOpen(false);
+  //   setForm({ name: "", image: "", weather: "" });
+  //   setTouched({ name: false, image: false });
+  //   setSelectedItem(null);
+  // }
+
+  // function handleFormSubmit(e) {
+  //   e.preventDefault();
+  //   setIsModalOpen(false);
+  //   setForm({ name: "", image: "", weather: "" });
+  //   setTouched({ name: false, image: false });
+  // }
+
+  // function handleInputChange(e) {
+  //   const { name, value } = e.target;
+  //   setForm((prev) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
+  // }
+
+  // function handleBlur(e) {
+  //   const { name } = e.target;
+  //   setTouched((prev) => ({
+  //     ...prev,
+  //     [name]: true,
+  //   }));
+  // }
+
+  // For ItemCard click
+  function handleCardClick(item) {
+    console.log("Card clicked:", item);
+    setSelectedItem(item);
+  }
+
+  function handleCloseItemModal() {
+    setSelectedItem(null);
+  }
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  function handleMenuClick() {
+    setIsMobileMenuOpen(true);
+  }
+
+  function handleCloseMobileMenu() {
+    setIsMobileMenuOpen(false);
+  }
+
+  return (
+    <CurrentTemperatureUnitContext.Provider
+      value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+    >
+      <Router>
+        <div className="app">
+          <Header
+            city={weather.city}
+            onAddClothes={handleAddClothesClick}
+            onMenuClick={handleMenuClick}
+          />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  weather={weather}
+                  clothingItems={clothingItems}
+                  onCardClick={handleCardClick}
+                />
+              }
+            />
+
+            <Route
+              path="/profile"
+              element={
+                <Profile
+                  clothingItems={clothingItems}
+                  onAddClothes={handleAddClothesClick}
+                />
+              }
+            />
+          </Routes>
+
+          <Footer />
+          <MobileMenu
+            isOpen={isMobileMenuOpen}
+            onClose={handleCloseMobileMenu}
+            onAddClothes={handleAddClothesClick}
+          />
+          <ItemModal
+            item={selectedItem}
+            onClose={handleCloseItemModal}
+            onOpenConfirm={openConfirmationModal}
+          />
+          <DeleteConfirmationModal
+            isOpen={isConfirmOpen}
+            onConfirm={handleConfirmDelete}
+            onCancel={closeConfirmationModal}
+          />
+          <AddItemModal
+            isOpen={isModalOpen}
+            onCloseModal={handleCloseAddModal}
+            onAddItem={handleAddItem}
+          />
+        </div>
+      </Router>
+    </CurrentTemperatureUnitContext.Provider>
+  );
+}
+
+export default App;
+
+===== END ./src/components/App.jsx =====
+
+===== BEGIN ./src/components/App/DeleteConfirmationModal.jsx =====
+import ModalWithForm from "./ModalWithForm.jsx";
+
+function DeleteConfirmationModal({ isOpen, onConfirm, onCancel }) {
+  return (
+    <ModalWithForm
+      title="Delete this item?"
+      name="confirm-delete"
+      buttonText="Delete"
+      onClose={onCancel}
+      onSubmit={(e) => {
+        e.preventDefault();
+        onConfirm?.();
+      }}
+      isOpen={isOpen}
+    >
+      <p style={{ margin: 0 }}>This action cannot be undone.</p>
+      <button
+        type="button"
+        className="modal__cancel"
+        onClick={onCancel}
+        style={{ marginTop: 16 }}
+      >
+        Cancel
+      </button>
+    </ModalWithForm>
+  );
+}
+
+export default DeleteConfirmationModal;
+
+===== END ./src/components/App/DeleteConfirmationModal.jsx =====
+
+===== BEGIN ./src/components/App/Footer.css =====
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #000;
+  margin-top: 85px;
+  margin-bottom: 24px;
+}
+
+.footer__left,
+.footer__right {
+}
+
+@media (max-width: 767px) {
+  .footer {
+    margin-top: 40px;
+    padding-bottom: 20px;
+  }
+}
+
+===== END ./src/components/App/Footer.css =====
+
+===== BEGIN ./src/components/App/Footer.jsx =====
+import React from "react";
+import "./Footer.css";
+
+function Footer() {
+  return (
+    <footer className="footer">
+      <span className="footer__left">developed by AEM</span>
+      <span className="footer__right">2025</span>
+    </footer>
+  );
+}
+
+export default Footer;
+
+===== END ./src/components/App/Footer.jsx =====
+
+===== BEGIN ./src/components/App/Header.css =====
+@import "../../index.css";
+
+.header {
+  line-height: 24px;
+  max-width: 1360px;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  margin: 32px auto auto;
+}
+
+.header__logo {
+  background-image: url("../../assets/wtwr.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 89px;
+  height: 40px;
+}
+
+.header__date-location {
+  height: 24px;
+  margin: 11px auto 5px 24px;
+}
+
+.header__add-clothes-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 8px 20px 8px 0px;
+  padding: 0px;
+  line-height: 24px;
+}
+
+.header__user {
+  display: flex;
+}
+
+.header__user-name {
+  margin: 8px 12px 7px auto;
+}
+
+.header__user-avatar {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-image: url("../../assets/avatar.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.header__menu-button {
+  display: none;
+}
+
+.header__menu-icon {
+  width: 44px;
+  height: 44px;
+}
+
+@media (max-width: 767px) {
+  .header__container {
+    margin-top: 0;
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header__menu-button {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+  }
+
+  .header__add-clothes-button,
+  .header__user {
+    display: none;
+  }
+
+  .header__date-location {
+    margin: 32px 0 0 0;
+    height: auto;
+  }
+}
+
+===== END ./src/components/App/Header.css =====
+
+===== BEGIN ./src/components/App/Header.jsx =====
+import "./Header.css";
+import menuIcon from "../../assets/hamburgIcon.svg";
+import Toggle_Switch from "./ToggleSwitch.jsx";
+import { useContext } from "react";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext.js";
+import { Link } from "react-router-dom";
+
+const currentDate = new Date().toLocaleString("default", {
+  month: "long",
+  day: "numeric",
+});
+
+function Header({ city, onAddClothes, onMenuClick }) {
+  const { currentTemperatureUnit, handleToggleSwitchChange } = useContext(
+    CurrentTemperatureUnitContext
+  );
+
+  return (
+    <header className="header">
+      <div className="header__container">
+        <Link to="/" className="header__logo" aria-label="Go to home" />
+
+        <div className="header__date-location">
+          {currentDate}, {city ? city : "Loading..."}
+        </div>
+
+        <Toggle_Switch
+          isOn={currentTemperatureUnit === "C"}
+          handleToggle={handleToggleSwitchChange}
+        />
+
+        <button
+          className="header__add-clothes-button"
+          type="button"
+          onClick={onAddClothes}
+        >
+          + Add Clothes
+        </button>
+
+        <Link to="/profile" className="header__user" aria-label="Go to profile">
+          <div className="header__user-name">Terrence Tegegne</div>
+          <div className="header__user-avatar"></div>
+        </Link>
+
+        <button
+          className="header__menu-button"
+          type="button"
+          onClick={onMenuClick}
+        >
+          <img src={menuIcon} alt="Menu" className="header__menu-icon" />
+        </button>
+      </div>
+    </header>
+  );
+}
+
+export default Header;
+
+===== END ./src/components/App/Header.jsx =====
+
+===== BEGIN ./src/components/App/ItemModal.css =====
+.item-modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.item-modal {
+  width: 498px;
+  height: 610px;
+  background-color: white;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-modal__close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 20px;
+  height: 20px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.item-modal__close-icon {
+  color: white;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.item-modal__close:hover .item-modal__close-icon {
+  opacity: 0.7;
+}
+
+.item-modal__image-section {
+  width: 498px;
+  height: 498px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.item-modal__image {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+}
+
+.item-modal__content {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding: 0;
+  margin: 20px auto 32px 32px;
+}
+
+.item-modal__title {
+  margin: 0 0 12px 0;
+  color: black;
+  line-height: 24px;
+}
+
+.item-modal__weather {
+  margin: 0;
+  color: black;
+  line-height: 24px;
+}
+
+@media (max-width: 767px) {
+  .item-modal__overlay {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .item-modal {
+    max-width: 343px;
+    width: calc(100vw - 32px);
+    height: auto;
+    max-height: 463px;
+    margin: 0 16px;
+  }
+
+  .item-modal__image-section {
+    width: 100%;
+    height: auto;
+    max-height: 350px;
+  }
+
+  .item-modal__image {
+    width: 100%;
+    height: auto;
+    max-height: 350px;
+    object-fit: cover;
+  }
+
+  .item-modal__content {
+    margin: 16px 20px 20px 20px;
+  }
+
+  .item-modal__close {
+    top: 16px;
+    right: 16px;
+  }
+}
+
+===== END ./src/components/App/ItemModal.css =====
+
+===== BEGIN ./src/components/App/ItemModal.jsx =====
+import "./ItemModal.css";
+import closeIcon from "../../assets/Union.svg";
+
+function ItemModal({ item, onClose, onOpenConfirm }) {
+  if (!item) return null;
+
+  console.log("ItemModal received item:", item);
+  console.log("Image source:", item.link);
+
+  return (
+    <div className="item-modal__overlay" onClick={onClose}>
+      <div className="item-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="item-modal__close" onClick={onClose}>
+          <img src={closeIcon} alt="Close" className="item-modal__close-icon" />
+        </button>
+        <div className="item-modal__image-section">
+          <img
+            src={item.link || item.imageUrl}
+            alt={item.name}
+            className="item-modal__image"
+            onError={(e) => {
+              console.log("Image failed to load:", e.target.src);
+            }}
+            onLoad={() => {
+              console.log("Image loaded successfully:", item.link);
+            }}
+          />
+        </div>
+        <div className="item-modal__content">
+          <p className="item-modal__title">{item.name}</p>
+          <p className="item-modal__weather">Weather: {item.weather}</p>
+          <button
+            type="button"
+            className="modal__submit"
+            onClick={() => onOpenConfirm?.(item)}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default ItemModal;
+
+===== END ./src/components/App/ItemModal.jsx =====
+
+===== BEGIN ./src/components/App/Main.css =====
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 28px;
+  max-width: 1360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.main__headliner {
+  margin: 40px auto 34px 0px;
+}
+
+.main__card-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 20px;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  justify-content: center;
+}
+
+.main__randomize-button {
+  display: none !important;
+  width: 100%;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 20px 16px;
+  margin: 20px 0 auto 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .main__card-list {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .main {
+    margin-top: 20px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .main__card-list {
+    gap: 16px;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .main__randomize-button {
+    display: block !important;
+  }
+
+  .main__randomize-button:hover {
+    background-color: #333;
+  }
+
+  .main__randomize-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+@media (max-width: 375px) {
+  .main__card-list {
+    gap: 12px;
+  }
+}
+
+===== END ./src/components/App/Main.css =====
+
+===== BEGIN ./src/components/App/Main.jsx =====
+import { useContext, useState } from "react";
+import WeatherCard from "./Main/WeatherCard.jsx";
+import ItemCard from "./Main/ItemCard.jsx";
+import { getWeatherType } from "../../utils/weatherApi.js";
+import "./Main.css";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext.js";
+import { buildOutfit } from "../../utils/outfitBuilder.js";
+
+function Main({ weather, clothingItems, onCardClick }) {
+  const [displayItems, setDisplayItems] = useState(null);
+  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+
+  // console.log("Main component received:");
+  // console.log("weather:", weather);
+  // console.log("clothingItems:", clothingItems);
+  // console.log("clothingItems length:", clothingItems?.length);
+
+  const tempF = weather?.temperature?.F ?? null;
+  const weatherType = tempF !== null ? getWeatherType(tempF) : null;
+  const weatherCondition = weather?.condition;
+
+  // console.log("weatherType:", weatherType);
+  // console.log("weatherCondition:", weatherCondition);
+
+  const filteredItems = clothingItems.filter((item) => {
+    const matchesType =
+      !weatherType || item.weather === weatherType || item.weather === "any";
+
+    const matchesCondition =
+      !weatherCondition ||
+      !item.condition ||
+      (Array.isArray(item.condition) && item.condition.includes("any")) ||
+      (Array.isArray(item.condition) &&
+        item.condition.includes(weatherCondition)) ||
+      item.condition === weatherCondition ||
+      item.condition === "any";
+
+    // console.log(`Item: ${item.name}`);
+    // console.log(
+    //   `  weather: "${item.weather}" vs weatherType: "${weatherType}"`
+    // );
+    // console.log(`  condition: ${JSON.stringify(item.condition)}`);
+    // console.log(`  matchesType: ${matchesType}`);
+    // console.log(`  matchesCondition: ${matchesCondition}`);
+    // console.log(`  final result: ${matchesType && matchesCondition}`);
+    // console.log("---");
+
+    return matchesType && matchesCondition;
+  });
+
+  // console.log("filteredItems:", filteredItems);
+  // console.log("filteredItems length:", filteredItems.length);
+
+  const handleShowAll = () => {
+    setDisplayItems(null);
+    console.log("Showing all weather-appropriate items");
+  };
+
+  const handleRandomize = () => {
+    if (filteredItems.length === 0) {
+      console.log("No items available for current weather conditions");
+      return;
+    }
+
+    const { selectedItems, reasons } = buildOutfit({
+      items: filteredItems,
+      weatherType,
+      tempF,
+      weatherCondition,
+    });
+
+    // console.table(reasons);
+
+    setDisplayItems(selectedItems);
+  };
+
+  const itemsToDisplay = displayItems || filteredItems;
+
+  return (
+    <main className="main">
+      <WeatherCard
+        temperature={weather.temperature}
+        condition={weather.condition}
+        time={weather.time}
+      />
+      <div className="main__headliner">
+        Today is{" "}
+        {weather?.temperature?.[currentTemperatureUnit] != null
+          ? `${weather.temperature[currentTemperatureUnit]}°${currentTemperatureUnit}`
+          : "..."}{" "}
+        / You may want to wear:
+      </div>
+      <ul className="main__card-list">
+        {itemsToDisplay.map((item) => (
+          <ItemCard key={item._id} item={item} onCardClick={onCardClick} />
+        ))}
+      </ul>
+      <button
+        className="main__randomize-button"
+        type="button"
+        onClick={handleRandomize}
+        disabled={filteredItems.length === 0}
+      >
+        Randomize
+      </button>
+
+      {/* {displayItems && (
+        <button
+          className="main__showall-button"
+          type="button"
+          onClick={handleShowAll}
+        >
+          Show all
+        </button>
+      )} */}
+    </main>
+  );
+}
+
+export default Main;
+
+===== END ./src/components/App/Main.jsx =====
+
+===== BEGIN ./src/components/App/Main/ItemCard.css =====
+.card {
+  width: 100%;
+}
+
+.card__image-container {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+}
+
+.card__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.card__title {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  background-color: white;
+  padding: 2px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+@media (max-width: 767px) {
+  .card__image-container {
+    min-width: 164px;
+  }
+
+  .card__title {
+    font-size: 12px;
+    padding: 1px 8px;
+  }
+}
+
+===== END ./src/components/App/Main/ItemCard.css =====
+
+===== BEGIN ./src/components/App/Main/ItemCard.jsx =====
+import "./ItemCard.css";
+
+function ItemCard({ item, onCardClick }) {
+  return (
+    <li className="card">
+      <div className="card__image-container">
+        <img
+          // src={`${import.meta.env.BASE_URL}items/${item.imageUrl}`} keep for later use when changing database
+          src={item.link || item.imageUrl}
+          alt={item.name}
+          className="card__image"
+          onClick={() => onCardClick(item)}
+        />
+        <span className="card__title">{item.name}</span>
+      </div>
+    </li>
+  );
+}
+
+export default ItemCard;
+
+===== END ./src/components/App/Main/ItemCard.jsx =====
+
+===== BEGIN ./src/components/App/Main/WeatherCard.css =====
+.weather-card {
+  max-width: 1360px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+}
+
+.weather-card__image {
+  width: 100%;
+  max-width: 1360px;
+  height: auto;
+  display: block;
+}
+
+.weather-card__temp {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+}
+
+@media (min-width: 375px) {
+  .weather-card {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .weather-card__image {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    object-position: right;
+    display: block;
+  }
+}
+
+===== END ./src/components/App/Main/WeatherCard.css =====
+
+===== BEGIN ./src/components/App/Main/WeatherCard.jsx =====
+import { weatherConditions } from "../../../utils/constants.js";
+import "./WeatherCard.css";
+import CurrentTemperatureUnitContext from "../../../contexts/CurrentTemperatureUnitContext.js";
+import { useContext } from "react";
+
+function WeatherCard({ temperature, condition, time }) {
+  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+
+  const weatherImage = weatherConditions.find(
+    (c) => c.condition === condition && c.time === time
+  );
+
+  const temp = temperature?.[currentTemperatureUnit];
+  const imageSrc = weatherImage
+    ? `${import.meta.env.BASE_URL}weatherConditions/${weatherImage.imageUrl}`
+    : `${import.meta.env.BASE_URL}weatherConditions/daySunny.svg`;
+
+  return (
+    <section className="weather-card">
+      {weatherImage && (
+        <img className="weather-card__image" src={imageSrc} alt={condition} />
+      )}
+      <span className="weather-card__temp">
+        {temp != null ? `${temp}°${currentTemperatureUnit}` : "..."}
+      </span>
+    </section>
+  );
+}
+
+export default WeatherCard;
+
+===== END ./src/components/App/Main/WeatherCard.jsx =====
+
+===== BEGIN ./src/components/App/MobileMenu.css =====
+.mobile-menu__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 16px;
+}
+
+.mobile-menu {
+  background-color: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 343px;
+  position: relative;
+}
+
+.mobile-menu__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: 60px auto 60px;
+}
+
+.mobile-menu__add-clothes {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 12px 20px;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 24px;
+}
+
+.mobile-menu__user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.mobile-menu__user-name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.mobile-menu__user-avatar {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-image: url("../../assets/avatar.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+@media (min-width: 769px) {
+  .mobile-menu__overlay {
+    display: none;
+  }
+}
+
+===== END ./src/components/App/MobileMenu.css =====
+
+===== BEGIN ./src/components/App/MobileMenu.jsx =====
+import "./MobileMenu.css";
+
+function MobileMenu({ isOpen, onClose, onAddClothes }) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="mobile-menu__overlay" onClick={onClose}>
+      <div className="mobile-menu" onClick={(e) => e.stopPropagation()}>
+        <button className="mobile-menu__close" onClick={onClose}>
+          ×
+        </button>
+
+        <div className="mobile-menu__content">
+          <div className="mobile-menu__user">
+            <div className="mobile-menu__user-name">Terrence Tegegne</div>
+            <div className="mobile-menu__user-avatar"></div>
+          </div>
+          <button
+            className="mobile-menu__add-clothes"
+            type="button"
+            onClick={() => {
+              onAddClothes();
+              onClose();
+            }}
+          >
+            + Add Clothes
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default MobileMenu;
+
+===== END ./src/components/App/MobileMenu.jsx =====
+
+===== BEGIN ./src/components/App/ModalWithForm.css =====
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal__content {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px 28px 36px;
+  position: relative;
+  min-width: 496px;
+  line-height: 20px;
+  font-size: 16px;
+}
+
+.modal__close {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  width: 20px;
+  height: 20px;
+  background: url("../../assets/close.svg") center/contain no-repeat;
+  border: none;
+  cursor: pointer;
+}
+
+.modal__title {
+  margin: 0px auto 24px 0px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.modal__form-label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal__input {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid #000;
+
+  padding: 0px 0px 4px 0px;
+}
+
+.modal__input--invalid {
+  border-bottom: 1px solid #ff4d00 !important;
+  color: #ff4d00;
+}
+
+.modal__form-label--invalid {
+  color: #ff4d00;
+}
+
+.modal__input--invalid::placeholder {
+  color: #ff4d00;
+  opacity: 1;
+}
+
+.modal__weather-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.modal__weather-radio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.modal__weather-radio--active {
+  opacity: 1;
+}
+
+.modal__submit {
+  margin-top: 8px;
+  background: #000000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  width: 124px;
+  height: 36px;
+}
+.modal__submit:hover {
+  opacity: 0.6;
+}
+
+.modal__submit:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+@media (max-width: 767px) {
+  .modal {
+    align-items: flex-end;
+  }
+
+  .modal__content {
+    min-width: 325px;
+    border-radius: 20px 20px 0 0;
+  }
+}
+
+===== END ./src/components/App/ModalWithForm.css =====
+
+===== BEGIN ./src/components/App/ModalWithForm.jsx =====
+import React, { useEffect } from "react";
+import "./ModalWithForm.css";
+
+function ModalWithForm({
+  title,
+  name,
+  buttonText,
+  onClose,
+  onSubmit,
+  children,
+  isOpen,
+  isSubmitDisabled = false,
+}) {
+  useEffect(() => {
+    if (!isOpen) return;
+    function handleEsc(e) {
+      if (e.key === "Escape") onClose();
+    }
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, [isOpen, onClose]);
+
+  function handleOverlayClick(e) {
+    if (e.target === e.currentTarget) onClose();
+  }
+
+  if (!isOpen) return null;
+
+  return (
+    <div
+      className={`modal modal_type_${name}`}
+      onMouseDown={handleOverlayClick}
+    >
+      <div className="modal__content">
+        <button
+          type="button"
+          className="modal__close"
+          aria-label="Close"
+          onClick={onClose}
+        />
+        <h2 className="modal__title">{title}</h2>
+        <form
+          className="modal__form"
+          name={name}
+          onSubmit={onSubmit}
+          autoComplete="off"
+        >
+          {children}
+          <button
+            className="modal__submit"
+            type="submit"
+            disabled={isSubmitDisabled}
+          >
+            {buttonText}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default ModalWithForm;
+
+===== END ./src/components/App/ModalWithForm.jsx =====
+
+===== BEGIN ./src/components/App/Profile.jsx =====
+import SideBar from "./Profile/SideBar.jsx";
+import ClothesSection from "./Profile/ClothesSection.jsx";
+
+const Profile = ({ clothingItems, onAddClothes }) => {
+  return (
+    <section className="profile">
+      <SideBar
+        user={{ name: "Terrence Tegegne", avatar: "/assets/avatar.svg" }}
+      />
+      <ClothesSection items={clothingItems} onAddClothes={onAddClothes} />
+    </section>
+  );
+};
+
+export default Profile;
+
+===== END ./src/components/App/Profile.jsx =====
+
+===== BEGIN ./src/components/App/Profile/ClothesSection.jsx =====
+const ClothesSection = ({ items, onAddClothes }) => {
+  return (
+    <section className="clothes">
+      <div className="clothes__header">
+        <h2 className="clothes__title">Your clothes</h2>
+        <button className="clothes__add" type="button" onClick={onAddClothes}>
+          + Add Clothes
+        </button>
+      </div>
+      <ul className="clothes__grid">
+        {items.map((i) => (
+          <li key={i._id} className="clothes__card">
+            <img
+              src={i.imageUrl || i.link}
+              alt={i.name}
+              className="clothes__img"
+            />
+            <div className="clothes__name">{i.name}</div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+};
+
+export default ClothesSection;
+
+===== END ./src/components/App/Profile/ClothesSection.jsx =====
+
+===== BEGIN ./src/components/App/Profile/SideBar.jsx =====
+const SideBar = ({ user }) => {
+  return (
+    <aside className="sidebar">
+      <img
+        src={user.avatar}
+        alt={`${user.name} avatar`}
+        className="sidebar__avatar"
+        width="80"
+        height="80"
+      />
+      <div className="sidebar__name">{user.name}</div>
+    </aside>
+  );
+};
+
+export default SideBar;
+
+===== END ./src/components/App/Profile/SideBar.jsx =====
+
+===== BEGIN ./src/components/App/ToggleSwitch.css =====
+.ToggleSwitch {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ToggleSwitch__label {
+  position: relative;
+  display: inline-block;
+  width: 56px;
+  height: 28px;
+  background: #ffffff;
+  border: 2px solid #7e7e7e;
+  border-radius: 20px;
+  cursor: pointer;
+  user-select: none;
+  margin-right: 20px;
+}
+
+.ToggleSwitch__button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  background: #000000;
+  border-radius: 50%;
+  transition: left 0.2s ease;
+  z-index: 1;
+}
+
+.ToggleSwitch:checked + .ToggleSwitch__label .ToggleSwitch__button {
+  left: calc(100% - 28px);
+}
+
+.ToggleSwitch__text {
+  position: absolute;
+  top: 50%;
+  width: 28px;
+  transform: translateY(-50%);
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  font-family: "Cabinet Grotesk", system-ui, -apple-system, Segoe UI, Roboto,
+    Arial, sans-serif;
+}
+
+.ToggleSwitch__text-left {
+  left: 0;
+}
+.ToggleSwitch__text-right {
+  right: 0;
+}
+
+.ToggleSwitch__text-left {
+  color: #ffffff;
+}
+.ToggleSwitch__text-right {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.ToggleSwitch:checked + .ToggleSwitch__label .ToggleSwitch__text-left {
+  color: rgba(0, 0, 0, 0.5);
+}
+.ToggleSwitch:checked + .ToggleSwitch__label .ToggleSwitch__text-right {
+  color: #ffffff;
+}
+
+===== END ./src/components/App/ToggleSwitch.css =====
+
+===== BEGIN ./src/components/App/ToggleSwitch.jsx =====
+import React, { useContext } from "react";
+import "./ToggleSwitch.css";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+
+const Toggle_Switch = ({ isOn: isOnProp, handleToggle: handleToggleProp }) => {
+  const ctx = useContext(CurrentTemperatureUnitContext);
+  const isOn = isOnProp ?? ctx?.currentTemperatureUnit === "C";
+  const handleToggle =
+    handleToggleProp ?? ctx?.handleToggleSwitchChange ?? (() => {});
+
+  return (
+    <>
+      <input
+        className="ToggleSwitch"
+        id={`TempSwitchUnit`}
+        type="checkbox"
+        checked={isOn}
+        onChange={handleToggle}
+        aria-label="Toggle temperature unit (°F/°C)"
+      />
+      <label className="ToggleSwitch__label" htmlFor={`TempSwitchUnit`}>
+        <span className="ToggleSwitch__text ToggleSwitch__text-left">F</span>
+        <span className="ToggleSwitch__text ToggleSwitch__text-right">C</span>
+        <span className="ToggleSwitch__button" />
+      </label>
+    </>
+  );
+};
+
+export default Toggle_Switch;
+
+===== END ./src/components/App/ToggleSwitch.jsx =====
+
+===== BEGIN ./src/contexts/CurrentTemperatureUnitContext.js =====
+import { createContext } from "react";
+
+const CurrentTemperatureUnitContext = createContext({
+  currentTemperatureUnit: "F",
+  handleToggleSwitchChange: () => {},
+});
+
+export default CurrentTemperatureUnitContext;
+
+===== END ./src/contexts/CurrentTemperatureUnitContext.js =====
+
+===== BEGIN ./src/hooks/formValidation.js =====
+export default function formValidation(
+  values = { name: "", image: "", weather: "" }
+) {
+  const name = values.name ?? "";
+  const image = values.image ?? "";
+  const weather = values.weather ?? "";
+
+  const nameIsValid = /[A-Za-z0-9]/.test(name);
+  const imageIsValid = /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp|svg)$/i.test(
+    image
+  );
+  const isFormValid = nameIsValid && imageIsValid && weather.trim() !== "";
+
+  return { nameIsValid, imageIsValid, isFormValid };
+}
+
+===== END ./src/hooks/formValidation.js =====
+
+===== BEGIN ./src/hooks/useForm.js =====
+import { useState } from "react";
+
+export default function useForm(initialValues = {}) {
+  const [values, setValues] = useState(initialValues);
+
+  return { values, setValues };
+}
+
+===== END ./src/hooks/useForm.js =====
+
+===== BEGIN ./src/hooks/useTouch.js =====
+import { useState, useCallback } from "react";
+
+export default function useTouch(initial = { name: false, image: false }) {
+  const [touched, setTouched] = useState(initial);
+
+  const handleBlur = useCallback((event) => {
+    const { name } = event.target;
+    setTouched((touch) => ({ ...touch, [name]: true }));
+  }, []);
+
+  const resetTouched = useCallback(() => setTouched(initial), [initial]);
+
+  return { touched, handleBlur, resetTouched, setTouched };
+}
+
+===== END ./src/hooks/useTouch.js =====
+
+===== BEGIN ./src/index.css =====
+@import "./vendor/normalize.css";
+@import "./vendor/fonts.css";
+
+body {
+  font-family: "cabinet-grotesk", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+===== END ./src/index.css =====
+
+===== BEGIN ./src/main.jsx =====
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./components/App.jsx";
+
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
+
+===== END ./src/main.jsx =====
+
+===== BEGIN ./src/utils/api.js =====
+const BASE = "http://localhost:3001";
+
+const handle = async (p) => {
+  const res = await p;
+  if (!res.ok) throw new Error(`API ${res.status}`);
+  return res.json();
+};
+
+export const getItems = () => handle(fetch(`${BASE}/items`));
+
+// form uses "image", server expects "imageUrl"
+export const createItem = ({ name, image, weather }) =>
+  handle(
+    fetch(`${BASE}/items`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        imageUrl: image,
+        weather: (weather || "any").toLowerCase(),
+      }),
+    })
+  );
+
+export const removeItem = (id) =>
+  handle(
+    fetch(`${BASE}/items/${encodeURIComponent(id)}`, { method: "DELETE" })
+  );
+
+===== END ./src/utils/api.js =====
+
+===== BEGIN ./src/utils/constants.js =====
+//home.openweathermap.org/api_keys: fd485a5230f45716ba6db534b6745df9
+export const defaultClothingItems = [
+  {
+    _id: 0,
+    name: "Cap",
+    weather: "any",
+    condition: ["any"],
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Cap.png?etag=f3dad389b22909cafa73cff9f9a3d591",
+  },
+  {
+    _id: 1,
+    name: "Hoodie",
+    weather: "warm",
+    condition: ["any"],
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Hoodie.png?etag=5f52451d0958ccb1016c78a45603a4e8",
+  },
+  {
+    _id: 2,
+    name: "Jacket",
+    weather: "cold",
+    condition: ["any"],
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Jacket.png?etag=f4bb188deaa25ac84ce2338be2d404ad",
+  },
+  {
+    _id: 3,
+    name: "Sneakers",
+    weather: "any",
+    condition: ["any"],
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Sneakers.png?etag=3efeec41c1c78b8afe26859ca7fa7b6f",
+  },
+  {
+    _id: 4,
+    name: "T-Shirt",
+    weather: "any",
+    condition: ["any"],
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09",
+  },
+  {
+    _id: 5,
+    name: "Coat",
+    weather: "cold",
+    condition: ["any"],
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Coat.png?etag=298717ed89d5e40b1954a1831ae0bdd4",
+  },
+];
+
+// export const API_KEY = "fd485a5230f45716ba6db534b6745df9";
+export const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
+export const DEFAULT_COORDS = {
+  latitude: "40.7128", // Example: New York City
+  longitude: "-74.0060",
+};
+
+export const clothingItemsData = [
+  {
+    _id: "1",
+    name: "T-Shirt",
+    imageUrl: "tshirt.svg",
+    weather: "hot",
+  },
+  {
+    _id: "2",
+    name: "Shorts",
+    imageUrl: "shorts.svg",
+    weather: "hot",
+  },
+  {
+    _id: "3",
+    name: "Cap",
+    imageUrl: "cap.svg",
+    weather: "hot",
+  },
+  {
+    _id: "4",
+    name: "Sneakers",
+    imageUrl: "sneakers.svg",
+    weather: "warm",
+  },
+  {
+    _id: "5",
+    name: "Custom Cap",
+    imageUrl: "customCap.svg",
+    weather: "hot",
+  },
+  {
+    _id: "6",
+    name: "Custom Sneakers",
+    imageUrl: "customSneakers.png",
+    weather: "warm",
+  },
+];
+
+export const weatherConditions = [
+  { _id: "1", time: "day", condition: "Sunny", imageUrl: "daySunny.svg" },
+  { _id: "2", time: "day", condition: "Cloudy", imageUrl: "dayCloudy.svg" },
+  { _id: "3", time: "day", condition: "Rain", imageUrl: "dayRain.svg" },
+  { _id: "4", time: "day", condition: "Storm", imageUrl: "dayStorm.svg" },
+  { _id: "5", time: "day", condition: "Snow", imageUrl: "daySnow.svg" },
+  { _id: "6", time: "day", condition: "Fog", imageUrl: "dayFog.svg" },
+  { _id: "7", time: "night", condition: "Sunny", imageUrl: "nightSunny.svg" },
+  { _id: "8", time: "night", condition: "Cloudy", imageUrl: "nightCloudy.svg" },
+  { _id: "9", time: "night", condition: "Rain", imageUrl: "nightRain.svg" },
+  { _id: "10", time: "night", condition: "Storm", imageUrl: "nightStorm.svg" },
+  { _id: "11", time: "night", condition: "Snow", imageUrl: "nightSnow.svg" },
+  { _id: "12", time: "night", condition: "Fog", imageUrl: "nightFog.svg" },
+];
+
+===== END ./src/utils/constants.js =====
+
+===== BEGIN ./src/utils/outfitBuilder.js =====
+function pick(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+export function buildOutfit({ items, weatherType, tempF, weatherCondition }) {
+  const categories = {
+    head: [],
+    face: [],
+    topBase: [],
+    topOuter: [],
+    bottomBase: [],
+    bottomMain: [],
+    feet: [],
+    socks: [],
+    hands: [],
+    accessories: [],
+  };
+
+  items.forEach((item) => {
+    const name = (item.name || "").toLowerCase();
+
+    if (
+      /(hat|cap|beanie|toque|headband|headscarf|headwrap|headbandana)/.test(
+        name
+      )
+    )
+      categories.head.push(item);
+    else if (
+      /(scarf|mask|earmuff|earflap|balaclava|facecover|nasal|neck|buff|neckwarmer|shawl)/.test(
+        name
+      )
+    )
+      categories.face.push(item);
+    else if (/(shirt|tank|tee|blouse)/.test(name))
+      categories.topBase.push(item);
+    else if (/(sweater|jacket|coat|hoodie|cardigan)/.test(name))
+      categories.topOuter.push(item);
+    else if (/(legging|thermal|underwear)/.test(name))
+      categories.bottomBase.push(item);
+    else if (/(pants|shorts|skirt|jeans)/.test(name))
+      categories.bottomMain.push(item);
+    else if (
+      /(shoe|boot|sandal|flip|slide|slipper|loafer|sneaker|trainer)/.test(name)
+    )
+      categories.feet.push(item);
+    else if (/(sock|stocking)/.test(name)) categories.socks.push(item);
+    else if (/(glove|mitten)/.test(name)) categories.hands.push(item);
+    else categories.accessories.push(item);
+  });
+
+  const outfit = {};
+  const reasons = {};
+  const t = (n, fallback = 999) => n ?? fallback;
+
+  if (weatherType === "cold" || t(tempF) < 40) {
+    if (categories.head.length) {
+      outfit.head = pick(categories.head);
+      reasons.head = `Selected: ${outfit.head.name} - Cold weather protection needed`;
+    } else {
+      reasons.head = `No head coverage available - Recommended for ${tempF}°F`;
+    }
+  } else {
+    reasons.head = `No head coverage needed - Weather ${weatherType} (${tempF}°F)`;
+  }
+
+  if (
+    (weatherType === "cold" && t(tempF) < 30) ||
+    ["dusty", "windy"].includes((weatherCondition || "").toLowerCase())
+  ) {
+    if (categories.face.length) {
+      outfit.face = pick(categories.face);
+      reasons.face = `Selected: ${outfit.face.name} - Protection from ${
+        weatherCondition || "extreme cold"
+      }`;
+    } else {
+      reasons.face = `No face coverage available - Recommended for ${
+        weatherCondition || "extreme cold"
+      }`;
+    }
+  } else {
+    reasons.face = `No face coverage needed`;
+  }
+
+  const topLayers = [];
+  if (categories.topBase.length) {
+    const baseTop = pick(categories.topBase);
+    topLayers.push(baseTop);
+    reasons.topBase = `Selected: ${baseTop.name} - Base layer essential`;
+  } else {
+    reasons.topBase = `No base tops available - CRITICAL`;
+  }
+
+  const needsOuterLayer = weatherType === "cold" || t(tempF) < 60;
+  if (needsOuterLayer) {
+    if (categories.topOuter.length) {
+      const outerTop = pick(categories.topOuter);
+      topLayers.push(outerTop);
+      reasons.topOuter = `Selected: ${outerTop.name} - Outer layer for ${tempF}°F`;
+    } else {
+      reasons.topOuter = `No outer layers available - Recommended for ${tempF}°F`;
+    }
+  } else {
+    reasons.topOuter = `No outer layer needed (${tempF}°F)`;
+  }
+  outfit.tops = topLayers;
+
+  const bottomLayers = [];
+  const needsBottomBase = weatherType === "cold" || t(tempF) < 50;
+  if (needsBottomBase) {
+    if (categories.bottomBase.length) {
+      const baseBottom = pick(categories.bottomBase);
+      bottomLayers.push(baseBottom);
+      reasons.bottomBase = `Selected: ${baseBottom.name} - Base layer for warmth`;
+    } else {
+      reasons.bottomBase = `No base bottoms available - Recommended for ${tempF}°F`;
+    }
+  } else {
+    reasons.bottomBase = `No base layer needed (${tempF}°F)`;
+  }
+
+  if (categories.bottomMain.length) {
+    const mainBottom = pick(categories.bottomMain);
+    bottomLayers.push(mainBottom);
+    reasons.bottomMain = `Selected: ${mainBottom.name} - Main bottom essential`;
+  } else {
+    reasons.bottomMain = `No main bottoms available - CRITICAL`;
+  }
+  outfit.bottoms = bottomLayers;
+
+  if (categories.feet.length) {
+    outfit.feet = pick(categories.feet);
+    reasons.feet = `Selected: ${outfit.feet.name} - Footwear required`;
+  } else {
+    reasons.feet = `No footwear available - CRITICAL`;
+  }
+
+  const needsSocks =
+    outfit.feet && !/flip|sandal/.test(outfit.feet.name.toLowerCase());
+  if (needsSocks) {
+    if (categories.socks.length) {
+      outfit.socks = pick(categories.socks);
+      reasons.socks = `Selected: ${outfit.socks.name} - Needed with ${outfit.feet?.name}`;
+    } else {
+      reasons.socks = `No socks available - Recommended`;
+    }
+  } else {
+    reasons.socks = `No socks needed with ${
+      outfit.feet?.name || "open footwear"
+    }`;
+  }
+
+  if (weatherType === "cold" || t(tempF) < 35) {
+    if (categories.hands.length) {
+      outfit.hands = pick(categories.hands);
+      reasons.hands = `Selected: ${outfit.hands.name} - Hand protection for ${tempF}°F`;
+    } else {
+      reasons.hands = `No gloves available - Recommended for ${tempF}°F`;
+    }
+  } else {
+    reasons.hands = `No gloves needed (${tempF}°F)`;
+  }
+
+  const lowerCond = (weatherCondition || "").toLowerCase();
+  const hasUmbrella = categories.accessories.find((i) =>
+    /umbrella/.test((i.name || "").toLowerCase())
+  );
+  const hasSunglasses = categories.accessories.find((i) =>
+    /(sunglass|shades|sunnies|sunglasses)/.test((i.name || "").toLowerCase())
+  );
+  if (/rain|storm/.test(lowerCond) && hasUmbrella) {
+    outfit.accessories = [...(outfit.accessories || []), hasUmbrella];
+    reasons.accessories = `Selected: ${hasUmbrella.name} - Rain protection`;
+  } else if ((/sunny/.test(lowerCond) || t(tempF) >= 66) && hasSunglasses) {
+    outfit.accessories = [...(outfit.accessories || []), hasSunglasses];
+    reasons.accessories = `Selected: ${hasSunglasses.name} - Bright conditions`;
+  }
+
+  const selectedItems = [];
+  if (outfit.head) selectedItems.push(outfit.head);
+  if (outfit.face) selectedItems.push(outfit.face);
+  if (outfit.tops?.length) selectedItems.push(...outfit.tops);
+  if (outfit.bottoms?.length) selectedItems.push(...outfit.bottoms);
+  if (outfit.feet) selectedItems.push(outfit.feet);
+  if (outfit.socks) selectedItems.push(outfit.socks);
+  if (outfit.hands) selectedItems.push(outfit.hands);
+  if (outfit.accessories?.length) selectedItems.push(...outfit.accessories);
+
+  return { outfit, reasons, selectedItems };
+}
+
+===== END ./src/utils/outfitBuilder.js =====
+
+===== BEGIN ./src/utils/weatherApi.js =====
+import { BASE_URL, DEFAULT_COORDS } from "./constants";
+
+const API_KEY = import.meta.env.VITE_OPEN_WEATHER_KEY;
+
+const OWM_TO_APP_CONDITION = {
+  Clear: "Sunny",
+  Clouds: "Cloudy",
+  Rain: "Rain",
+  Drizzle: "Rain",
+  Thunderstorm: "Storm",
+  Snow: "Snow",
+  Mist: "Fog",
+  Fog: "Fog",
+  Haze: "Fog",
+};
+
+export function fetchWeather(
+  lat = DEFAULT_COORDS.latitude,
+  lon = DEFAULT_COORDS.longitude
+) {
+  const url = `${BASE_URL}?lat=${lat}&lon=${lon}&units=imperial&appid=${API_KEY}`;
+  return fetch(url)
+    .then((res) => {
+      if (!res.ok) throw new Error("location fetch failed");
+      return res.json();
+    })
+    .then((data) => {
+      const owmMain = data.weather[0].main;
+      const condition = OWM_TO_APP_CONDITION[owmMain] || "Sunny";
+      const now = data.dt;
+      const sunrise = data.sys.sunrise;
+      const sunset = data.sys.sunset;
+      const time = now >= sunrise && now < sunset ? "day" : "night";
+      return {
+        city: data.name,
+        temperature: {
+          F: Math.round(data.main.temp),
+          C: Math.round(((data.main.temp - 32) * 5) / 9),
+        },
+        condition,
+        time,
+      };
+    });
+}
+
+// Example temperature range function
+export function getWeatherType(temperature) {
+  if (temperature >= 86) {
+    return "hot";
+  } else if (temperature >= 66) {
+    return "warm";
+  } else {
+    return "cold";
+  }
+}
+
+===== END ./src/utils/weatherApi.js =====
+
+===== BEGIN ./src/vendor/fonts.css =====
+@font-face {
+  font-family: "cabinet-grotesk";
+  src: url("./fonts/CabinetGrotesk-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "cabinet-grotesk";
+  src: url("./fonts/CabinetGrotesk-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+===== END ./src/vendor/fonts.css =====
+
+===== BEGIN ./src/vendor/normalize.css =====
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+
+/* Document
+   ========================================================================== */
+
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/* Sections
+   ========================================================================== */
+
+/**
+ * Remove the margin in all browsers.
+ */
+
+body {
+  margin: 0;
+}
+
+/**
+ * Render the `main` element consistently in IE.
+ */
+
+main {
+  display: block;
+}
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+   ========================================================================== */
+
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+
+hr {
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+
+a {
+  background-color: transparent;
+}
+
+/**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  text-decoration: underline dotted; /* 2 */
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Remove the border on images inside links in IE 10.
+ */
+
+img {
+  border-style: none;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+
+button,
+input { /* 1 */
+  overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+
+button,
+select { /* 1 */
+  text-transform: none;
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+ * Correct the padding in Firefox.
+ */
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+
+legend {
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  white-space: normal; /* 1 */
+}
+
+/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+
+progress {
+  vertical-align: baseline;
+}
+
+/**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+
+textarea {
+  overflow: auto;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/* Interactive
+   ========================================================================== */
+
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+
+details {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+
+summary {
+  display: list-item;
+}
+
+/* Misc
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 10+.
+ */
+
+template {
+  display: none;
+}
+
+/**
+ * Add the correct display in IE 10.
+ */
+
+[hidden] {
+  display: none;
+}
+
+===== END ./src/vendor/normalize.css =====
+
+===== BEGIN ./vite.config.js =====
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig(({ mode }) => ({
+  base: mode === "production" ? "/se_project_react/" : "/",
+  plugins: [react()],
+  server: { port: 3000 },
+}));
+
+===== END ./vite.config.js =====
+

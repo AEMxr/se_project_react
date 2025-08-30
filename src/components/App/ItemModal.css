@@ -57,16 +57,25 @@
 .item-modal__image {
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
   display: block;
 }
 
 .item-modal__content {
+  position: relative;
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
+  /* flex-shrink: 0; */
   padding: 0;
-  margin: 20px auto 32px 32px;
+  margin: 20px 32px 32px 32px;
+}
+
+.item-modal__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 12px 0;
 }
 
 .item-modal__title {
@@ -79,6 +88,23 @@
   margin: 0;
   color: black;
   line-height: 24px;
+}
+
+.item-modal__delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  /* width: 98px; */
+  height: 13px;
+  background: none;
+  border: none;
+  color: #ff4d00;
+  font-weight: 600;
+  /* font-size: 14px; */
+  /* line-height: 1.4; */
+  cursor: pointer;
+  padding: 0;
+  /* margin: 24.6px 33.56px auto auto; */
 }
 
 @media (max-width: 767px) {

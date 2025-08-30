@@ -1,7 +1,7 @@
 import "./ItemModal.css";
 import closeIcon from "../../assets/Union.svg";
 
-function ItemModal({ item, onClose }) {
+function ItemModal({ item, onClose, onOpenConfirm }) {
   if (!item) return null;
 
   console.log("ItemModal received item:", item);
@@ -15,7 +15,7 @@ function ItemModal({ item, onClose }) {
         </button>
         <div className="item-modal__image-section">
           <img
-            src={item.link}
+            src={item.link || item.imageUrl}
             alt={item.name}
             className="item-modal__image"
             onError={(e) => {
@@ -27,6 +27,18 @@ function ItemModal({ item, onClose }) {
           />
         </div>
         <div className="item-modal__content">
+          <button
+            type="button"
+            className="item-modal__delete"
+            onClick={() => {
+              onClose();
+              onOpenConfirm?.(item);
+            }}
+            aria-label="Delete item"
+          >
+            Delete item
+          </button>
+
           <p className="item-modal__title">{item.name}</p>
           <p className="item-modal__weather">Weather: {item.weather}</p>
         </div>

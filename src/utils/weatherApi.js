@@ -1,4 +1,6 @@
-import { API_KEY, BASE_URL, DEFAULT_COORDS } from "./constants";
+import { BASE_URL, DEFAULT_COORDS } from "./constants";
+
+const API_KEY = import.meta.env.VITE_OPEN_WEATHER_KEY;
 
 const OWM_TO_APP_CONDITION = {
   Clear: "Sunny",
@@ -31,7 +33,10 @@ export function fetchWeather(
       const time = now >= sunrise && now < sunset ? "day" : "night";
       return {
         city: data.name,
-        temperature: Math.round(data.main.temp),
+        temperature: {
+          F: Math.round(data.main.temp),
+          C: Math.round(((data.main.temp - 32) * 5) / 9),
+        },
         condition,
         time,
       };
