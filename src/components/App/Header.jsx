@@ -1,6 +1,6 @@
 import "./Header.css";
 import menuIcon from "../../assets/hamburgIcon.svg";
-import Toggle_Switch from "./ToggleSwitch.jsx";
+import Toggle_Switch from "../ToggleSwitch/ToggleSwitch.jsx";
 import { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext.js";
 import { Link } from "react-router-dom";
