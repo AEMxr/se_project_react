@@ -1,7 +1,6 @@
 @import "./vendor/normalize.css";
 @import "./vendor/fonts.css";
-
-body {
+@import "./components/ToggleSwitch/ToggleSwitch.css" body {
   font-family: "cabinet-grotesk", Arial, sans-serif;
   font-weight: 700;
   font-size: 20px;
