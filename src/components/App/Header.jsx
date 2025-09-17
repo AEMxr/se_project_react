@@ -24,7 +24,7 @@ function Header({ city, onAddClothes, onMenuClick }) {
           {currentDate}, {city ? city : "Loading..."}
         </div>
 
-        <Toggle_Switch
+        <ToggleSwitch
           isOn={currentTemperatureUnit === "C"}
           handleToggle={handleToggleSwitchChange}
         />
