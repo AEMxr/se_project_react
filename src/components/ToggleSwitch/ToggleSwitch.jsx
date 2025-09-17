@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import "./ToggleSwitch.css";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 
-const Toggle_Switch = ({ isOn: isOnProp, handleToggle: handleToggleProp }) => {
+const ToggleSwitch = ({ isOn: isOnProp, handleToggle: handleToggleProp }) => {
   const ctx = useContext(CurrentTemperatureUnitContext);
   const isOn = isOnProp ?? ctx?.currentTemperatureUnit === "C";
   const handleToggle =
@@ -27,4 +27,4 @@ const Toggle_Switch = ({ isOn: isOnProp, handleToggle: handleToggleProp }) => {
   );
 };
 
-export default Toggle_Switch;
+export default ToggleSwitch;
