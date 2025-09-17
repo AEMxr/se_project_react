@@ -2,6 +2,12 @@
 @import "./vendor/fonts.css";
 @import "./components/ToggleSwitch/ToggleSwitch.css";
 
+body {
+  font-family: "cabinet-grotesk", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+}
+
 button {
   font-family: inherit;
   font-size: inherit;
