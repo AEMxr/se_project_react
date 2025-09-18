@@ -1,16 +1,16 @@
 const BASE = "http://localhost:3001";
 
-const handle = async (p) => {
+const handleResponse = async (p) => {
   const res = await p;
   if (!res.ok) throw new Error(`API ${res.status}`);
   return res.json();
 };
 
-export const getItems = () => handle(fetch(`${BASE}/items`));
+export const getItems = () => handleResponse(fetch(`${BASE}/items`));
 
 // form uses "image", server expects "imageUrl"
 export const createItem = ({ name, image, weather }) =>
-  handle(
+  handleResponse(
     fetch(`${BASE}/items`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -23,6 +23,6 @@ export const createItem = ({ name, image, weather }) =>
   );
 
 export const removeItem = (id) =>
-  handle(
+  handleResponse(
     fetch(`${BASE}/items/${encodeURIComponent(id)}`, { method: "DELETE" })
   );

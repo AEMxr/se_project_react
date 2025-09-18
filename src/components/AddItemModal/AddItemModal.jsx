@@ -16,6 +16,13 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
 
   const { nameIsValid, imageIsValid, isFormValid } = formValidation(form);
 
+  useEffect(() => {
+    if (isOpen) {
+      setForm(initialValues);
+      resetTouched();
+    }
+  }, [isOpen, setForm, resetTouched]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setForm((prev) => ({ ...prev, [name]: value }));

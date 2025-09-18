@@ -53,12 +53,12 @@ function Main({ weather, clothingItems, onCardClick }) {
 
   const handleShowAll = () => {
     setDisplayItems(null);
-    console.log("Showing all weather-appropriate items");
+    // console.log("Showing all weather-appropriate items");
   };
 
   const handleRandomize = () => {
     if (filteredItems.length === 0) {
-      console.log("No items available for current weather conditions");
+      // console.log("No items available for current weather conditions");
       return;
     }
 

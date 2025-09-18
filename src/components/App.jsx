@@ -189,7 +189,7 @@ function App() {
 
   // For ItemCard click
   function handleCardClick(item) {
-    console.log("Card clicked:", item);
+    // console.log("Card clicked:", item);
     setSelectedItem(item);
   }
 

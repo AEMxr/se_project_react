@@ -1,11 +1,26 @@
+import { useEffect } from "react";
 import "./ItemModal.css";
 import closeIcon from "../../assets/Union.svg";
 
 function ItemModal({ item, onClose, onOpenConfirm }) {
   if (!item) return null;
 
-  console.log("ItemModal received item:", item);
-  console.log("Image source:", item.link);
+  // console.log("ItemModal received item:", item);
+  // console.log("Image source:", item.link);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
 
   return (
     <div className="item-modal__overlay" onClick={onClose}>
@@ -19,10 +34,10 @@ function ItemModal({ item, onClose, onOpenConfirm }) {
             alt={item.name}
             className="item-modal__image"
             onError={(e) => {
-              console.log("Image failed to load:", e.target.src);
+              // console.log("Image failed to load:", e.target.src);
             }}
             onLoad={() => {
-              console.log("Image loaded successfully:", item.link);
+              // console.log("Image loaded successfully:", item.link);
             }}
           />
         </div>
