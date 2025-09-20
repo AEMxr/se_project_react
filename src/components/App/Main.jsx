@@ -12,8 +12,8 @@ function Main({ weather, clothingItems, onCardClick }) {
 
   // console.log("Main component received:");
   // console.log("weather:", weather);
-  // console.log("clothingItems:", clothingItems);
-  // console.log("clothingItems length:", clothingItems?.length);
+  console.log("clothingItems:", clothingItems);
+  console.log("clothingItems length:", clothingItems?.length);
 
   const tempF = weather?.temperature?.F ?? null;
   const weatherType = tempF !== null ? getWeatherType(tempF) : null;
@@ -44,6 +44,7 @@ function Main({ weather, clothingItems, onCardClick }) {
     // console.log(`  matchesCondition: ${matchesCondition}`);
     // console.log(`  final result: ${matchesType && matchesCondition}`);
     // console.log("---");
+    // console.log("[Main] distinct item weathers in data:", allWeathers);
 
     return matchesType && matchesCondition;
   });
