@@ -6,9 +6,8 @@ export default function formValidation(
   const weather = values.weather ?? "";
 
   const nameIsValid = /[A-Za-z0-9]/.test(name);
-  const imageIsValid = /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp|svg)$/i.test(
-    image
-  );
+  const imageIsValid =
+    /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp|svg)(\?.*)?$/i.test(image);
   const isFormValid = nameIsValid && imageIsValid && weather.trim() !== "";
 
   return { nameIsValid, imageIsValid, isFormValid };

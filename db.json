@@ -107,6 +107,18 @@
       "imageUrl": "https://media.gucci.com/style/DarkGray_Center_0_0_1200x1200/1752768942/814221_XJHFV_3266_001_100_0000_Light-gg-jersey-jacquard-shorts.jpg",
       "weather": "hot",
       "_id": "LamqRHj"
+    },
+    {
+      "name": "adsfasdf",
+      "imageUrl": "https://www.soulrevolver.com/cdn/shop/files/heist-mens-leather-jacket-soul-revolver-1149963707_1440x.webp?v=1754836687",
+      "weather": "warm",
+      "_id": "9kA1j91"
+    },
+    {
+      "name": "asdfasdf",
+      "imageUrl": "https://www.soulrevolver.com/cdn/shop/files/heist-mens-leather-jacket-soul-revolver-1149963707_1440x.webp?v=1754836687",
+      "weather": "cold",
+      "_id": "FMqq5-I"
     }
   ]
 }
