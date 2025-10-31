@@ -9,7 +9,7 @@ const ToggleSwitch = ({ isOn: isOnProp, handleToggle: handleToggleProp }) => {
     handleToggleProp ?? ctx?.handleToggleSwitchChange ?? (() => {});
 
   return (
-    <>
+    <div className="ToggleSwitch__wrapper">
       <input
         className="ToggleSwitch"
         id={`TempSwitchUnit`}
@@ -23,7 +23,7 @@ const ToggleSwitch = ({ isOn: isOnProp, handleToggle: handleToggleProp }) => {
         <span className="ToggleSwitch__text ToggleSwitch__text-right">C</span>
         <span className="ToggleSwitch__button" />
       </label>
-    </>
+    </div>
   );
 };
 

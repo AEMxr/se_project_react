@@ -1,6 +1,6 @@
 import "./Profile.css";
 
-const ClothesSection = ({ items, onAddClothes }) => {
+const ClothesSection = ({ items, onAddClothes, onCardClick }) => {
   return (
     <section className="clothes">
       <div className="clothes__header">
@@ -11,7 +11,11 @@ const ClothesSection = ({ items, onAddClothes }) => {
       </div>
       <ul className="clothes__grid">
         {items.map((i) => (
-          <li key={i._id} className="clothes__card">
+          <li
+            key={i._id}
+            className="clothes__card"
+            onClick={() => onCardClick && onCardClick(i)}
+          >
             <img
               src={i.imageUrl || i.link}
               alt={i.name}

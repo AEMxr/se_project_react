@@ -1,6 +1,6 @@
 const BASE = "http://localhost:3001";
 
-const handleResponse = async (p) => {
+export const handleResponse = async (p) => {
   const res = await p;
   if (!res.ok) throw new Error(`API ${res.status}`);
   return res.json();

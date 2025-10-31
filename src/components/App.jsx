@@ -1,13 +1,11 @@
 import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchWeather } from "../utils/weatherApi.js";
-// import { defaultClothingItems } from "../utils/constants.js";
 import { getItems, createItem, removeItem } from "../utils/api.js";
 import "./App.css";
 import Header from "./App/Header.jsx";
 import Main from "./App/Main.jsx";
 import Footer from "./App/Footer.jsx";
-// import ModalWithForm from "./App/ModalWithForm.jsx";
 import ItemModal from "./App/ItemModal.jsx";
 import MobileMenu from "./App/MobileMenu.jsx";
 import Profile from "./App/Profile.jsx";
@@ -77,22 +75,9 @@ function App() {
 
   // Form modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [form, setForm] = useState({
-  //   name: "",
-  //   image: "",
-  //   weather: "",
-  // });
-  // const [touched, setTouched] = useState({ name: false, image: false });
 
   // For ItemModal
   const [selectedItem, setSelectedItem] = useState(null);
-
-  // Form validation
-  // const nameIsValid = /[A-Za-z0-9]/.test(form.name);
-  // const imageIsValid = /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp|svg)$/i.test(
-  //   form.image
-  // );
-  // const isFormValid = nameIsValid && imageIsValid && form.weather.trim() !== "";
 
   // Form modal handlers
   function handleAddClothesClick() {
@@ -103,7 +88,6 @@ function App() {
     setIsModalOpen(false);
   }
 
-  // const [clothingItems, setClothingItems] = useState(defaultClothingItems);
   const [clothingItems, setClothingItems] = useState([]);
 
   useEffect(() => {
@@ -134,58 +118,6 @@ function App() {
       })
       .catch(console.error);
   }
-
-  // function handleItemDelete(item) {
-  //   if (!item?._id) return;
-  //   removeItem(item._id)
-  //     .then(() => {
-  //       setClothingItems((prev) => prev.filter((i) => i._id !== item._id));
-  //       setSelectedItem(null);
-  //     })
-  //     .catch(console.error);
-  // }
-
-  // function handleAddItem(values) {
-  //   const newItem = {
-  //     _id: Date.now(),
-  //     name: values.name,
-  //     weather: values.weather,
-  //     link: values.image,
-  //     condition: ["any"],
-  //   };
-  //   setClothingItems((prev) => [newItem, ...prev]);
-  //   setIsModalOpen(false);
-  // }
-
-  // function handleCloseModal() {
-  //   setIsModalOpen(false);
-  //   setForm({ name: "", image: "", weather: "" });
-  //   setTouched({ name: false, image: false });
-  //   setSelectedItem(null);
-  // }
-
-  // function handleFormSubmit(e) {
-  //   e.preventDefault();
-  //   setIsModalOpen(false);
-  //   setForm({ name: "", image: "", weather: "" });
-  //   setTouched({ name: false, image: false });
-  // }
-
-  // function handleInputChange(e) {
-  //   const { name, value } = e.target;
-  //   setForm((prev) => ({
-  //     ...prev,
-  //     [name]: value,
-  //   }));
-  // }
-
-  // function handleBlur(e) {
-  //   const { name } = e.target;
-  //   setTouched((prev) => ({
-  //     ...prev,
-  //     [name]: true,
-  //   }));
-  // }
 
   // For ItemCard click
   function handleCardClick(item) {
@@ -236,6 +168,7 @@ function App() {
                 <Profile
                   clothingItems={clothingItems}
                   onAddClothes={handleAddClothesClick}
+                  onCardClick={handleCardClick}
                 />
               }
             />
