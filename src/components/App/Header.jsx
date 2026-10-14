@@ -4,13 +4,67 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch.jsx";
 import { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext.js";
 import { Link } from "react-router-dom";
+import CurrentUserContext from "../../contexts/CurrentUserContext.js";
+import Avatar from "./Avatar.jsx";
 
 const currentDate = new Date().toLocaleString("default", {
   month: "long",
   day: "numeric",
 });
 
-function Header({ city, onAddClothes, onMenuClick }) {
+function Header({ city, onAddClothes, onMenuClick, isLoggedIn, onSignUp, onLogIn }) {
+
+  const currentUser = useContext(CurrentUserContext);
+
+  let accountControls;
+
+  if (isLoggedIn){
+    //authenticated controls
+    accountControls = (
+      <>
+        
+          <button
+            className="header__add-clothes-button"
+            type="button"
+            onClick={onAddClothes}
+          >
+            + Add Clothes
+          </button>
+
+          <Link to="/profile" className="header__user" aria-label="Go to profile">
+            <div className="header__user-name">{currentUser.name}</div>
+            <Avatar
+              name={currentUser.name}
+              avatar={currentUser.avatar}
+              className="header__user-avatar"
+            />
+          </Link>
+        
+      </>
+    )
+  } else {
+    //guest controls
+    accountControls = (
+    <>
+      <button
+        className=""
+        type="button"
+        onClick={onSignUp}
+        >
+        Sign Up
+      </button>
+
+      <button
+        className=""
+        type="button"
+        onClick={onLogIn}
+        >
+        Log In
+      </button>
+    </>
+    )
+  }
+
   const { currentTemperatureUnit, handleToggleSwitchChange } = useContext(
     CurrentTemperatureUnitContext
   );
@@ -29,18 +83,7 @@ function Header({ city, onAddClothes, onMenuClick }) {
           handleToggle={handleToggleSwitchChange}
         />
 
-        <button
-          className="header__add-clothes-button"
-          type="button"
-          onClick={onAddClothes}
-        >
-          + Add Clothes
-        </button>
-
-        <Link to="/profile" className="header__user" aria-label="Go to profile">
-          <div className="header__user-name">Terrence Tegegne</div>
-          <div className="header__user-avatar"></div>
-        </Link>
+        {accountControls}
 
         <button
           className="header__menu-button"

@@ -1,16 +1,27 @@
+import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import SideBar from "./Profile/SideBar.jsx";
 import ClothesSection from "./Profile/ClothesSection.jsx";
 
-const Profile = ({ clothingItems, onAddClothes, onCardClick }) => {
+const Profile = ({ clothingItems, onAddClothes, onCardClick, onLogout, onEditProfile, onCardLike }) => {
+  const currentUser = useContext(CurrentUserContext);
+
+  if (!currentUser) {
+    return null;
+  }
+
+  const userItems = clothingItems.filter(
+    (item) => item.owner === currentUser._id
+  );
+
   return (
     <section className="profile">
-      <SideBar
-        user={{ name: "Terrence Tegegne", avatar: "/assets/avatar.svg" }}
-      />
+      <SideBar onLogout={onLogout} onEditProfile={onEditProfile} />
       <ClothesSection
-        items={clothingItems}
+        items={userItems}
         onAddClothes={onAddClothes}
         onCardClick={onCardClick}
+        onCardLike={onCardLike}
       />
     </section>
   );

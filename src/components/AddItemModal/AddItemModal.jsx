@@ -6,13 +6,15 @@ import useTouch from "../../hooks/useTouch.js";
 
 const initialValues = { name: "", image: "", weather: "warm" };
 
+const initialTouched = {
+  name: false,
+  image: false,
+};
+
 const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { values: form, setValues: setForm } = useForm(initialValues);
-  const { touched, handleBlur, resetTouched } = useTouch({
-    name: false,
-    image: false,
-  });
+  const { touched, handleBlur, resetTouched } = useTouch(initialTouched);
 
   const { nameIsValid, imageIsValid, isFormValid } = formValidation(form);
 
@@ -20,7 +22,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
     if (!isOpen) return;
     setForm(initialValues);
     resetTouched();
-  }, [isOpen]);
+  }, [isOpen, setForm, resetTouched]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;

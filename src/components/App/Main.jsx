@@ -6,8 +6,8 @@ import "./Main.css";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext.js";
 import { buildOutfit } from "../../utils/outfitBuilder.js";
 
-function Main({ weather, clothingItems, onCardClick }) {
-  const [displayItems, setDisplayItems] = useState(null);
+function Main({ weather, clothingItems, onCardClick, onCardLike }) {
+  const [displayItemIds, setDisplayItemIds] = useState(null);
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   // console.log("Main component received:");
@@ -52,10 +52,10 @@ function Main({ weather, clothingItems, onCardClick }) {
   // console.log("filteredItems:", filteredItems);
   // console.log("filteredItems length:", filteredItems.length);
 
-  const handleShowAll = () => {
-    setDisplayItems(null);
-    // console.log("Showing all weather-appropriate items");
-  };
+  // const handleShowAll = () => {
+  //   setDisplayItemIds(null);
+  //   // console.log("Showing all weather-appropriate items");
+  // };
 
   const handleRandomize = () => {
     if (filteredItems.length === 0) {
@@ -63,7 +63,9 @@ function Main({ weather, clothingItems, onCardClick }) {
       return;
     }
 
-    const { selectedItems, reasons } = buildOutfit({
+    //removed "reasons" from constant declaration.  
+    // I don't remember what that was used for.
+    const { selectedItems } = buildOutfit({
       items: filteredItems,
       weatherType,
       tempF,
@@ -72,10 +74,20 @@ function Main({ weather, clothingItems, onCardClick }) {
 
     // console.table(reasons);
 
-    setDisplayItems(selectedItems);
+    setDisplayItemIds(selectedItems.map((item) => item._id));
   };
 
-  const itemsToDisplay = displayItems || filteredItems;
+  let itemsToDisplay = filteredItems;
+
+if (displayItemIds !== null) {
+  const itemsById = new Map(
+    clothingItems.map((item) => [item._id, item])
+  );
+
+  itemsToDisplay = displayItemIds
+    .map((id) => itemsById.get(id))
+    .filter(Boolean);
+}
 
   return (
     <main className="main">
@@ -93,7 +105,12 @@ function Main({ weather, clothingItems, onCardClick }) {
       </div>
       <ul className="main__card-list">
         {itemsToDisplay.map((item) => (
-          <ItemCard key={item._id} item={item} onCardClick={onCardClick} />
+          <ItemCard 
+            key={item._id} 
+            item={item} 
+            onCardClick={onCardClick}
+            onCardLike={onCardLike} 
+          />
         ))}
       </ul>
       <button

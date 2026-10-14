@@ -17,13 +17,12 @@ function WeatherCard({ temperature, condition, time }) {
 
   return (
     <section className="weather-card">
-      {weatherImage && (
-        <img
-          className="weather-card__image"
-          src={imageSrc}
-          alt={condition || "Weather"}
-        />
-      )}
+      <img
+        className="weather-card__image"
+        src={imageSrc}
+        alt={condition || "Weather"}
+      />
+
       <span className="weather-card__temp">
         {temp != null ? `${temp}°${currentTemperatureUnit}` : "..."}
       </span>

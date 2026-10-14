@@ -210,6 +210,12 @@ Notes:
 
 ---
 
+## SE_PROJECT_EXPRESS Link
+
+[link](https://github.com/AEMxr/se_project_express)
+
+---
+
 ## Inspiration
 
 Project for TripleTen’s React curriculum — designed to help users make smarter, weather-based wardrobe choices every day.

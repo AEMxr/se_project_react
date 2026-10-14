@@ -1,17 +1,20 @@
+import LikeButton from "../LikeButton.jsx";
 import "./ItemCard.css";
 
-function ItemCard({ item, onCardClick }) {
+function ItemCard({ item, onCardClick, onCardLike }) {
   return (
     <li className="card">
       <div className="card__image-container">
         <img
-          // src={`${import.meta.env.BASE_URL}items/${item.imageUrl}`} keep for later use when changing database
           src={item.link || item.imageUrl}
           alt={item.name}
           className="card__image"
           onClick={() => onCardClick(item)}
         />
-        <span className="card__title">{item.name}</span>
+        <div className="card__header">
+          <span className="card__title">{item.name}</span>
+          <LikeButton item={item} onCardLike={onCardLike} />
+        </div>
       </div>
     </li>
   );

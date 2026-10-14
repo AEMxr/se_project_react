@@ -8,6 +8,7 @@ function ModalWithForm({
   onClose,
   onSubmit,
   children,
+  secondaryAction,
   isOpen,
   isSubmitDisabled = false,
 }) {
@@ -53,6 +54,7 @@ function ModalWithForm({
           >
             {buttonText}
           </button>
+            {secondaryAction}
         </form>
       </div>
     </div>

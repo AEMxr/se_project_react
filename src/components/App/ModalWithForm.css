@@ -14,6 +14,10 @@
   padding: 28px 28px 36px;
   position: relative;
   min-width: 496px;
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
   line-height: 20px;
   font-size: 16px;
 }
@@ -116,7 +120,8 @@
   }
 
   .modal__content {
-    min-width: 325px;
+    min-width: 0;
+    width: calc(100vw - 32px);
     border-radius: 20px 20px 0 0;
   }
 }

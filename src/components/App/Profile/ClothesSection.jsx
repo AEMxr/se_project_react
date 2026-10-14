@@ -1,6 +1,7 @@
 import "./Profile.css";
+import LikeButton from "../LikeButton.jsx";
 
-const ClothesSection = ({ items, onAddClothes, onCardClick }) => {
+const ClothesSection = ({ items, onAddClothes, onCardClick, onCardLike }) => {
   return (
     <section className="clothes">
       <div className="clothes__header">
@@ -21,7 +22,10 @@ const ClothesSection = ({ items, onAddClothes, onCardClick }) => {
               alt={i.name}
               className="clothes__img"
             />
-            <div className="clothes__name">{i.name}</div>
+            <div className="clothes__card-header">
+  <div className="clothes__name">{i.name}</div>
+  <LikeButton item={i} onCardLike={onCardLike} />
+</div>
           </li>
         ))}
       </ul>

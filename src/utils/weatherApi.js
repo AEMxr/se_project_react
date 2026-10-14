@@ -1,5 +1,5 @@
 import { BASE_URL, DEFAULT_COORDS } from "./constants";
-import { handleResponse } from "./api";
+import { handleResponse } from "./request.js";
 
 const API_KEY = import.meta.env.VITE_OPEN_WEATHER_KEY;
 

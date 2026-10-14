@@ -1,28 +1,61 @@
-const BASE = "http://localhost:3001";
-
-export const handleResponse = async (p) => {
-  const res = await p;
-  if (!res.ok) throw new Error(`API ${res.status}`);
-  return res.json();
-};
+import { BASE, handleResponse } from "./request.js";
 
 export const getItems = () => handleResponse(fetch(`${BASE}/items`));
 
 // form uses "image", server expects "imageUrl"
-export const createItem = ({ name, image, weather }) =>
+export const createItem = ({ name, image, weather }, token) =>
   handleResponse(
     fetch(`${BASE}/items`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         name,
         imageUrl: image,
-        weather: (weather || "any").toLowerCase(),
+        weather,
       }),
     })
   );
 
-export const removeItem = (id) =>
+export const removeItem = (id, token) =>
   handleResponse(
-    fetch(`${BASE}/items/${encodeURIComponent(id)}`, { method: "DELETE" })
+    fetch(`${BASE}/items/${encodeURIComponent(id)}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
   );
+
+export function updateCurrentUser({ name, avatar }, token) {
+  return handleResponse(
+    fetch(`${BASE}/users/me`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ name, avatar }),
+    })
+  );
+}
+
+export function toggleItemLike(id, isLiked, token) {
+  let method;
+
+  if (isLiked) {
+    method = "DELETE";
+  } else {
+    method = "PUT";
+  }
+
+  return handleResponse(
+    fetch(`${BASE}/items/${encodeURIComponent(id)}/likes`, {
+      method,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  );
+}
