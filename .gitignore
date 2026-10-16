@@ -23,8 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-#docs
+# Documentation
 .dev.md
 
-#tests
+# Tests
 .test.js
