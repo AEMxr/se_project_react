@@ -6,7 +6,7 @@ export function signIn({ email, password }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
-    })
+    }),
   );
 }
 
@@ -15,18 +15,20 @@ export function signUp({ email, password, name, avatar }) {
     fetch(`${BASE}/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, name, avatar, }),
-    })
+      body: JSON.stringify({ email, password, name, avatar }),
+    }),
   );
 }
 
-export function getCurrentUser(token) {
+export function getCurrentUser(token, { signal } = {}) {
   return handleResponse(
     fetch(`${BASE}/users/me`, {
+      signal,
       method: "GET",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-      }
-    })
+      },
+    }),
   );
 }

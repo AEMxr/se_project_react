@@ -1,7 +1,14 @@
-import { BASE_URL, DEFAULT_COORDS } from "./constants";
+import {
+  API_KEY,
+  BASE_URL,
+  DEFAULT_COORDS,
+  HOT_TEMPERATURE_F,
+  WARM_TEMPERATURE_F,
+  FREEZING_TEMPERATURE_F,
+  CELSIUS_SCALE,
+} from "./constants.js";
 import { handleResponse } from "./request.js";
-
-const API_KEY = import.meta.env.VITE_OPEN_WEATHER_KEY;
+import { createUserError } from "./errors.js";
 
 const OWM_TO_APP_CONDITION = {
   Clear: "Sunny",
@@ -17,21 +24,35 @@ const OWM_TO_APP_CONDITION = {
 
 export function fetchWeather(
   lat = DEFAULT_COORDS.latitude,
-  lon = DEFAULT_COORDS.longitude
+  lon = DEFAULT_COORDS.longitude,
+  { signal } = {},
 ) {
-  const url = `${BASE_URL}?lat=${lat}&lon=${lon}&units=imperial&appid=${API_KEY}`;
-  return handleResponse(fetch(url)).then((data) => {
-    const owmMain = data.weather[0].main;
-    const condition = OWM_TO_APP_CONDITION[owmMain] || "Sunny";
-    const now = data.dt;
-    const sunrise = data.sys.sunrise;
-    const sunset = data.sys.sunset;
-    const time = now >= sunrise && now < sunset ? "day" : "night";
+  if (!API_KEY)
+    return Promise.reject(
+      createUserError("Weather is unavailable. Please try again later."),
+    );
+  const url = new URL(BASE_URL);
+  url.search = new URLSearchParams({
+    lat,
+    lon,
+    units: "imperial",
+    appid: API_KEY,
+  });
+  return handleResponse(fetch(url, { signal })).then((data) => {
+    if (!Number.isFinite(data?.main?.temp))
+      throw new Error("Invalid weather response");
+    const condition = OWM_TO_APP_CONDITION[data.weather?.[0]?.main] || "Sunny";
+    const time =
+      data.dt >= data.sys?.sunrise && data.dt < data.sys?.sunset
+        ? "day"
+        : "night";
     return {
-      city: data.name,
+      city: data.name || "Unknown location",
       temperature: {
         F: Math.round(data.main.temp),
-        C: Math.round(((data.main.temp - 32) * 5) / 9),
+        C: Math.round(
+          (data.main.temp - FREEZING_TEMPERATURE_F) * CELSIUS_SCALE,
+        ),
       },
       condition,
       time,
@@ -39,13 +60,8 @@ export function fetchWeather(
   });
 }
 
-// Example temperature range function
 export function getWeatherType(temperature) {
-  if (temperature >= 86) {
-    return "hot";
-  } else if (temperature >= 66) {
-    return "warm";
-  } else {
-    return "cold";
-  }
+  if (!Number.isFinite(temperature)) return null;
+  if (temperature >= HOT_TEMPERATURE_F) return "hot";
+  return temperature >= WARM_TEMPERATURE_F ? "warm" : "cold";
 }

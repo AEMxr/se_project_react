@@ -1,77 +1,77 @@
 .profile {
-  /* max-width: 1120px; */
-  /* margin: 24px auto 48px; */
-  padding: 31px 24px;
-  display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
-  gap: 32px;
   flex: 1;
-  /* gap: 32px; */
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  align-items: start;
+  gap: 32px;
+  padding: 31px 0;
+  width: 100%;
+  box-sizing: border-box;
 }
-
 .sidebar {
   display: flex;
-  /* flex-direction: column; */
-  /* align-items: center; */
-  margin: 16px auto 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  margin-top: 16px;
 }
-
+.sidebar__user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  max-width: 100%;
+}
 .sidebar__avatar {
   width: 56px;
   height: 56px;
-  border-radius: 50%;
-  display: block;
-  object-fit: cover;
-  border: 1px solid #fff;
-  opacity: 0.5;
-  margin: -16px 16px;
 }
-
 .sidebar__name {
-  font-weight: 700;
   font-size: 20px;
-
-  color: #111;
+  line-height: 24px;
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
-
+.sidebar__action {
+  padding: 0;
+  background: none;
+  border: none;
+  line-height: 24px;
+  text-align: left;
+}
 .clothes {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: 16px;
   min-width: 0;
   width: 100%;
-  margin-left: auto;
+  margin-top: 16px;
 }
-
 .clothes__header {
   display: flex;
   align-items: baseline;
+  flex-wrap: wrap;
   gap: 12px;
-  width: 100%;
-  justify-content: flex-start;
-  margin: 0;
 }
-
 .clothes__title {
   margin: 0;
-  font-weight: 700;
   font-size: 20px;
-
-  color: #000;
+  line-height: 24px;
 }
-
 .clothes__add {
   background: none;
   border: 0;
   padding: 0;
-  font-weight: 700;
   font-size: 20px;
-  line-height: 1;
+  line-height: 24px;
   color: rgba(0, 0, 0, 0.6);
-  cursor: pointer;
 }
-
+.clothes__status {
+  margin: 0;
+  font-size: 16px;
+  line-height: 22px;
+}
 .clothes__grid {
   list-style: none;
   margin: 0;
@@ -79,66 +79,16 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
   gap: 20px;
-  justify-content: start;
 }
-
-.clothes__card {
-  position: relative;
-  min-width: 0;
-  aspect-ratio: 325 / 328;
-  background: #efefef;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 16px;
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-}
-
-.clothes__card-header {
-  z-index: 1;
-}
-
-.clothes__img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-  position: absolute;
-  inset: 0;
-}
-
-.clothes__name {
-  position: absolute;
-  top: 17px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-weight: 700;
-  color: #000;
-  opacity: 0.6;
-  background: #fff;
-  border: 1px solid #d6d6d6;
-  border-radius: 6px;
-  pointer-events: none;
-  width: 109px;
-  height: 24px;
-  text-align: center;
-}
-
 @media (max-width: 767px) {
   .profile {
     grid-template-columns: minmax(0, 1fr);
     padding: 24px 0;
-    gap: 16px;
+    gap: 24px;
   }
-
   .sidebar {
-    margin-left: 0;
+    margin-top: 0;
   }
-
-  .sidebar__avatar {
-    margin-left: 0;
-  }
-
   .clothes__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;

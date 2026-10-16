@@ -1,31 +1,25 @@
-body,
-#root {
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-}
-
 .app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-
-  padding: 18px 16px 20px;
-
+  box-sizing: border-box;
+  width: 100%;
   max-width: 1440px;
+  padding: 18px 16px 20px;
   margin: 0 auto;
 }
-
+.app__messages {
+  width: 100%;
+}
+.app__error {
+  margin: 16px 0 0;
+  color: #c00;
+  font-size: 16px;
+  line-height: 22px;
+  overflow-wrap: anywhere;
+}
 @media (min-width: 768px) {
   .app {
-    padding: 0;
-    margin: 0 auto;
-  }
-
-  .app > .header,
-  .app > .main,
-  .app > .footer {
-    margin-left: 40px !important;
-    margin-right: 40px !important;
+    padding: 0 40px;
   }
 }

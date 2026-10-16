@@ -1,51 +1,41 @@
-import { useState, useEffect } from "react";
-import ModalWithForm from "../App/ModalWithForm";
+import ModalWithForm from "../App/ModalWithForm.jsx";
+import FormField from "../App/FormField.jsx";
 import useForm from "../../hooks/useForm.js";
-import formValidation from "../../hooks/formValidation.js";
 import useTouch from "../../hooks/useTouch.js";
+import useFormSubmit from "../../hooks/useFormSubmit.js";
+import formValidation, {
+  normalizeFormValues,
+} from "../../hooks/formValidation.js";
 
 const initialValues = { email: "", password: "" };
+const initialTouched = { email: false, password: false };
 
-const initialTouched = {
-  email: false,
-  password: false
-}
-
-const LoginModal = ({ isOpen, onCloseModal, onSubmit, onSwitchToRegister }) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { values: form, setValues: setForm } = useForm(initialValues);
+export default function LoginModal({
+  isOpen,
+  onCloseModal,
+  onSubmit,
+  onSwitchToRegister,
+}) {
+  const { isSubmitting, submitForm, errorMessage } = useFormSubmit(isOpen);
+  const { values: form, setValues, handleChange } = useForm(initialValues);
   const { touched, handleBlur, resetTouched } = useTouch(initialTouched);
+  const { isFormValid, emailIsValid, passwordIsValid } = formValidation(
+    form,
+    "login",
+  );
 
-  const { isFormValid, emailIsValid, passwordIsValid } = 
-    formValidation(form, "login");
-
-  useEffect(() => {
-    if (!isOpen) return;
-    setForm(initialValues);
-    resetTouched();
-  }, [isOpen, setForm, resetTouched]);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (event) => {
+  function handleSubmit(event) {
     event.preventDefault();
-    if (!isFormValid || isSubmitting) return;
-    setIsSubmitting(true);
-    onSubmit(form)
-      .then(() => {
-        setForm(initialValues);
+    if (!isFormValid) return;
+    submitForm(
+      () => onSubmit(normalizeFormValues(form)),
+      () => {
+        setValues(initialValues);
         resetTouched();
-        onCloseModal && onCloseModal();
-      })
-      .catch((e) => {
-        console.error(e);
-      })
-      .finally(() => setIsSubmitting(false));
-  };
-
+        onCloseModal();
+      },
+    );
+  }
   return (
     <ModalWithForm
       title="Log In"
@@ -54,53 +44,46 @@ const LoginModal = ({ isOpen, onCloseModal, onSubmit, onSwitchToRegister }) => {
       onClose={onCloseModal}
       onSubmit={handleSubmit}
       isOpen={isOpen}
-      isSubmitDisabled={isSubmitting || !isFormValid}
+      isSubmitting={isSubmitting}
+      isSubmitDisabled={!isFormValid}
+      errorMessage={errorMessage}
+      pendingText="Logging in..."
       secondaryAction={
-        <button type="button" onClick={onSwitchToRegister}>
+        <button
+          className="modal__secondary-action interactive"
+          type="button"
+          onClick={onSwitchToRegister}
+        >
           or Sign Up
         </button>
       }
     >
-      <label
-        className={`modal__form-label${
-          touched.email && !emailIsValid ? " modal__form-label--invalid" : ""
-        }`}
-      >
-        Email
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          className={`modal__input${
-            touched.email && !emailIsValid ? " modal__input--invalid" : ""
-          }`}
-          required
-          value={form.email}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-      </label>
-      <label
-        className={`modal__form-label${
-          touched.password && !passwordIsValid ? " modal__form-label--invalid" : ""
-        }`}
-      >
-        Password
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          className={`modal__input${
-            touched.password && !passwordIsValid ? " modal__input--invalid" : ""
-          }`}
-          required
-          value={form.password}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-      </label>
+      <FormField
+        label="Email*"
+        type="email"
+        name="email"
+        placeholder="Email"
+        autoComplete="email"
+        value={form.email}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        isTouched={touched.email}
+        isValid={emailIsValid}
+        errorText="Enter a valid email address."
+      />
+      <FormField
+        label="Password*"
+        type="password"
+        name="password"
+        placeholder="Password"
+        autoComplete="current-password"
+        value={form.password}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        isTouched={touched.password}
+        isValid={passwordIsValid}
+        errorText="Enter your password."
+      />
     </ModalWithForm>
   );
-};
-
-export default LoginModal;
+}

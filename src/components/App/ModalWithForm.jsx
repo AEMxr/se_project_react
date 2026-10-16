@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import { useId } from "react";
+import { createPortal } from "react-dom";
+import useDialog from "../../hooks/useDialog.js";
 import "./ModalWithForm.css";
 
 function ModalWithForm({
@@ -11,54 +13,77 @@ function ModalWithForm({
   secondaryAction,
   isOpen,
   isSubmitDisabled = false,
+  isSubmitting = false,
+  isCloseDisabled = false,
+  pendingText = "Saving...",
+  hideSubmit = false,
+  errorMessage = "",
 }) {
-  useEffect(() => {
-    if (!isOpen) return;
-    function handleEsc(e) {
-      if (e.key === "Escape") onClose();
-    }
-    document.addEventListener("keydown", handleEsc);
-    return () => document.removeEventListener("keydown", handleEsc);
-  }, [isOpen, onClose]);
-
-  function handleOverlayClick(e) {
-    if (e.target === e.currentTarget) onClose();
+  const titleId = useId();
+  const errorId = useId();
+  function handleClose() {
+    if (!isCloseDisabled) onClose();
   }
-
+  const dialogRef = useDialog(isOpen, handleClose);
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div
       className={`modal modal_type_${name}`}
-      onMouseDown={handleOverlayClick}
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) handleClose();
+      }}
     >
-      <div className="modal__content">
+      <div
+        ref={dialogRef}
+        className="modal__content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        aria-describedby={errorMessage ? errorId : undefined}
+        aria-busy={isSubmitting}
+        tabIndex={-1}
+      >
         <button
           type="button"
-          className="modal__close"
+          className="modal__close interactive"
           aria-label="Close"
-          onClick={onClose}
+          disabled={isCloseDisabled}
+          onClick={handleClose}
         />
-        <h2 className="modal__title">{title}</h2>
+        <h2 id={titleId} className="modal__title">
+          {title}
+        </h2>
         <form
           className="modal__form"
           name={name}
           onSubmit={onSubmit}
-          autoComplete="off"
+          aria-describedby={errorMessage ? errorId : undefined}
         >
-          {children}
-          <button
-            className="modal__submit"
-            type="submit"
-            disabled={isSubmitDisabled}
-          >
-            {buttonText}
-          </button>
-            {secondaryAction}
+          <fieldset className="modal__fields" disabled={isSubmitting}>
+            {children}
+          </fieldset>
+          {errorMessage && (
+            <p id={errorId} className="modal__error" role="alert">
+              {errorMessage}
+            </p>
+          )}
+          {!hideSubmit && (
+            <div className="modal__actions">
+              <button
+                className="modal__submit interactive"
+                type="submit"
+                disabled={isSubmitDisabled || isSubmitting}
+              >
+                {isSubmitting ? pendingText : buttonText}
+              </button>
+              {secondaryAction}
+            </div>
+          )}
         </form>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
-
 export default ModalWithForm;

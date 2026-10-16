@@ -1,29 +1,21 @@
 import { useState } from "react";
+import "./Avatar.css";
 
 export default function Avatar({ name = "", avatar, className = "" }) {
   const [failedAvatar, setFailedAvatar] = useState(null);
-
-  if (avatar && avatar !== failedAvatar) {
+  if (avatar && avatar !== failedAvatar)
     return (
       <img
-        key={avatar}
-        className={className}
+        className={`avatar ${className}`}
         src={avatar}
         alt={`${name} avatar`}
         onError={() => setFailedAvatar(avatar)}
       />
     );
-  }
-
-  let initial = name.trim().charAt(0).toUpperCase();
-
-  if (initial === "") {
-    initial = "?";
-  }
-
+  const initial = name.trim().charAt(0).toUpperCase() || "?";
   return (
     <span
-      className={`${className} avatar__placeholder`}
+      className={`avatar avatar__placeholder ${className}`}
       role="img"
       aria-label={`${name} avatar`}
     >

@@ -1,82 +1,64 @@
-import { useContext, useEffect } from "react";
-import "./ItemModal.css";
+import { useContext, useId } from "react";
+import { createPortal } from "react-dom";
+import CurrentUserContext from "../../contexts/CurrentUserContext.js";
+import useDialog from "../../hooks/useDialog.js";
 import closeIcon from "../../assets/Union.svg";
-import CurrentUserContext from "../../contexts/CurrentUserContext";
+import "./ItemModal.css";
 
-function ItemModal({ item, onClose, onOpenConfirm }) {
-
-  const currentUser = useContext(CurrentUserContext);
-  
-  // console.log("ItemModal received item:", item);
-  // console.log("Image source:", item.link);
-
-  useEffect(() => {
-  if (!item) {
-    return;
-  }
-
-  const handleKeyDown = (event) => {
-    if (event.key === "Escape") {
-      onClose();
-    }
-  };
-
-  window.addEventListener("keydown", handleKeyDown);
-
-  return () => {
-    window.removeEventListener("keydown", handleKeyDown);
-  };
-}, [item, onClose]);
-
-if (!item) {
-  return null;
-}
-
-let deleteAction = null;
-
-if (currentUser && item.owner === currentUser._id) {
-  deleteAction = (
-    <button
-      type="button"
-      className="item-modal__delete"
-      onClick={() => {
-        onClose();
-        onOpenConfirm?.(item);
+export default function ItemModal({ item, onClose, onOpenConfirm }) {
+  const user = useContext(CurrentUserContext);
+  const titleId = useId();
+  const dialogRef = useDialog(Boolean(item), onClose);
+  if (!item) return null;
+  return createPortal(
+    <div
+      className="item-modal__overlay"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
       }}
-      aria-label="Delete item"
     >
-      Delete item
-    </button>
-  );
-}
-
-  return (
-    <div className="item-modal__overlay" onClick={onClose}>
-      <div className="item-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="item-modal__close" onClick={onClose}>
-          <img src={closeIcon} alt="Close" className="item-modal__close-icon" />
+      <div
+        ref={dialogRef}
+        className="item-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        tabIndex={-1}
+      >
+        <button
+          className="item-modal__close interactive"
+          type="button"
+          aria-label="Close"
+          onClick={onClose}
+        >
+          <img src={closeIcon} alt="" className="item-modal__close-icon" />
         </button>
         <div className="item-modal__image-section">
           <img
             src={item.link || item.imageUrl}
             alt={item.name}
             className="item-modal__image"
-            // onError={(e) => {
-              // console.log("Image failed to load:", e.target.src);
-            // }}
-            // onLoad={() => {
-              // console.log("Image loaded successfully:", item.link);
-            // }}
           />
         </div>
         <div className="item-modal__content">
-          {deleteAction}
-          <p className="item-modal__title">{item.name}</p>
+          <div className="item-modal__row">
+            <h2 id={titleId} className="item-modal__title">
+              {item.name}
+            </h2>
+            {user && item.owner === user._id && (
+              <button
+                type="button"
+                className="item-modal__delete interactive"
+                onClick={() => onOpenConfirm(item)}
+              >
+                Delete item
+              </button>
+            )}
+          </div>
           <p className="item-modal__weather">Weather: {item.weather}</p>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
-
-export default ItemModal;

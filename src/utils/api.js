@@ -1,31 +1,26 @@
 import { BASE, handleResponse } from "./request.js";
 
-export const getItems = () => handleResponse(fetch(`${BASE}/items`));
+export const getItems = ({ signal } = {}) =>
+  handleResponse(fetch(`${BASE}/items`, { signal }));
 
-// form uses "image", server expects "imageUrl"
 export const createItem = ({ name, image, weather }, token) =>
   handleResponse(
     fetch(`${BASE}/items`, {
       method: "POST",
-      headers: { "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        name,
-        imageUrl: image,
-        weather,
-      }),
-    })
+      body: JSON.stringify({ name, imageUrl: image, weather }),
+    }),
   );
 
 export const removeItem = (id, token) =>
   handleResponse(
     fetch(`${BASE}/items/${encodeURIComponent(id)}`, {
       method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+      headers: { Authorization: `Bearer ${token}` },
+    }),
   );
 
 export function updateCurrentUser({ name, avatar }, token) {
@@ -37,25 +32,15 @@ export function updateCurrentUser({ name, avatar }, token) {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ name, avatar }),
-    })
+    }),
   );
 }
 
 export function toggleItemLike(id, isLiked, token) {
-  let method;
-
-  if (isLiked) {
-    method = "DELETE";
-  } else {
-    method = "PUT";
-  }
-
   return handleResponse(
     fetch(`${BASE}/items/${encodeURIComponent(id)}/likes`, {
-      method,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+      method: isLiked ? "DELETE" : "PUT",
+      headers: { Authorization: `Bearer ${token}` },
+    }),
   );
 }

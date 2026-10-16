@@ -7,7 +7,7 @@ function WeatherCard({ temperature, condition, time }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   const weatherImage = weatherConditions.find(
-    (c) => c.condition === condition && c.time === time
+    (c) => c.condition === condition && c.time === time,
   );
 
   const temp = temperature?.[currentTemperatureUnit];

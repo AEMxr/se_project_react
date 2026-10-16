@@ -1,50 +1,73 @@
-import { useContext, useState } from "react";
+import {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
+import { getErrorMessage } from "../../utils/errors.js";
+import "./LikeButton.css";
 
 export default function LikeButton({ item, onCardLike }) {
-  const currentUser = useContext(CurrentUserContext);
-  const [isLikePending, setIsLikePending] = useState(false);
-
-  if (!currentUser) {
-    return null;
-  }
-
-  const isLiked = (item.likes ?? []).includes(currentUser._id);
+  const user = useContext(CurrentUserContext);
+  const [isPending, setIsPending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const pending = useRef(false);
+  const mounted = useRef(false);
+  const userId = useRef(user?._id);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+  useLayoutEffect(() => {
+    userId.current = user?._id;
+    setErrorMessage("");
+  }, [user?._id]);
+  if (!user) return null;
+  const isLiked = (item.likes ?? []).includes(user._id);
 
   function handleLike(event) {
     event.stopPropagation();
-
-    if (isLikePending) {
-      return;
-    }
-
-    setIsLikePending(true);
-
-    onCardLike({ id: item._id, isLiked })
-      .catch(console.error)
+    if (pending.current) return;
+    const owner = user._id;
+    pending.current = true;
+    setIsPending(true);
+    setErrorMessage("");
+    Promise.resolve()
+      .then(() => onCardLike({ id: item._id, isLiked }))
+      .catch((error) => {
+        if (
+          mounted.current &&
+          userId.current === owner &&
+          error?.name !== "AbortError"
+        )
+          setErrorMessage(getErrorMessage(error));
+      })
       .finally(() => {
-        setIsLikePending(false);
+        pending.current = false;
+        if (mounted.current) setIsPending(false);
       });
   }
-
-  let buttonText = "♡";
-  let buttonClassName = "card__like";
-
-  if (isLiked) {
-    buttonText = "♥";
-    buttonClassName += " card__like--active";
-  }
-
   return (
-    <button
-      type="button"
-      className={buttonClassName}
-      onClick={handleLike}
-      disabled={isLikePending}
-      aria-label={`Like ${item.name}`}
-      aria-pressed={isLiked}
-    >
-      {buttonText}
-    </button>
+    <>
+      <button
+        className={`card__like interactive${isLiked ? " card__like--active" : ""}`}
+        type="button"
+        onClick={handleLike}
+        disabled={isPending}
+        aria-label={`${isLiked ? "Unlike" : "Like"} ${item.name}`}
+        aria-pressed={isLiked}
+      >
+        {isLiked ? "♥" : "♡"}
+      </button>
+      {errorMessage && (
+        <span className="card__like-error" role="alert">
+          {errorMessage}
+        </span>
+      )}
+    </>
   );
 }

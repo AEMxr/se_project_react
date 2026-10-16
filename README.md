@@ -1,223 +1,113 @@
-# WTWR (What To Wear — React)
+# WTWR — What to Wear
 
-A weather-driven wardrobe assistant built with React + Vite. WTWR shows the current weather, lets you toggle °F/°C, and manage your clothing items (add / view / delete), backed by a local json-server mock API.
+WTWR is a React frontend for a weather-based wardrobe application, built for TripleTen Project 14. It connects to an Express API and MongoDB for account registration, authentication, profile updates, clothing items, and likes.
 
----
+**Backend repository:** [AEMxr/se_project_express](https://github.com/AEMxr/se_project_express)
 
 ## Features
 
-- **Live Weather Integration** (OpenWeatherMap) — fetches real-time weather for your location.
-- **°F/°C Toggle via React Context** — one switch updates temperatures across the app.
-- **Routing** — `/` (Main) and `/profile` (Profile) with Header/Footer on both.
-- **Profile Page** — `SideBar` (hardcoded user) + `ClothesSection` (renders **all** items).
-- **Clothing Items** — Add via **AddItemModal** (controlled form + validation), view in a modal, **delete with confirmation**.
-- **Mock Backend** — `json-server` with `GET /items`, `POST /items`, `DELETE /items/:id`.
-- **WeatherCard UX** — always shows an image; temperature displays “…” until data arrives.
-- **Responsive Modals & Clean UI** — accessible, keyboard-friendly dialogs and controls.
-- **(Optional/Extra)** Smart outfit randomizer (mobile prototype).
-
----
+- Register and sign in through validated forms; registration signs in automatically.
+- Restore a saved JWT on refresh and clear it on logout or a current-session authentication failure.
+- Protect `/profile` and show only the signed-in user's clothing there.
+- Edit a user's name and avatar, with current values prefilled.
+- Add garments, preview items, and confirm deletion of owned items.
+- Like and unlike items, with saved likes reflected after refresh.
+- Show OpenWeather conditions and weather-appropriate garments; toggle Fahrenheit/Celsius through React Context.
+- Display an initial in a circle when an avatar is missing or cannot load.
+- Use keyboard-accessible cards and dialogs, with visible validation and request errors.
+- Preserve the existing mobile outfit randomizer as an extra feature.
 
-## Technologies & Techniques
+## Technologies
 
-- **React** (functional components & hooks)
-- **Vite** (fast dev/build)
-- **React Router** (HashRouter in production)
-- **Context API** (temperature unit)
-- **CSS + BEM** (or CSS Modules, depending on setup)
-- **Normalize.css** for consistent base styles
-- **Custom Fonts** (Cabinet Grotesk)
-- **ESLint** (and Prettier conventions)
-- **OpenWeatherMap API**
+React functional components and hooks, React Router, Context, Vite, Fetch, validator.js, BEM CSS, Normalize.css, Cabinet Grotesk, ESLint, Prettier, and Node's test runner with jsdom. The separate backend uses Express and MongoDB/Mongoose.
 
----
+## Run locally in Git Bash
 
-## Project Structure
+Use Node.js 22 or newer and install MongoDB Community Server. Clone the frontend and backend into sibling folders, for example:
 
-    src/
-      assets/                         # images/icons (e.g., avatar.svg, weatherConditions/)
-      components/
-        App/
-          Header.jsx
-          Main.jsx
-          Footer.jsx
-          ItemModal.jsx
-          DeleteConfirmationModal.jsx
-          ModalWithForm.jsx
-          Profile.jsx
-          ToggleSwitch.jsx
-          # (styles live alongside components)
-        AddItemModal/
-          AddItemModal.jsx
-      contexts/
-        CurrentTemperatureUnitContext.js
-      hooks/
-        useForm.js
-        useTouch.js
-        formValidation.js
-      utils/
-        api.js            # json-server calls (GET/POST/DELETE)
-        weatherApi.js     # OpenWeather fetch + parsing
-        constants.js      # base URLs, defaults, etc.
-      vendor/
-        normalize.css
-        fonts.css
-        fonts/...
-      index.css
-      main.jsx
-    db.json                            # mock database for json-server
+```text
+TripleTen/
+  se_project_react/
+  se_project_express/
+```
 
----
+Keep the database, backend, and frontend running. These are separate processes:
 
-## Getting Started
+| Terminal                                          | Folder               | Process                    |
+| ------------------------------------------------- | -------------------- | -------------------------- |
+| A, if MongoDB is not already running as a service | Any folder           | MongoDB                    |
+| B                                                 | `se_project_express` | Express API on port 3001   |
+| C                                                 | `se_project_react`   | Vite frontend on port 3000 |
 
-1. **Install**
+### A. Database
 
-   npm install
+If MongoDB is running as a Windows service, use that service. For a manually started local database, run:
 
-2. **Start the mock API (required for items)**
+```bash
+mkdir -p /c/data/db
+mongod --dbpath /c/data/db
+```
 
-   npm run api
+Keep this terminal running. The backend's database configuration is documented in its own repository.
 
-   # -> http://localhost:3001
+### B. Backend
 
-   # Uses \_id as the primary key so deletes work consistently.
+Open another terminal **in the backend folder**:
 
-3. **Start Vite**
+```bash
+cd ~/Documents/TripleTen/se_project_express
+npm ci
+npm run dev
+```
 
-   npm run dev
+The API should listen at `http://localhost:3001`. Starting the frontend does not start Express or MongoDB.
 
-   # -> http://localhost:5173
+### C. Frontend
 
-> If you edit `.env`, restart the dev server so Vite picks up changes.
+Open another terminal **in the frontend folder**:
 
----
+```bash
+cd ~/Documents/TripleTen/se_project_react
+npm ci
+cp -n .env.example .env.local
+```
 
-## Environment Variables
+Set your own key in `.env.local`:
 
-Create a `.env` file in the project root:
+```dotenv
+VITE_OPEN_WEATHER_KEY=your_openweather_key
+```
 
-    VITE_OPEN_WEATHER_KEY=YOUR_OPENWEATHERMAP_KEY
+Then run:
 
-- Only variables prefixed with `VITE_` are exposed to the client (Vite convention).
-- The app reads this in `weatherApi.js`.
+```bash
+npm run dev
+```
 
----
+Open `http://localhost:3000`. Restart Vite after changing environment values. Stop a running Vite process with Ctrl+C before reinstalling packages on Windows; otherwise its esbuild executable may be locked.
 
-## Scripts
+The optional `VITE_API_BASE_URL` overrides the default `http://localhost:3001`. The OpenWeather key is browser-facing configuration; Vite includes `VITE_` variables in the frontend build.
 
-These are defined in `package.json`:
+## Commands
 
-    {
-      "dev": "vite --open",
-      "build": "vite build",
-      "preview": "vite preview",
-      "api": "json-server --watch db.json --id _id --port 3001",
-      "predeploy": "npm run build",
-      "deploy": "gh-pages -d dist"
-    }
+| Command                | Purpose                                                   |
+| ---------------------- | --------------------------------------------------------- |
+| `npm run dev`          | Start the frontend                                        |
+| `npm run lint`         | Check JavaScript/JSX                                      |
+| `npm test`             | Run automated regression checks with mocked API responses |
+| `npm run format`       | Apply Prettier formatting                                 |
+| `npm run format:check` | Check formatting without editing                          |
+| `npm run build`        | Produce `dist/`                                           |
+| `npm run preview`      | Preview the production build locally                      |
 
----
+## API and routing
 
-## API (json-server)
+The frontend calls the backend's `POST /signup`, `POST /signin`, `GET/PATCH /users/me`, `GET/POST /items`, `DELETE /items/:id`, and `PUT/DELETE /items/:id/likes` endpoints. Signup, signin, and listing items are public; protected requests include the saved Bearer token.
 
-**Base URL:** `http://localhost:3001`
+Development uses `/` and `/profile` through BrowserRouter. The production build uses HashRouter and the `/se_project_react/` base for GitHub Pages. Hosted use requires a reachable HTTPS backend configured at build time; the local Express setup is sufficient for this course project.
 
-- **GET `/items`** → `[{ _id, name, imageUrl, weather }]`
-- **POST `/items`** → Body: `{ name, imageUrl, weather }` → returns created item
-- **DELETE `/items/:id`** → removes item
+## Verification
 
-Notes:
+Automated tests use fixture accounts and mocked API responses, without changing a real database. Before submitting, follow [the submission checklist](docs/submission-checklist.md) against your running backend to confirm persistence and two-account ownership.
 
-- The app maps `imageUrl → link` internally for card rendering.
-- `weather` is normalized to lowercase for consistency.
-
----
-
-## Routes
-
-- `/` → `Header + Main + Footer`
-- `/profile` → `Header + Profile + Footer`
-- Header logo → **navigates to `/`**
-- Profile link → **navigates to `/profile`**
-
----
-
-## Components & Data Flow (high level)
-
-- **App.jsx**
-
-  - Holds: weather data, clothing items, modal states, selected item.
-  - Provides temperature unit context: `{ currentTemperatureUnit, handleToggleSwitchChange }`.
-  - Loads items from `json-server` on mount (`getItems`), maps `imageUrl → link`.
-  - Handlers:
-    - **Add item:** `createItem` → prepend to state on success (form resets only after success).
-    - **Delete item:** opens **DeleteConfirmationModal**; on confirm → `removeItem` → filter from state.
-
-- **ToggleSwitch.jsx**
-
-  - Reads temperature unit from **Context** by default (can also accept props).
-  - Toggling flips between `"F"` and `"C"`.
-
-- **WeatherCard.jsx / Main.jsx**
-
-  - Use the Context unit to render `weather.temperature[currentTemperatureUnit]`.
-  - Show “…” until temp is ready; always show a weather image.
-
-- **AddItemModal.jsx**
-
-  - Controlled form via `useForm`; touch/validation via `useTouch` + `formValidation`.
-  - Disables submit while posting; resets **only after** the POST resolves.
-
-- **ItemModal.jsx → DeleteConfirmationModal.jsx**
-  - Clicking **Delete** in ItemModal opens a confirmation modal.
-  - Confirming calls `removeItem` and updates state; both modals close.
-
----
-
-## Code Style & Naming
-
-- **camelCase** for variables/functions; **PascalCase** for components.
-- Descriptive names.
-- **ESLint** enabled; Prettier conventions for formatting.
-- `normalize.css` imported **first** in `index.css`.
-- Accessibility: interactive elements have focus/hover states and sensible labels.
-
----
-
-## Troubleshooting
-
-- **MetaMask / SES logs on localhost:** harmless extension output; you can disable the extension on localhost if noisy.
-- **Weather shows `…`:** intentional until the API responds; °F/°C toggles once loaded.
-- **Port conflicts:** tweak the `api` script port or stop other processes using `3001`/`5173`.
-- **DELETE fails on newly created items:** ensure you started the server with `--id _id` (use `npm run api`).
-
----
-
-## Contributing / Formatting
-
-- Run ESLint before pushing:
-
-        npm run lint
-
-- `.prettierignore` `vendor/normalize.css`.
-
----
-
-## Acknowledgements
-
-- [React](https://react.dev/) • [Vite](https://vitejs.dev/) • [OpenWeatherMap](https://openweathermap.org/) • [Normalize.css](https://necolas.github.io/normalize.css/) • Cabinet Grotesk
-
----
-
-## SE_PROJECT_EXPRESS Link
-
-[link](https://github.com/AEMxr/se_project_express)
-
----
-
-## Inspiration
-
-Project for TripleTen’s React curriculum — designed to help users make smarter, weather-based wardrobe choices every day.
-
-> “No such thing as bad weather, only inappropriate clothing.” — Alfred Wainwright
+Built by Anthony Malcuit for TripleTen.
