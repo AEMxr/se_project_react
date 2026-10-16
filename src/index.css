@@ -1,14 +1,42 @@
 @import "./vendor/normalize.css";
 @import "./vendor/fonts.css";
 
-body {
+.page {
+  margin: 0;
+  min-width: 280px;
+  min-height: 100vh;
   font-family: "cabinet-grotesk", Arial, sans-serif;
   font-weight: 700;
   font-size: 20px;
 }
-
-button {
+.page__root {
+  min-height: 100vh;
+}
+:where([type="button"], [type="submit"]) {
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
+}
+.interactive {
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.interactive:hover {
+  opacity: 0.7;
+}
+.interactive:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+.page :focus-visible {
+  outline: 2px solid #0078d4;
+  outline-offset: 3px;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }

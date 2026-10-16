@@ -1,70 +1,60 @@
-.ToggleSwitch {
+.toggle-switch {
+  flex-shrink: 0;
+}
+.toggle-switch__input {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
-
-.ToggleSwitch__label {
+.toggle-switch__label {
   position: relative;
-  display: inline-block;
+  display: block;
   width: 56px;
   height: 28px;
-  background: #ffffff;
+  background: #fff;
   border: 2px solid #7e7e7e;
   border-radius: 20px;
-  cursor: pointer;
   user-select: none;
-  margin-right: 20px;
 }
-
-.ToggleSwitch__button {
+.toggle-switch__button {
   position: absolute;
   top: 0;
   left: 0;
   width: 28px;
   height: 28px;
-  background: #000000;
+  background: #000;
   border-radius: 50%;
-  transition: left 0.2s ease;
-  z-index: 1;
+  transition: left 0.2s;
 }
-
-.ToggleSwitch:checked + .ToggleSwitch__label .ToggleSwitch__button {
-  left: calc(100% - 28px);
-}
-
-.ToggleSwitch__text {
+.toggle-switch__text {
   position: absolute;
   top: 50%;
   width: 28px;
   transform: translateY(-50%);
   text-align: center;
-  font-weight: 700;
   font-size: 14px;
-  line-height: 100%;
-  z-index: 2;
+  line-height: 1;
+  z-index: 1;
   pointer-events: none;
-  font-family: "Cabinet Grotesk", system-ui, -apple-system, Segoe UI, Roboto,
-    Arial, sans-serif;
 }
-
-.ToggleSwitch__text-left {
+.toggle-switch__text_side_left {
   left: 0;
+  color: #fff;
 }
-.ToggleSwitch__text-right {
+.toggle-switch__text_side_right {
   right: 0;
-}
-
-.ToggleSwitch__text-left {
-  color: #ffffff;
-}
-.ToggleSwitch__text-right {
   color: rgba(0, 0, 0, 0.5);
 }
-
-.ToggleSwitch:checked + .ToggleSwitch__label .ToggleSwitch__text-left {
+.toggle-switch_unit_celsius .toggle-switch__button {
+  left: calc(100% - 28px);
+}
+.toggle-switch_unit_celsius .toggle-switch__text_side_left {
   color: rgba(0, 0, 0, 0.5);
 }
-.ToggleSwitch:checked + .ToggleSwitch__label .ToggleSwitch__text-right {
-  color: #ffffff;
+.toggle-switch_unit_celsius .toggle-switch__text_side_right {
+  color: #fff;
+}
+.toggle-switch__input:focus-visible + .toggle-switch__label {
+  outline: 2px solid #0078d4;
+  outline-offset: 3px;
 }

@@ -1,30 +1,36 @@
-import React, { useContext } from "react";
+import { useContext, useId } from "react";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext.js";
 import "./ToggleSwitch.css";
-import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 
-const ToggleSwitch = ({ isOn: isOnProp, handleToggle: handleToggleProp }) => {
-  const ctx = useContext(CurrentTemperatureUnitContext);
-  const isOn = isOnProp ?? ctx?.currentTemperatureUnit === "C";
-  const handleToggle =
-    handleToggleProp ?? ctx?.handleToggleSwitchChange ?? (() => {});
-
+export default function ToggleSwitch({
+  isOn: isOnProp,
+  handleToggle: handleToggleProp,
+}) {
+  const context = useContext(CurrentTemperatureUnitContext);
+  const id = useId();
+  const isOn = isOnProp ?? context?.currentTemperatureUnit === "C";
+  const handleToggle = handleToggleProp ?? context?.handleToggleSwitchChange;
   return (
-    <div className="ToggleSwitch__wrapper">
+    <div
+      className={`toggle-switch${isOn ? " toggle-switch_unit_celsius" : ""}`}
+    >
       <input
-        className="ToggleSwitch"
-        id={`TempSwitchUnit`}
+        className="toggle-switch__input"
+        id={id}
         type="checkbox"
         checked={isOn}
         onChange={handleToggle}
-        aria-label="Toggle temperature unit (°F/°C)"
+        aria-label="Use Celsius"
       />
-      <label className="ToggleSwitch__label" htmlFor={`TempSwitchUnit`}>
-        <span className="ToggleSwitch__text ToggleSwitch__text-left">F</span>
-        <span className="ToggleSwitch__text ToggleSwitch__text-right">C</span>
-        <span className="ToggleSwitch__button" />
+      <label className="toggle-switch__label interactive" htmlFor={id}>
+        <span className="toggle-switch__text toggle-switch__text_side_left">
+          F
+        </span>
+        <span className="toggle-switch__text toggle-switch__text_side_right">
+          C
+        </span>
+        <span className="toggle-switch__button" />
       </label>
     </div>
   );
-};
-
-export default ToggleSwitch;
+}

@@ -1,16 +1,29 @@
 import LikeButton from "../LikeButton.jsx";
 import "./ItemCard.css";
 
-function ItemCard({ item, onCardClick, onCardLike }) {
+export default function ItemCard({
+  item,
+  onCardClick,
+  onCardLike,
+  variant = "main",
+}) {
   return (
-    <li className="card">
+    <li
+      className={`card${variant === "profile" ? " card_context_profile" : ""}`}
+    >
       <div className="card__image-container">
-        <img
-          src={item.link || item.imageUrl}
-          alt={item.name}
-          className="card__image"
+        <button
+          className="card__preview interactive"
+          type="button"
           onClick={() => onCardClick(item)}
-        />
+          aria-label={`View ${item.name}`}
+        >
+          <img
+            src={item.link || item.imageUrl}
+            alt={item.name}
+            className="card__image"
+          />
+        </button>
         <div className="card__header">
           <span className="card__title">{item.name}</span>
           <LikeButton item={item} onCardLike={onCardLike} />
@@ -19,5 +32,3 @@ function ItemCard({ item, onCardClick, onCardLike }) {
     </li>
   );
 }
-
-export default ItemCard;

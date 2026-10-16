@@ -1,50 +1,38 @@
-import { useState, useEffect } from "react";
-import ModalWithForm from "../App/ModalWithForm";
+import ModalWithForm from "../App/ModalWithForm.jsx";
+import FormField from "../App/FormField.jsx";
 import useForm from "../../hooks/useForm.js";
-import formValidation from "../../hooks/formValidation.js";
 import useTouch from "../../hooks/useTouch.js";
+import useFormSubmit from "../../hooks/useFormSubmit.js";
+import formValidation, {
+  normalizeFormValues,
+} from "../../hooks/formValidation.js";
+import {
+  NAME_MIN_LENGTH,
+  NAME_MAX_LENGTH,
+  VALID_WEATHER_TYPES,
+} from "../../utils/constants.js";
 
 const initialValues = { name: "", image: "", weather: "warm" };
+const initialTouched = { name: false, image: false };
 
-const initialTouched = {
-  name: false,
-  image: false,
-};
-
-const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { values: form, setValues: setForm } = useForm(initialValues);
+export default function AddItemModal({ isOpen, onAddItem, onCloseModal }) {
+  const { isSubmitting, submitForm, errorMessage } = useFormSubmit(isOpen);
+  const { values: form, setValues, handleChange } = useForm(initialValues);
   const { touched, handleBlur, resetTouched } = useTouch(initialTouched);
-
   const { nameIsValid, imageIsValid, isFormValid } = formValidation(form);
 
-  useEffect(() => {
-    if (!isOpen) return;
-    setForm(initialValues);
-    resetTouched();
-  }, [isOpen, setForm, resetTouched]);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (event) => {
+  function handleSubmit(event) {
     event.preventDefault();
-    if (!isFormValid || isSubmitting) return;
-    setIsSubmitting(true);
-    onAddItem(form)
-      .then(() => {
-        setForm(initialValues);
+    if (!isFormValid) return;
+    submitForm(
+      () => onAddItem(normalizeFormValues(form)),
+      () => {
+        setValues(initialValues);
         resetTouched();
-        onCloseModal && onCloseModal();
-      })
-      .catch((e) => {
-        console.error(e);
-      })
-      .finally(() => setIsSubmitting(false));
-  };
-
+        onCloseModal();
+      },
+    );
+  }
   return (
     <ModalWithForm
       title="New garment"
@@ -53,55 +41,46 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
       onClose={onCloseModal}
       onSubmit={handleSubmit}
       isOpen={isOpen}
-      isSubmitDisabled={isSubmitting || !isFormValid}
+      isSubmitting={isSubmitting}
+      isSubmitDisabled={!isFormValid}
+      errorMessage={errorMessage}
+      pendingText="Adding..."
     >
-      <label
-        className={`modal__form-label${
-          touched.name && !nameIsValid ? " modal__form-label--invalid" : ""
-        }`}
-      >
-        Name
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          className={`modal__input${
-            touched.name && !nameIsValid ? " modal__input--invalid" : ""
-          }`}
-          required
-          value={form.name}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-      </label>
-      <label
-        className={`modal__form-label${
-          touched.image && !imageIsValid ? " modal__form-label--invalid" : ""
-        }`}
-      >
-        Image
-        <input
-          type="url"
-          name="image"
-          placeholder="Image URL"
-          className={`modal__input${
-            touched.image && !imageIsValid ? " modal__input--invalid" : ""
-          }`}
-          required
-          value={form.image}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-      </label>
-      <label className="modal__form-label">
-        Select the weather type:
+      <FormField
+        label="Name"
+        type="text"
+        name="name"
+        placeholder="Name"
+        minLength={NAME_MIN_LENGTH}
+        maxLength={NAME_MAX_LENGTH}
+        value={form.name}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        isTouched={touched.name}
+        isValid={nameIsValid}
+        errorText="Enter a name with 2–30 characters."
+      />
+      <FormField
+        label="Image"
+        type="url"
+        name="image"
+        placeholder="Image URL"
+        value={form.image}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        isTouched={touched.image}
+        isValid={imageIsValid}
+        errorText="Enter a complete http:// or https:// image URL."
+      />
+      <fieldset className="modal__weather-group">
+        <legend className="modal__weather-legend">
+          Select the weather type:
+        </legend>
         <div className="modal__weather-radio-group">
-          {["hot", "warm", "cold"].map((type) => (
+          {VALID_WEATHER_TYPES.map((type) => (
             <label
               key={type}
-              className={`modal__weather-radio${
-                form.weather === type ? " modal__weather-radio--active" : ""
-              }`}
+              className={`modal__weather-radio interactive${form.weather === type ? " modal__weather-radio--active" : ""}`}
             >
               <input
                 type="radio"
@@ -112,14 +91,11 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
                 onChange={handleChange}
                 className="modal__weather-radio-input"
               />
-
               {type[0].toUpperCase() + type.slice(1)}
             </label>
           ))}
         </div>
-      </label>
+      </fieldset>
     </ModalWithForm>
   );
-};
-
-export default AddItemModal;
+}

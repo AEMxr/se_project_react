@@ -1,96 +1,97 @@
-import { useContext } from "react";
+import { useContext, useId } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
-import "./MobileMenu.css";
+import useDialog from "../../hooks/useDialog.js";
 import Avatar from "./Avatar.jsx";
+import "./MobileMenu.css";
 
-function MobileMenu({
+export default function MobileMenu({
   isOpen,
   onClose,
   onAddClothes,
   onSignUp,
   onLogIn,
 }) {
-  const currentUser = useContext(CurrentUserContext);
-
-  if (!isOpen) {
-    return null;
-  }
-
+  const user = useContext(CurrentUserContext);
+  const titleId = useId();
+  const dialogRef = useDialog(isOpen, onClose);
+  if (!isOpen) return null;
   function handleAction(action) {
     onClose();
     action();
   }
 
-  let accountControls;
-
-  if (currentUser) {
-    accountControls = (
-      <>
-        <Link
-          to="/profile"
-          className="mobile-menu__user"
-          onClick={onClose}
-          aria-label="Go to profile"
-        >
-          <span className="mobile-menu__user-name">
-            {currentUser.name}
-          </span>
-          <Avatar
-            name={currentUser.name}
-            avatar={currentUser.avatar}
-            className="mobile-menu__user-avatar"
-          />
-        </Link>
-
-        <button
-          className="mobile-menu__add-clothes"
-          type="button"
-          onClick={() => handleAction(onAddClothes)}
-        >
-          + Add Clothes
-        </button>
-      </>
-    );
-  } else {
-    accountControls = (
-      <>
-        <button
-          type="button"
-          onClick={() => handleAction(onSignUp)}
-        >
-          Sign Up
-        </button>
-        <button
-          type="button"
-          onClick={() => handleAction(onLogIn)}
-        >
-          Log In
-        </button>
-      </>
-    );
-  }
-
-  return (
-    <div className="mobile-menu__overlay" onClick={onClose}>
+  return createPortal(
+    <div
+      className="mobile-menu__overlay"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
       <div
+        ref={dialogRef}
         className="mobile-menu"
-        onClick={(event) => event.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        tabIndex={-1}
       >
+        <h2 id={titleId} className="visually-hidden">
+          Menu
+        </h2>
         <button
-          className="mobile-menu__close"
+          className="mobile-menu__close interactive"
           type="button"
+          aria-label="Close menu"
           onClick={onClose}
         >
           ×
         </button>
-
         <div className="mobile-menu__content">
-          {accountControls}
+          {user ? (
+            <>
+              <Link
+                to="/profile"
+                className="mobile-menu__user interactive"
+                onClick={onClose}
+              >
+                <span className="mobile-menu__user-name">{user.name}</span>
+                <Avatar
+                  name={user.name}
+                  avatar={user.avatar}
+                  className="mobile-menu__user-avatar"
+                />
+              </Link>
+              <button
+                className="mobile-menu__add-clothes interactive"
+                type="button"
+                onClick={() => handleAction(onAddClothes)}
+              >
+                + Add Clothes
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className="mobile-menu__auth interactive"
+                type="button"
+                onClick={() => handleAction(onSignUp)}
+              >
+                Sign Up
+              </button>
+              <button
+                className="mobile-menu__auth interactive"
+                type="button"
+                onClick={() => handleAction(onLogIn)}
+              >
+                Log In
+              </button>
+            </>
+          )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
-
-export default MobileMenu;

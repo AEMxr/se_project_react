@@ -3,28 +3,31 @@ import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import SideBar from "./Profile/SideBar.jsx";
 import ClothesSection from "./Profile/ClothesSection.jsx";
 
-const Profile = ({ clothingItems, onAddClothes, onCardClick, onLogout, onEditProfile, onCardLike }) => {
-  const currentUser = useContext(CurrentUserContext);
-
-  if (!currentUser) {
-    return null;
-  }
-
-  const userItems = clothingItems.filter(
-    (item) => item.owner === currentUser._id
-  );
-
+export default function Profile({
+  clothingItems,
+  onAddClothes,
+  onCardClick,
+  onLogout,
+  onEditProfile,
+  onCardLike,
+  isItemsLoading,
+  itemsError,
+}) {
+  const user = useContext(CurrentUserContext);
+  if (!user) return null;
+  const userItems = clothingItems.filter((item) => item.owner === user._id);
   return (
-    <section className="profile">
+    <main className="profile">
+      <h1 className="visually-hidden">Your profile</h1>
       <SideBar onLogout={onLogout} onEditProfile={onEditProfile} />
       <ClothesSection
         items={userItems}
         onAddClothes={onAddClothes}
         onCardClick={onCardClick}
         onCardLike={onCardLike}
+        isLoading={isItemsLoading}
+        errorMessage={itemsError}
       />
-    </section>
+    </main>
   );
-};
-
-export default Profile;
+}

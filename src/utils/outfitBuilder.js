@@ -1,3 +1,11 @@
+import { WARM_TEMPERATURE_F } from "./constants.js";
+
+const COLD_HEAD_TEMPERATURE_F = 40;
+const EXTREME_COLD_TEMPERATURE_F = 30;
+const OUTER_LAYER_TEMPERATURE_F = 60;
+const BASE_LAYER_TEMPERATURE_F = 50;
+const GLOVE_TEMPERATURE_F = 35;
+
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -20,14 +28,14 @@ export function buildOutfit({ items, weatherType, tempF, weatherCondition }) {
     const name = (item.name || "").toLowerCase();
 
     if (
-      /(hat|cap|beanie|toque|headband|headscarf|headwrap|headbandana)/.test(
-        name
+      /\b(hat|cap|beanie|toque|headband|headscarf|headwrap|headbandana)\b/.test(
+        name,
       )
     )
       categories.head.push(item);
     else if (
       /(scarf|mask|earmuff|earflap|balaclava|facecover|nasal|neck|buff|neckwarmer|shawl)/.test(
-        name
+        name,
       )
     )
       categories.face.push(item);
@@ -50,9 +58,9 @@ export function buildOutfit({ items, weatherType, tempF, weatherCondition }) {
 
   const outfit = {};
   const reasons = {};
-  const t = (n, fallback = 999) => n ?? fallback;
+  const t = (n, fallback = Infinity) => n ?? fallback;
 
-  if (weatherType === "cold" || t(tempF) < 40) {
+  if (weatherType === "cold" || t(tempF) < COLD_HEAD_TEMPERATURE_F) {
     if (categories.head.length) {
       outfit.head = pick(categories.head);
       reasons.head = `Selected: ${outfit.head.name} - Cold weather protection needed`;
@@ -64,7 +72,7 @@ export function buildOutfit({ items, weatherType, tempF, weatherCondition }) {
   }
 
   if (
-    (weatherType === "cold" && t(tempF) < 30) ||
+    (weatherType === "cold" && t(tempF) < EXTREME_COLD_TEMPERATURE_F) ||
     ["dusty", "windy"].includes((weatherCondition || "").toLowerCase())
   ) {
     if (categories.face.length) {
@@ -90,7 +98,8 @@ export function buildOutfit({ items, weatherType, tempF, weatherCondition }) {
     reasons.topBase = `No base tops available - CRITICAL`;
   }
 
-  const needsOuterLayer = weatherType === "cold" || t(tempF) < 60;
+  const needsOuterLayer =
+    weatherType === "cold" || t(tempF) < OUTER_LAYER_TEMPERATURE_F;
   if (needsOuterLayer) {
     if (categories.topOuter.length) {
       const outerTop = pick(categories.topOuter);
@@ -105,7 +114,8 @@ export function buildOutfit({ items, weatherType, tempF, weatherCondition }) {
   outfit.tops = topLayers;
 
   const bottomLayers = [];
-  const needsBottomBase = weatherType === "cold" || t(tempF) < 50;
+  const needsBottomBase =
+    weatherType === "cold" || t(tempF) < BASE_LAYER_TEMPERATURE_F;
   if (needsBottomBase) {
     if (categories.bottomBase.length) {
       const baseBottom = pick(categories.bottomBase);
@@ -149,7 +159,7 @@ export function buildOutfit({ items, weatherType, tempF, weatherCondition }) {
     }`;
   }
 
-  if (weatherType === "cold" || t(tempF) < 35) {
+  if (weatherType === "cold" || t(tempF) < GLOVE_TEMPERATURE_F) {
     if (categories.hands.length) {
       outfit.hands = pick(categories.hands);
       reasons.hands = `Selected: ${outfit.hands.name} - Hand protection for ${tempF}°F`;
@@ -162,15 +172,18 @@ export function buildOutfit({ items, weatherType, tempF, weatherCondition }) {
 
   const lowerCond = (weatherCondition || "").toLowerCase();
   const hasUmbrella = categories.accessories.find((i) =>
-    /umbrella/.test((i.name || "").toLowerCase())
+    /umbrella/.test((i.name || "").toLowerCase()),
   );
   const hasSunglasses = categories.accessories.find((i) =>
-    /(sunglass|shades|sunnies|sunglasses)/.test((i.name || "").toLowerCase())
+    /(sunglass|shades|sunnies|sunglasses)/.test((i.name || "").toLowerCase()),
   );
   if (/rain|storm/.test(lowerCond) && hasUmbrella) {
     outfit.accessories = [...(outfit.accessories || []), hasUmbrella];
     reasons.accessories = `Selected: ${hasUmbrella.name} - Rain protection`;
-  } else if ((/sunny/.test(lowerCond) || t(tempF) >= 66) && hasSunglasses) {
+  } else if (
+    (/sunny/.test(lowerCond) || t(tempF) >= WARM_TEMPERATURE_F) &&
+    hasSunglasses
+  ) {
     outfit.accessories = [...(outfit.accessories || []), hasSunglasses];
     reasons.accessories = `Selected: ${hasSunglasses.name} - Bright conditions`;
   }

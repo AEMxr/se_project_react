@@ -1,4 +1,5 @@
 import ModalWithForm from "./ModalWithForm.jsx";
+import useFormSubmit from "../../hooks/useFormSubmit.js";
 import "./DeleteConfirmationModal.css";
 
 export default function DeleteConfirmationModal({
@@ -6,38 +7,37 @@ export default function DeleteConfirmationModal({
   onConfirm,
   onCancel,
 }) {
+  const { isSubmitting, submitForm, errorMessage } = useFormSubmit(isOpen);
+  function handleSubmit(event) {
+    event.preventDefault();
+    submitForm(onConfirm, onCancel);
+  }
   return (
     <ModalWithForm
-      title=""
+      title="Are you sure you want to delete this item?"
       name="confirm-delete"
-      buttonText=""
       onClose={onCancel}
-      onSubmit={(e) => {
-        e.preventDefault();
-        onConfirm?.();
-      }}
+      onSubmit={handleSubmit}
       isOpen={isOpen}
+      isSubmitting={isSubmitting}
+      isCloseDisabled={isSubmitting}
+      hideSubmit
+      errorMessage={errorMessage}
     >
-      <h1 className="del-modal__title">
-        Are you sure you want to delete this item? <br />
-        This action is irreversible.
-      </h1>
-      {/* <h1 className="del-modal__subtitle">This action is irreversible.</h1> */}
-
+      <p className="del-modal__subtitle">This action is irreversible.</p>
       <div className="del-modal__actions">
         <button
-          type="button"
-          className="del-modal__confirm"
-          onClick={onConfirm}
-          aria-label="Confirm delete"
+          type="submit"
+          className="del-modal__confirm interactive"
+          disabled={isSubmitting}
         >
-          Yes, delete item
+          {isSubmitting ? "Deleting..." : "Yes, delete item"}
         </button>
         <button
           type="button"
-          className="del-modal__cancel"
+          className="del-modal__cancel interactive"
           onClick={onCancel}
-          aria-label="Cancel delete"
+          disabled={isSubmitting}
         >
           Cancel
         </button>
