@@ -17,10 +17,10 @@ Reviewed against the supplied Project 14 instructions and criteria on October 16
 
 ## Verification
 
-- 33 automated regression tests pass, using fixture accounts and mocked APIs.
+- 35 automated regression tests pass, using fixture accounts and mocked APIs, including URL-only garment entry and recommendations unaffected by optional metadata or ownership filters.
 - ESLint, Prettier checking, and the production build pass.
 - `npm audit` reports zero vulnerabilities for the installed dependency tree at review time.
-- The production build was exercised in headless Chrome at 320, 390, 768, 800, 1024, and 1440 pixels on both routes. Checks passed for horizontal overflow, route headings, ownership filtering, sidebar sizing, and runtime exceptions. Mobile menu/login switching, initial focus, Escape, and native Enter activation of card previews also passed.
+- The production build was exercised in headless Chrome at 320, 390, 430, 431, 768, 800, 1024, and 1440 pixels on both routes. Checks passed for horizontal overflow, route headings, ownership filtering, sidebar sizing, and runtime exceptions. The randomizer is visible only through 430px. Mobile menu/login switching, initial focus, Escape, native Enter activation of card previews, and URL-only garment entry also passed.
 - The original Express repository was left unchanged. Optional phone/photo additions were kept in their separate worktree.
 
 ## Before submission

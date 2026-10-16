@@ -15,6 +15,8 @@ The automated suite checks the frontend with mocked APIs. It does not create acc
 
 Use two test accounts so ownership can be checked.
 
+Open the course frontend at `http://127.0.0.1:3000`, with the optional worktree's frontend stopped. The add-garment form should contain Name, Image URL, and weather radios, with no photo picker or color option. Randomize should appear at widths of 430px or less, including 390px, and be hidden on larger screens.
+
 1. Register account A. Confirm the modal closes, the header shows A, and refresh preserves the session.
 2. Open the profile and change the name/avatar. Refresh and confirm the saved values.
 3. Add a weather-appropriate garment. Confirm it is visible in the profile and remains after refresh.
@@ -27,6 +29,8 @@ Use two test accounts so ownership can be checked.
 10. Stop the API temporarily. Confirm request failures are visible. Restart it and verify recovery.
 11. Toggle Fahrenheit/Celsius; check the weather card and page heading.
 12. Check desktop and narrow layouts, long item names, avatar fallback, keyboard card previews, Escape, and focus return from dialogs.
+
+The main page shows garments from every account that match the temperature category: cold below 66°F, warm from 66°F to below 86°F, and hot at 86°F or above. If none match, the page explains which category to add. The profile shows only the current account's garments.
 
 ## Submission requirements
 

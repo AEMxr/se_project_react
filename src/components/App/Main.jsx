@@ -21,17 +21,9 @@ export default function Main({
   const weatherType = getWeatherType(tempF);
   const weatherCondition = weather?.condition;
   const weatherKey = `${weatherType}:${weatherCondition}`;
-  const filteredItems = clothingItems.filter((item) => {
-    if (!weatherType) return false;
-    const matchesType = item.weather === weatherType || item.weather === "any";
-    const conditions = Array.isArray(item.condition)
-      ? item.condition
-      : [item.condition || "any"];
-    return (
-      matchesType &&
-      (conditions.includes("any") || conditions.includes(weatherCondition))
-    );
-  });
+  const filteredItems = clothingItems.filter(
+    (item) => weatherType && item.weather === weatherType,
+  );
   let itemsToDisplay = filteredItems;
   if (selection?.weatherKey === weatherKey) {
     const selectedIds = new Set(selection.ids);
@@ -75,7 +67,8 @@ export default function Main({
         weatherType &&
         !filteredItems.length && (
           <p className="main__status">
-            No clothing items match the current weather.
+            No {weatherType}-weather garments yet. Add one with this weather
+            type to see recommendations.
           </p>
         )}
       <ul className="main__card-list" aria-busy={isItemsLoading}>

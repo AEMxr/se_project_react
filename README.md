@@ -84,7 +84,9 @@ Then run:
 npm run dev
 ```
 
-Open `http://localhost:3000`. Restart Vite after changing environment values. Stop a running Vite process with Ctrl+C before reinstalling packages on Windows; otherwise its esbuild executable may be locked.
+Open `http://127.0.0.1:3000`. Restart Vite after changing environment values. Stop a running Vite process with Ctrl+C before reinstalling packages on Windows; otherwise its esbuild executable may be locked.
+
+Run only this frontend on port 3000. Stop the frontend from the optional `bug fixes and code refinement` worktree before starting the course version. The course server binds to `127.0.0.1` and fails if that address and port are occupied, rather than silently choosing another port. Use the explicit address above to avoid mixing worktrees through `localhost`. A first visit to this address may require signing in again because browser storage is separate from `localhost`.
 
 The optional `VITE_API_BASE_URL` overrides the default `http://localhost:3001`. The OpenWeather key is browser-facing configuration; Vite includes `VITE_` variables in the frontend build.
 

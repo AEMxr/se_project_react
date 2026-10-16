@@ -51,6 +51,26 @@ test("guest sees weather-appropriate cards and cannot enter profile", async () =
   assert.ok(query(".weather-card__temp").textContent.includes("21°C"));
 });
 
+test("course recommendations show matching garments from every account without optional filters", async () => {
+  localStorage.setItem("jwt", "token:account-a");
+  api.db.items[1].condition = ["Rain"];
+  api.db.items[1].color = "red";
+  await mount(App);
+  assert.deepEqual(
+    all(".card__title").map((title) => title.textContent),
+    ["Sweater", "T-Shirt"],
+  );
+});
+
+test("no matching garments explains which weather category is missing", async () => {
+  api.db.items[0].weather = "cold";
+  api.db.items[1].weather = "hot";
+  await mount(App);
+  assert.equal(all(".card").length, 0);
+  assert.ok(query(".main__status").textContent.includes("warm-weather"));
+  assert.equal(query(".main__randomize-button").disabled, true);
+});
+
 test("signup automatically logs in and restores the session after remount", async () => {
   await mount(App);
   await click(".header__auth-button");
@@ -161,6 +181,9 @@ test("creating a garment preserves normalized values and survives reload", async
   await mount(App);
   await login();
   await click(".header__add-clothes-button");
+  assert.equal(query('input[name="image"]').type, "url");
+  assert.equal(query('input[type="file"]'), null);
+  assert.equal(query('[name="color"]'), null);
   await input("name", "  New sweater  ");
   await input("image", "https://example.com/new.jpg");
   await click(".modal__submit");
