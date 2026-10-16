@@ -35,16 +35,18 @@
   width: 20px;
   height: 20px;
   display: block;
+  filter: drop-shadow(0 0 1px #000);
 }
 .item-modal__image-section {
   width: 100%;
-  aspect-ratio: 1;
   flex-shrink: 0;
 }
 .item-modal__image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  aspect-ratio: 1;
+  max-height: calc(100dvh - 180px);
+  object-fit: contain;
   display: block;
 }
 .item-modal__content {
