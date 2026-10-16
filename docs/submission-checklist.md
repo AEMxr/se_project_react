@@ -30,7 +30,7 @@ Open the course frontend at `http://127.0.0.1:3000`, with the optional worktree'
 11. Toggle Fahrenheit/Celsius; check the weather card and page heading.
 12. Check desktop and narrow layouts, long item names, avatar fallback, keyboard card previews, Escape, and focus return from dialogs.
 
-The main page shows garments from every account that match the temperature category: cold below 66°F, warm from 66°F to below 86°F, and hot at 86°F or above. If none match, the page explains which category to add. The profile shows only the current account's garments.
+The main page shows garments from every account that match the temperature category: cold below 66°F, warm from 66°F to below 86°F, and hot at 86°F or above. If none match, the clothing area stays empty. The profile shows only the current account's garments.
 
 ## Submission requirements
 

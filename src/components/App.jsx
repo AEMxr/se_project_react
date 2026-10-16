@@ -379,7 +379,6 @@ function App() {
                     clothingItems={clothingItems}
                     isWeatherLoading={isWeatherLoading}
                     isItemsLoading={isItemsLoading}
-                    itemsError={itemsError}
                     onCardClick={handleCardClick}
                     onCardLike={handleCardLike}
                   />

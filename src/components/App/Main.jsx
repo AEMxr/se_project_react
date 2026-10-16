@@ -13,7 +13,6 @@ export default function Main({
   onCardLike,
   isWeatherLoading,
   isItemsLoading,
-  itemsError,
 }) {
   const [selection, setSelection] = useState(null);
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
@@ -62,15 +61,6 @@ export default function Main({
           Loading clothing items...
         </p>
       )}
-      {!isItemsLoading &&
-        !itemsError &&
-        weatherType &&
-        !filteredItems.length && (
-          <p className="main__status">
-            No {weatherType}-weather garments yet. Add one with this weather
-            type to see recommendations.
-          </p>
-        )}
       <ul className="main__card-list" aria-busy={isItemsLoading}>
         {itemsToDisplay.map((item) => (
           <ItemCard

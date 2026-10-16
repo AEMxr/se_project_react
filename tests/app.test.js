@@ -62,12 +62,12 @@ test("course recommendations show matching garments from every account without o
   );
 });
 
-test("no matching garments explains which weather category is missing", async () => {
+test("no matching garments leaves the main clothing area empty", async () => {
   api.db.items[0].weather = "cold";
   api.db.items[1].weather = "hot";
   await mount(App);
   assert.equal(all(".card").length, 0);
-  assert.ok(query(".main__status").textContent.includes("warm-weather"));
+  assert.equal(query(".main__status"), null);
   assert.equal(query(".main__randomize-button").disabled, true);
 });
 
