@@ -19,7 +19,7 @@ WTWR is a React frontend for a weather-based wardrobe application, built for Tri
 
 ## Technologies
 
-React functional components and hooks, React Router, Context, Vite, Fetch, validator.js, BEM CSS, Normalize.css, Cabinet Grotesk, ESLint, Prettier, and Node's test runner with jsdom. The separate backend uses Express and MongoDB/Mongoose.
+React functional components and hooks, React Router, Context, Vite, Fetch, validator.js, BEM CSS, Normalize.css, Cabinet Grotesk, ESLint, Prettier, Jest, React Testing Library, and Node's test runner with jsdom. The separate backend uses Express and MongoDB/Mongoose.
 
 ## Run locally in Git Bash
 
@@ -92,15 +92,18 @@ The optional `VITE_API_BASE_URL` overrides the default `http://localhost:3001`. 
 
 ## Commands
 
-| Command                | Purpose                                                   |
-| ---------------------- | --------------------------------------------------------- |
-| `npm run dev`          | Start the frontend                                        |
-| `npm run lint`         | Check JavaScript/JSX                                      |
-| `npm test`             | Run automated regression checks with mocked API responses |
-| `npm run format`       | Apply Prettier formatting                                 |
-| `npm run format:check` | Check formatting without editing                          |
-| `npm run build`        | Produce `dist/`                                           |
-| `npm run preview`      | Preview the production build locally                      |
+| Command                      | Purpose                                                   |
+| ---------------------------- | --------------------------------------------------------- |
+| `npm run dev`                | Start the frontend                                        |
+| `npm run lint`               | Check JavaScript/JSX                                      |
+| `npm test`                   | Run automated regression checks with mocked API responses |
+| `npm run test:jest`          | Run isolated Jest unit and user-flow suites               |
+| `npm run test:jest:coverage` | Generate Jest coverage reports                            |
+| `npm run test:all`           | Run both the original regression suite and Jest           |
+| `npm run format`             | Apply Prettier formatting                                 |
+| `npm run format:check`       | Check formatting without editing                          |
+| `npm run build`              | Produce `dist/`                                           |
+| `npm run preview`            | Preview the production build locally                      |
 
 ## API and routing
 
@@ -110,6 +113,6 @@ Development uses `/` and `/profile` through BrowserRouter. The production build 
 
 ## Verification
 
-Automated tests use fixture accounts and mocked API responses, without changing a real database. Before submitting, follow [the submission checklist](docs/submission-checklist.md) against your running backend to confirm persistence and two-account ownership.
+Automated frontend tests use fixture accounts and mocked API responses, without changing a real database. See [the testing guide](docs/testing.dev.md) for Jest suites, coverage, and the separate backend worktree's SuperTest/database tests. Before submitting, follow [the submission checklist](docs/submission-checklist.dev.md) against your running backend to confirm persistence and two-account ownership.
 
 Built by Anthony Malcuit for TripleTen.

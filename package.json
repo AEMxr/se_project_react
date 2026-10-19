@@ -12,8 +12,11 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "test": "node --import ./tests/register.js --test tests/validation.test.js tests/api.test.js tests/app.test.js",
-    "format": "prettier --write \"src/**/*.{js,jsx,css}\" \"tests/**/*.js\" \"docs/**/*.md\" package.json package-lock.json eslint.config.js vite.config.js index.html README.md",
-    "format:check": "prettier --check \"src/**/*.{js,jsx,css}\" \"tests/**/*.js\" \"docs/**/*.md\" package.json package-lock.json eslint.config.js vite.config.js index.html README.md"
+    "test:jest": "jest --runInBand",
+    "test:jest:coverage": "jest --runInBand --coverage",
+    "test:all": "npm test && npm run test:jest",
+    "format": "prettier --write \"src/**/*.{js,jsx,css}\" \"tests/**/*.{js,cjs}\" \"docs/**/*.md\" package.json package-lock.json eslint.config.js vite.config.js jest.config.js index.html README.md",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,css}\" \"tests/**/*.{js,cjs}\" \"docs/**/*.md\" package.json package-lock.json eslint.config.js vite.config.js jest.config.js index.html README.md"
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -23,6 +26,10 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@jest/globals": "^30.5.2",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.8",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
@@ -32,6 +39,8 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "gh-pages": "^6.1.1",
     "globals": "^16.0.0",
+    "jest": "^30.5.2",
+    "jest-environment-jsdom": "^30.5.2",
     "jsdom": "^26.1.0",
     "prettier": "^3.9.10",
     "vite": "^6.4.4"
