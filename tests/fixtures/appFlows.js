@@ -47,7 +47,7 @@ export async function logIn(email = "a@example.com", password = "Password1!") {
 export async function profile() {
   await testState.user.click(
     await screen.findByRole("link", {
-      name: "Go to profile",
+      name: /^Go to profile:/,
     }),
   );
   await screen.findByRole("heading", {

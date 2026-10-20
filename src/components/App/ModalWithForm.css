@@ -62,14 +62,14 @@
   background: transparent;
 }
 .modal__input_invalid {
-  border-bottom-color: #ff4d00;
-  color: #ff4d00;
+  border-bottom-color: #c43800;
+  color: #c43800;
 }
 .modal__form-label_invalid {
-  color: #ff4d00;
+  color: #c43800;
 }
 .modal__input_invalid::placeholder {
-  color: #ff4d00;
+  color: #c43800;
   opacity: 1;
 }
 .modal__weather-group {
@@ -91,10 +91,10 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  opacity: 0.5;
+  color: #666;
 }
 .modal__weather-radio_active {
-  opacity: 1;
+  color: #000;
 }
 .modal__actions {
   display: flex;
@@ -122,7 +122,7 @@
 .modal__error,
 .modal__field-error {
   margin: 0;
-  color: #ff4d00;
+  color: #c43800;
   font-size: 14px;
   line-height: 18px;
   overflow-wrap: anywhere;

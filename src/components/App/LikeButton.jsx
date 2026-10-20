@@ -61,7 +61,7 @@ export default function LikeButton({ item, onCardLike }) {
         aria-label={`${isLiked ? "Unlike" : "Like"} ${item.name}`}
         aria-pressed={isLiked}
       >
-        {isLiked ? "♥" : "♡"}
+        <span aria-hidden="true">{isLiked ? "♥" : "♡"}</span>
       </button>
       {errorMessage && (
         <span className="card__like-error" role="alert">

@@ -16,6 +16,10 @@
   border-radius: 20px;
   user-select: none;
 }
+.toggle-switch__label:hover {
+  opacity: 1;
+  border-color: #000;
+}
 .toggle-switch__button {
   position: absolute;
   top: 0;
@@ -43,13 +47,13 @@
 }
 .toggle-switch__text_side_right {
   right: 0;
-  color: rgba(0, 0, 0, 0.5);
+  color: #666;
 }
 .toggle-switch_unit_celsius .toggle-switch__button {
   left: calc(100% - 28px);
 }
 .toggle-switch_unit_celsius .toggle-switch__text_side_left {
-  color: rgba(0, 0, 0, 0.5);
+  color: #666;
 }
 .toggle-switch_unit_celsius .toggle-switch__text_side_right {
   color: #fff;

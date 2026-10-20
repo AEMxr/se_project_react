@@ -7,6 +7,7 @@ import useAppModals from "../hooks/useAppModals.js";
 import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext.js";
 import CurrentUserContext from "../contexts/CurrentUserContext.js";
 import Header from "./App/Header.jsx";
+import SkipLink from "./App/SkipLink.jsx";
 import Main from "./App/Main.jsx";
 import Footer from "./App/Footer.jsx";
 import Profile from "./App/Profile.jsx";
@@ -33,6 +34,7 @@ function App() {
     weather,
     isLoading: isWeatherLoading,
     errorMessage: weatherError,
+    retry: retryWeather,
   } = useWeather();
 
   const modalActions = useAppModals({
@@ -73,13 +75,17 @@ function App() {
     handleEditProfileClick,
   } = modalActions;
   const { handleLogout } = authActions;
-  const { handleCardLike } = wardrobeActions;
+  const { handleCardLike, retryItems } = wardrobeActions;
 
   function handleToggleSwitchChange() {
     setCurrentTemperatureUnit((unit) => (unit === "F" ? "C" : "F"));
   }
 
-  const messages = [weatherError, itemsError, authError].filter(Boolean);
+  const messages = [
+    { message: weatherError, retry: retryWeather, label: "Retry weather" },
+    { message: itemsError, retry: retryItems, label: "Retry clothing" },
+    { message: authError },
+  ].filter(({ message }) => message);
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <CurrentTemperatureUnitContext.Provider
@@ -87,6 +93,7 @@ function App() {
       >
         <Router>
           <div className="app">
+            <SkipLink />
             <Header
               city={
                 weather.city ||
@@ -100,9 +107,18 @@ function App() {
             />
             {messages.length > 0 && (
               <div className="app__messages" aria-live="polite">
-                {messages.map((message) => (
+                {messages.map(({ message, retry, label }) => (
                   <p className="app__error" key={message}>
                     {message}
+                    {retry && (
+                      <button
+                        className="app__retry interactive"
+                        type="button"
+                        onClick={retry}
+                      >
+                        {label}
+                      </button>
+                    )}
                   </p>
                 ))}
               </div>

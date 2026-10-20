@@ -52,7 +52,7 @@ export default function Header({
             <Link
               to="/profile"
               className="header__user interactive"
-              aria-label="Go to profile"
+              aria-label={`Go to profile: ${user.name}`}
             >
               <span className="header__user-name">{user.name}</span>
               <Avatar

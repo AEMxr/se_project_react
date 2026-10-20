@@ -82,7 +82,7 @@ describe("Profile editing and garments", () => {
     view.unmount();
     await start();
     expect(
-      await screen.findByRole("link", { name: "Go to profile" }),
+      await screen.findByRole("link", { name: /^Go to profile:/ }),
     ).toHaveTextContent("Updated Account");
   });
 

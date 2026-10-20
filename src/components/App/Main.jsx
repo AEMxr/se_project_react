@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import WeatherCard from "./Main/WeatherCard.jsx";
-import ItemCard from "./Main/ItemCard.jsx";
+import ClothingGrid from "./Main/ClothingGrid.jsx";
 import { getWeatherType } from "../../utils/weatherApi.js";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext.js";
 import { buildOutfit } from "../../utils/outfitBuilder.js";
@@ -43,11 +43,12 @@ export default function Main({
   }
   const temperature = weather?.temperature?.[currentTemperatureUnit];
   return (
-    <main className="main">
+    <main id="main-content" className="main" tabIndex={-1}>
       <WeatherCard
         temperature={weather.temperature}
         condition={weather.condition}
         time={weather.time}
+        isLoading={isWeatherLoading}
       />
       <h1 className="main__headliner">
         {Number.isFinite(temperature)
@@ -61,16 +62,13 @@ export default function Main({
           Loading clothing items...
         </p>
       )}
-      <ul className="main__card-list" aria-busy={isItemsLoading}>
-        {itemsToDisplay.map((item) => (
-          <ItemCard
-            key={item._id}
-            item={item}
-            onCardClick={onCardClick}
-            onCardLike={onCardLike}
-          />
-        ))}
-      </ul>
+      <ClothingGrid
+        className="main__card-list"
+        items={itemsToDisplay}
+        isLoading={isItemsLoading || isWeatherLoading}
+        onCardClick={onCardClick}
+        onCardLike={onCardLike}
+      />
       <button
         className="main__randomize-button interactive"
         type="button"

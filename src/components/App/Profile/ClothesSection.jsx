@@ -1,4 +1,4 @@
-import ItemCard from "../Main/ItemCard.jsx";
+import ClothingGrid from "../Main/ClothingGrid.jsx";
 import "./ClothesSection.css";
 
 export default function ClothesSection({
@@ -31,17 +31,14 @@ export default function ClothesSection({
       {!isLoading && !errorMessage && !items.length && (
         <p className="clothes__status">Add a garment to start your wardrobe.</p>
       )}
-      <ul className="clothes__grid" aria-busy={isLoading}>
-        {items.map((item) => (
-          <ItemCard
-            key={item._id}
-            item={item}
-            variant="profile"
-            onCardClick={onCardClick}
-            onCardLike={onCardLike}
-          />
-        ))}
-      </ul>
+      <ClothingGrid
+        className="clothes__grid"
+        items={items}
+        isLoading={isLoading}
+        variant="profile"
+        onCardClick={onCardClick}
+        onCardLike={onCardLike}
+      />
     </section>
   );
 }

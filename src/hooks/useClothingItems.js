@@ -1,11 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   getItems,
   createItem,
   removeItem,
   toggleItemLike,
 } from "../utils/api.js";
-import { createUserError } from "../utils/errors.js";
+import { createUserError, getErrorMessage } from "../utils/errors.js";
 import { mergeInitialItems, normalizeItem } from "../utils/items.js";
 
 export default function useClothingItems({
@@ -20,21 +20,26 @@ export default function useClothingItems({
 }) {
   const changedItemIds = useRef(new Set());
   const pendingLikes = useRef(new Set());
+  const [attempt, setAttempt] = useState(0);
   useEffect(() => {
     const controller = new AbortController();
+    const changedDuringLoad = new Set();
+    changedItemIds.current = changedDuringLoad;
+    setIsItemsLoading(true);
+    setItemsError("");
     getItems({ signal: controller.signal })
       .then((items) => {
         if (controller.signal.aborted) return;
         if (!Array.isArray(items)) throw new Error("Invalid clothing response");
         const loaded = items.map(normalizeItem);
         setClothingItems((current) =>
-          mergeInitialItems(current, loaded, changedItemIds.current),
+          mergeInitialItems(current, loaded, changedDuringLoad),
         );
       })
       .catch((error) => {
         if (!controller.signal.aborted && error?.name !== "AbortError")
           setItemsError(
-            "Clothing items could not be loaded. Please try refreshing the page.",
+            `Clothing items could not be loaded. ${getErrorMessage(error, "Please try again.")}`,
           );
       })
       .finally(() => {
@@ -43,7 +48,11 @@ export default function useClothingItems({
     return () => {
       controller.abort();
     };
-  }, [setClothingItems, setIsItemsLoading, setItemsError]);
+  }, [attempt, setClothingItems, setIsItemsLoading, setItemsError]);
+
+  function retryItems() {
+    setAttempt((current) => current + 1);
+  }
 
   function handleAddItem(values) {
     const token = localStorage.getItem("jwt");
@@ -106,5 +115,5 @@ export default function useClothingItems({
       });
   }
 
-  return { handleAddItem, handleConfirmDelete, handleCardLike };
+  return { handleAddItem, handleConfirmDelete, handleCardLike, retryItems };
 }

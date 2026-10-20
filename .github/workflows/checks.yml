@@ -34,3 +34,60 @@ jobs:
           npm run test:security
       - name: Build for production
         run: npm run build
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL || 'http://localhost:3001' }}
+      - name: Deliver the verified frontend build
+        uses: actions/upload-artifact@v4
+        with:
+          name: wtwr-frontend-${{ github.sha }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    name: Publish the verified frontend
+    needs: verify
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.VITE_API_BASE_URL != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Validate the public backend address
+        env:
+          PUBLIC_API_URL: ${{ vars.VITE_API_BASE_URL }}
+        run: |
+          node --input-type=module <<'NODE'
+          const valid = (() => {
+            try {
+              const url = new URL(process.env.PUBLIC_API_URL);
+              return url.protocol === 'https:' && !url.username && !url.password &&
+                !url.search && !url.hash &&
+                !/^(localhost\.?|127\..*|\[::1\])$/.test(url.hostname);
+            } catch {
+              return false;
+            }
+          })();
+          if (!valid) throw new Error('Set VITE_API_BASE_URL to a public HTTPS backend address without credentials, a query, or a fragment.');
+          NODE
+      - name: Download the verified build
+        uses: actions/download-artifact@v4
+        with:
+          name: wtwr-frontend-${{ github.sha }}
+          path: dist/
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Package the Pages release
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

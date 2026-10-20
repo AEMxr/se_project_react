@@ -134,14 +134,14 @@ describe("useCurrentDate timers", () => {
 });
 
 describe("useWeather lifecycle", () => {
-  test("loads the location's weather and aborts on cleanup", async () => {
+  test("loads the location's weather and cleans up its timers", async () => {
+    jest.useFakeTimers();
     fetch.mockImplementation(fixture().fetch);
     const { result, unmount } = renderHook(() => useWeather());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.weather.city).toBe("Vancouver");
-    const signal = fetch.mock.calls[0][1].signal;
     unmount();
-    expect(signal.aborted).toBe(true);
+    expect(jest.getTimerCount()).toBe(0);
   });
   test("falls back when permission is denied", async () => {
     navigator.geolocation.getCurrentPosition = (_success, failure) => failure();
@@ -151,6 +151,18 @@ describe("useWeather lifecycle", () => {
     expect(new URL(fetch.mock.calls[0][0]).searchParams.get("lat")).toBe(
       "40.7128",
     );
+  });
+  test("aborts a pending weather request on unmount without leaving a timeout", async () => {
+    jest.useFakeTimers();
+    fetch.mockReturnValue(deferred().promise);
+    const { unmount } = renderHook(() => useWeather());
+    await act(async () => {});
+    const signal = fetch.mock.calls[0][1].signal;
+    expect(signal.aborted).toBe(false);
+    unmount();
+    await act(async () => jest.advanceTimersByTimeAsync(0));
+    expect(signal.aborted).toBe(true);
+    expect(jest.getTimerCount()).toBe(0);
   });
   test("falls back on deadline and ignores a location callback that arrives later", async () => {
     jest.useFakeTimers();

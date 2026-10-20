@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchWeather } from "../utils/weatherApi.js";
+import { getErrorMessage } from "../utils/errors.js";
 import {
   DEFAULT_COORDS,
   GEOLOCATION_TIMEOUT_MS,
@@ -17,11 +18,15 @@ export default function useWeather() {
   const [weather, setWeather] = useState(initialWeather);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [attempt, setAttempt] = useState(0);
+  const coordinates = useRef(null);
 
   useEffect(() => {
     const controller = new AbortController();
     const request = { started: false };
     const timer = setTimeout(loadWeather, GEOLOCATION_TIMEOUT_MS);
+    setIsLoading(true);
+    setErrorMessage("");
 
     function loadWeather(
       latitude = DEFAULT_COORDS.latitude,
@@ -30,6 +35,7 @@ export default function useWeather() {
       if (request.started || controller.signal.aborted) return;
       request.started = true;
       clearTimeout(timer);
+      coordinates.current = { latitude, longitude };
       fetchWeather(latitude, longitude, { signal: controller.signal })
         .then((data) => {
           if (!controller.signal.aborted) setWeather(data);
@@ -37,7 +43,7 @@ export default function useWeather() {
         .catch((error) => {
           if (!controller.signal.aborted && error?.name !== "AbortError")
             setErrorMessage(
-              "Weather is unavailable. Please try refreshing the page.",
+              `Weather is unavailable. ${getErrorMessage(error, "Please try again.")}`,
             );
         })
         .finally(() => {
@@ -45,7 +51,9 @@ export default function useWeather() {
         });
     }
 
-    if (navigator.geolocation) {
+    if (coordinates.current) {
+      loadWeather(coordinates.current.latitude, coordinates.current.longitude);
+    } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) =>
           loadWeather(position.coords.latitude, position.coords.longitude),
@@ -58,6 +66,11 @@ export default function useWeather() {
       clearTimeout(timer);
       controller.abort();
     };
-  }, []);
-  return { weather, isLoading, errorMessage };
+  }, [attempt]);
+
+  function retry() {
+    setAttempt((current) => current + 1);
+  }
+
+  return { weather, isLoading, errorMessage, retry };
 }

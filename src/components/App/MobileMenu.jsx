@@ -46,7 +46,7 @@ export default function MobileMenu({
           aria-label="Close menu"
           onClick={onClose}
         >
-          ×
+          <span aria-hidden="true">×</span>
         </button>
         <div className="mobile-menu__content">
           {user ? (

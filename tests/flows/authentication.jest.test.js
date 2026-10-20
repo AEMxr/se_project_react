@@ -9,7 +9,7 @@ describe("Authentication and protected navigation", () => {
     await start();
     await waitFor(() => expect(window.location.pathname).toBe("/"));
     expect(
-      screen.queryByRole("link", { name: "Go to profile" }),
+      screen.queryByRole("link", { name: /^Go to profile:/ }),
     ).not.toBeInTheDocument();
     expect(
       screen.queryByRole("button", { name: /^Like / }),
@@ -37,13 +37,13 @@ describe("Authentication and protected navigation", () => {
       within(dialog).getByRole("button", { name: "Sign Up", exact: true }),
     );
     expect(
-      await screen.findByRole("link", { name: "Go to profile" }),
+      await screen.findByRole("link", { name: /^Go to profile:/ }),
     ).toHaveTextContent("New User");
     expect(localStorage.getItem("jwt")).toBeTruthy();
     view.unmount();
     await start();
     expect(
-      await screen.findByRole("link", { name: "Go to profile" }),
+      await screen.findByRole("link", { name: /^Go to profile:/ }),
     ).toHaveTextContent("New User");
   });
 

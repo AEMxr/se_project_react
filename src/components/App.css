@@ -18,6 +18,15 @@
   line-height: 22px;
   overflow-wrap: anywhere;
 }
+.app__retry {
+  margin-left: 12px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #000;
+  font: inherit;
+  text-decoration: underline;
+}
 @media (min-width: 768px) {
   .app {
     padding: 0 40px;

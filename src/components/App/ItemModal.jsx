@@ -2,6 +2,7 @@ import { useContext, useId } from "react";
 import { createPortal } from "react-dom";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import useDialog from "../../hooks/useDialog.js";
+import ImageWithPlaceholder from "./ImageWithPlaceholder.jsx";
 import closeIcon from "../../assets/Union.svg";
 import "./ItemModal.css";
 
@@ -34,10 +35,11 @@ export default function ItemModal({ item, onClose, onOpenConfirm }) {
           <img src={closeIcon} alt="" className="item-modal__close-icon" />
         </button>
         <div className="item-modal__image-section">
-          <img
+          <ImageWithPlaceholder
             src={item.link || item.imageUrl}
             alt={item.name}
             className="item-modal__image"
+            loading="eager"
           />
         </div>
         <div className="item-modal__content">

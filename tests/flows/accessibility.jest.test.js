@@ -97,7 +97,7 @@ describe("Accessibility and weather interactions", () => {
 
   test("authenticated mobile navigation opens profile and the add form", async () => {
     await start("token:account-a");
-    await screen.findByRole("link", { name: "Go to profile" });
+    await screen.findByRole("link", { name: /^Go to profile:/ });
     await testState.user.click(
       screen.getByRole("button", { name: "Open menu" }),
     );

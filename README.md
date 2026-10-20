@@ -15,6 +15,9 @@ WTWR is a React frontend for a weather-based wardrobe application, built for Tri
 - Show OpenWeather conditions and weather-appropriate garments; toggle Fahrenheit/Celsius through React Context.
 - Display an initial in a circle when an avatar is missing or cannot load.
 - Use keyboard-accessible cards and dialogs, with visible validation and request errors.
+- Skip repeated navigation with a keyboard-visible link; keep readable contrast for validation, weather labels, and heart controls.
+- Keep weather, clothing, and session requests independent; show collection skeletons and image placeholders while loading, with a fallback for broken garment images.
+- Bound API requests to 15 seconds and retry failed weather or clothing loads independently; timed-out forms retain their drafts for another attempt.
 - Preserve the existing mobile outfit randomizer as an extra feature.
 
 ## Technologies
@@ -23,10 +26,10 @@ React functional components and hooks, React Router, Context, Vite, Fetch, valid
 
 ## Run locally in Git Bash
 
-Use Node.js 22 or newer and MongoDB Community Server. The matching changes are on `automated-tests` in both repositories. From a parent folder, clone that branch into ordinary sibling folders:
+Use Node.js 22 or newer and MongoDB Community Server. Use this frontend's `main` branch with the backend's `automated-tests` branch, which includes the required weather endpoint. From a parent folder, clone into ordinary sibling folders:
 
 ```bash
-git clone --branch automated-tests https://github.com/AEMxr/se_project_react.git
+git clone --branch main https://github.com/AEMxr/se_project_react.git
 git clone --branch automated-tests https://github.com/AEMxr/se_project_express.git
 ```
 
@@ -86,6 +89,26 @@ Run one frontend on port 3000 and one backend on port 3001. Stop a running Vite 
 
 The supplied rubric describes a weather key in frontend `constants.js`. This version intentionally keeps the key in the backend and retrieves weather through `GET /weather`. The browser receives the same weather data needed for the course UI, without provider credentials. This is a documented architectural deviation for the reviewer.
 
+## Engineering practices
+
+These practices guide the implementation; the links provide concrete examples rather than a claim that every module satisfies every principle:
+
+| Practice                                                     | Application in this project                                                                                                                                                                                             |
+| ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **BEM** — Block, Element, Modifier                           | CSS uses `block__element_modifier` names and retains each modified element's base class.                                                                                                                                |
+| **DRY** — Don't Repeat Yourself                              | Shared form fields, validation, request handling, and [clothing grids](src/components/App/Main/ClothingGrid.jsx) avoid duplicate behavior.                                                                              |
+| **KISS** — Keep It Simple, Stupid                            | Small functional components/hooks and native Fetch handle the course behavior without an additional application framework.                                                                                              |
+| **YAGNI** — You Aren't Gonna Need It                         | Garment entry keeps the required image-URL form.                                                                                                                                                                        |
+| **SRP** — Single Responsibility Principle                    | Weather, authentication, clothing requests, and dialog behavior have focused hooks.                                                                                                                                     |
+| **SoC** — Separation of Concerns                             | Components render UI, hooks manage state/lifecycles, API modules describe endpoints, and the request helper handles HTTP behavior.                                                                                      |
+| **SOLID**                                                    | Focused responsibilities and callback contracts, plus an [injectable HTTP transport](src/utils/request.js) checked by substitution tests. See the [principle-by-principle evidence](docs/engineering-practices.dev.md). |
+| **AAA** — Arrange, Act, Assert                               | Tests prepare fixtures, perform user actions or service calls, then assert observable results.                                                                                                                          |
+| **TDD** — Test-Driven Development                            | The new transport, skip-navigation, and accessible profile-name changes followed failing-test → implementation → verification cycles. Older code was not all developed test-first.                                      |
+| **CI/CD** — Continuous Integration / Delivery and Deployment | GitHub Actions checks the code, packages a verified build, and configures a gated Pages deployment from `main`. Hosting prerequisites are described below.                                                              |
+| **WCAG** — Web Content Accessibility Guidelines              | Semantic controls, associated errors, keyboard navigation, dialog focus, contrast fixes, and axe checks target WCAG 2.2 A/AA criteria. Automated checks do not establish full WCAG conformance.                         |
+
+The [engineering notes](docs/engineering-practices.dev.md) record the scope, test-first examples, accessibility review, and remaining manual checks.
+
 ## Commands
 
 | Command                      | Purpose                                                   |
@@ -95,6 +118,7 @@ The supplied rubric describes a weather key in frontend `constants.js`. This ver
 | `npm test`                   | Run automated regression checks with mocked API responses |
 | `npm run test:jest`          | Run isolated Jest unit and user-flow suites               |
 | `npm run test:jest:coverage` | Generate Jest coverage reports                            |
+| `npm run test:a11y`          | Run axe and keyboard skip-navigation checks               |
 | `npm run test:security`      | Verify real Vite builds exclude weather credentials       |
 | `npm run test:all`           | Run Node, Jest, and client-build security checks          |
 | `npm run format`             | Apply Prettier formatting                                 |
@@ -107,6 +131,12 @@ The supplied rubric describes a weather key in frontend `constants.js`. This ver
 The frontend calls the backend's `POST /signup`, `POST /signin`, `GET/PATCH /users/me`, `GET/POST /items`, `DELETE /items/:id`, and `PUT/DELETE /items/:id/likes` endpoints. Signup, signin, and listing items are public; protected requests include the saved Bearer token.
 
 Development uses `/` and `/profile` through BrowserRouter. The production build uses HashRouter and the `/se_project_react/` base for GitHub Pages. Hosted use requires a reachable HTTPS backend configured at build time; the local Express setup is sufficient for this course project.
+
+## Delivery and deployment
+
+The [frontend workflow](.github/workflows/checks.yml) retains each successful build as `wtwr-frontend-<commit SHA>` for seven days. Its Pages job runs only from `main`, after verification succeeds, and when the repository variable `VITE_API_BASE_URL` is set. The address must use HTTPS and contain no credentials, query, or fragment.
+
+For hosted releases, enable GitHub Actions as the Pages publishing source and set that public backend address under repository Actions variables. The backend must be reachable and allow the frontend origin. The workflow publishes the already-verified artifact. With no variable configured, deployment is skipped and local development continues normally. This change configures the workflow; it does not itself publish a site or provision a backend.
 
 ## Verification
 

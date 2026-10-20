@@ -27,12 +27,14 @@ describe("getItems", () => {
       item,
     ]);
     expect(fetch).toHaveBeenCalledWith(`${base}/items`, {
-      signal: controller.signal,
+      signal: expect.any(AbortSignal),
     });
   });
   test("supports calls without options", async () => {
     await getItems();
-    expect(fetch).toHaveBeenCalledWith(`${base}/items`, { signal: undefined });
+    expect(fetch).toHaveBeenCalledWith(`${base}/items`, {
+      signal: expect.any(AbortSignal),
+    });
   });
 });
 
@@ -51,6 +53,7 @@ describe("createItem", () => {
       ),
     ).resolves.toEqual(item);
     expect(fetch).toHaveBeenCalledWith(`${base}/items`, {
+      signal: expect.any(AbortSignal),
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,6 +72,7 @@ describe("removeItem", () => {
   test("encodes the item ID and returns the deleted record", async () => {
     await expect(removeItem("item/id ?", token)).resolves.toEqual(item);
     expect(fetch).toHaveBeenCalledWith(`${base}/items/item%2Fid%20%3F`, {
+      signal: expect.any(AbortSignal),
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -86,6 +90,7 @@ describe("updateCurrentUser", () => {
       ),
     ).resolves.toEqual(user);
     expect(fetch).toHaveBeenCalledWith(`${base}/users/me`, {
+      signal: expect.any(AbortSignal),
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -105,6 +110,7 @@ describe("toggleItemLike", () => {
       item,
     );
     expect(fetch).toHaveBeenCalledWith(`${base}/items/item%2Fid/likes`, {
+      signal: expect.any(AbortSignal),
       method,
       headers: { Authorization: `Bearer ${token}` },
     });

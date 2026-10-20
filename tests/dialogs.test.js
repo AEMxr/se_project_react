@@ -101,7 +101,8 @@ test("weather pending does not display garments from all temperature categories"
     call.path === "/weather" ? held.promise : undefined,
   );
   await mount(App);
-  assert.equal(all(".card").length, 0);
+  assert.equal(all(".card:not(.card_loading)").length, 0);
+  assert.equal(all(".card_loading").length, 4);
   assert.ok(query(".weather-card__image"));
   await settle(() =>
     held.resolve(

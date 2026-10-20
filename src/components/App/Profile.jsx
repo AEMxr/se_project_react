@@ -18,7 +18,7 @@ export default function Profile({
   if (!user) return null;
   const userItems = clothingItems.filter((item) => item.owner === user._id);
   return (
-    <main className="profile">
+    <main id="main-content" className="profile" tabIndex={-1}>
       <h1 className="visually-hidden">Your profile</h1>
       <SideBar onLogout={onLogout} onEditProfile={onEditProfile} />
       <ClothesSection

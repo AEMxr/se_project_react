@@ -1,4 +1,5 @@
 import LikeButton from "../LikeButton.jsx";
+import ImageWithPlaceholder from "../ImageWithPlaceholder.jsx";
 import "./ItemCard.css";
 
 export default function ItemCard({
@@ -6,6 +7,7 @@ export default function ItemCard({
   onCardClick,
   onCardLike,
   variant = "main",
+  imageLoading = "lazy",
 }) {
   return (
     <li
@@ -18,10 +20,11 @@ export default function ItemCard({
           onClick={() => onCardClick(item)}
           aria-label={`View ${item.name}`}
         >
-          <img
+          <ImageWithPlaceholder
             src={item.link || item.imageUrl}
             alt={item.name}
             className="card__image"
+            loading={imageLoading}
           />
         </button>
         <div className="card__header">

@@ -22,6 +22,9 @@
   aspect-ratio: 1;
   object-fit: cover;
 }
+.card__image_skeleton {
+  background: #efefef;
+}
 .card__header {
   position: absolute;
   top: 15px;
@@ -78,7 +81,8 @@
   width: 24px;
   height: 24px;
   padding: 0;
-  background: none;
+  background: #fff;
+  border-radius: 4px;
   border: none;
   color: #666;
   font-size: 24px;

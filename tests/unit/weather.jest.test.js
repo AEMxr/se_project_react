@@ -48,7 +48,7 @@ describe("fetchWeather", () => {
       lat: "49.28",
       lon: "-123.12",
     });
-    expect(options.signal).toBe(controller.signal);
+    expect(options.signal).toBeInstanceOf(AbortSignal);
     expect(options.headers).toBeUndefined();
   });
   test("uses default coordinates when none are supplied", async () => {

@@ -12,6 +12,7 @@ describe("signIn", () => {
       token: "fixture-token",
     });
     expect(fetch).toHaveBeenCalledWith(`${base}/signin`, {
+      signal: expect.any(AbortSignal),
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
@@ -40,6 +41,7 @@ describe("signUp", () => {
       _id: "new-user",
     });
     expect(fetch).toHaveBeenCalledWith(`${base}/signup`, {
+      signal: expect.any(AbortSignal),
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
@@ -63,7 +65,7 @@ describe("getCurrentUser", () => {
       getCurrentUser("fixture-token", { signal: controller.signal }),
     ).resolves.toEqual(user);
     expect(fetch).toHaveBeenCalledWith(`${base}/users/me`, {
-      signal: controller.signal,
+      signal: expect.any(AbortSignal),
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +76,7 @@ describe("getCurrentUser", () => {
   test("works without a cancellation option", async () => {
     fetch.mockResolvedValue(jsonResponse({ _id: "user" }));
     await getCurrentUser("fixture-token");
-    expect(fetch.mock.calls[0][1].signal).toBeUndefined();
+    expect(fetch.mock.calls[0][1].signal).toBeInstanceOf(AbortSignal);
   });
   test("preserves network rejection", async () => {
     const error = new TypeError("Offline");

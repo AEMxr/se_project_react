@@ -1,6 +1,6 @@
 # Automated testing
 
-The testing changes are on the `automated-tests` branch. The frontend stays in `se_project_react`; backend changes are isolated in the sibling `se_project_express-tests` worktree on its own `automated-tests` branch. The original backend and the optional iPhone worktree are unchanged.
+The frontend testing changes were prepared on `automated-tests` and integrated into `main` in `se_project_react`. Backend changes are isolated in the sibling `se_project_express-tests` worktree on its own `automated-tests` branch. The original backend and the optional iPhone worktree are unchanged.
 
 ## Frontend commands — Git Bash
 
@@ -8,8 +8,9 @@ From `~/Documents/TripleTen/se_project_react`:
 
 ```bash
 npm run test:jest
-npm run test:jest:coverage
 ```
+
+Use `npm run test:jest:coverage` instead when you also need a coverage report, or `npm run test:a11y` for only the axe/keyboard checks. Those accessibility suites are already included in a full Jest run.
 
 Run a specific suite:
 
@@ -28,22 +29,41 @@ The frontend Jest/Node regression tests work without running Vite, Express, Mong
 
 `npm run test:security` runs an actual Vite build in memory with fake private and legacy weather keys. It proves the public API address reaches client code and neither key does, even if an old weather environment variable is present. This check is included in `npm run test:all`. The weather API now calls Express's public `/weather` endpoint with coordinates only. See [weather security and setup](weather-security.dev.md).
 
-## Suites and the 20 standalone functions
+## Suites and standalone functions
 
 | Suite                                   | Functions or behavior                                                                                                                                                                                                                      |
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `tests/unit/validation.jest.test.js`    | `formValidation`, `normalizeFormValues`                                                                                                                                                                                                    |
 | `tests/unit/items.jest.test.js`         | `normalizeItem`, `mergeInitialItems`                                                                                                                                                                                                       |
 | `tests/unit/errors.jest.test.js`        | `createAbortError`, `createUserError`, `getErrorMessage`, `rejectRequest`                                                                                                                                                                  |
-| `tests/unit/request.jest.test.js`       | `handleResponse`                                                                                                                                                                                                                           |
+| `tests/unit/request.jest.test.js`       | `handleResponse` response parsing and HTTP errors                                                                                                                                                                                          |
+| `tests/unit/timeouts.jest.test.js`      | `request` deadlines, stalled response bodies, cancellation, timer/listener cleanup, and no automatic mutation retries                                                                                                                      |
+| `tests/unit/transport.jest.test.js`     | Injected synchronous/asynchronous HTTP transports preserve request options, parsed results, and errors                                                                                                                                     |
 | `tests/unit/api.jest.test.js`           | `getItems`, `createItem`, `removeItem`, `updateCurrentUser`, `toggleItemLike`                                                                                                                                                              |
 | `tests/unit/auth.jest.test.js`          | `signIn`, `signUp`, `getCurrentUser`                                                                                                                                                                                                       |
 | `tests/unit/weather.jest.test.js`       | `fetchWeather`, `getWeatherType`                                                                                                                                                                                                           |
 | `tests/unit/outfitBuilder.jest.test.js` | `buildOutfit` with controlled randomness                                                                                                                                                                                                   |
 | `tests/unit/hooks.jest.test.js`         | Form state, touched fields, submission guards/retries, midnight updates, geolocation deadlines, cleanup                                                                                                                                    |
+| `tests/unit/images.jest.test.js`        | Image loading, cached images, broken images, URL changes, collection skeletons, eager/lazy loading                                                                                                                                         |
 | `tests/flows/*.jest.test.js`            | Registration and auto-login, restored sessions, protected routes, two-account ownership, profile editing, garment creation/deletion, likes, stale responses, failures, dialogs, keyboard focus, mobile menu, unit switching, randomization |
 
 Suites group related work with `describe`; parameterized tests cover boundaries and invalid input. Network success and failure paths, draft retention, duplicate requests, input normalization, and stale results have explicit assertions. The original Node suite adds further overlapping-request regression coverage.
+
+`tests/flows/wcag.jest.test.js` adds nine axe checks covering page/form/dialog states. `tests/flows/skip-navigation.jest.test.js` verifies keyboard bypass of repeated navigation and accessible profile naming. Together with the transport contract suite, these add 15 tests. The [engineering notes](engineering-practices.dev.md) explain the test-first changes, SOLID examples, rendered Chrome accessibility checks, and their limits. `npm run test:a11y` runs the focused axe/keyboard suites; they also run in the full Jest suite and CI.
+
+## Loading behavior
+
+Weather, session verification, and clothing requests run independently. The main page waits for valid weather before choosing a temperature category; the profile can show its clothing while weather is still pending. A pending empty collection displays four noninteractive skeleton cards. Available garments remain usable during an outstanding collection request.
+
+Garment cards and previews reserve their existing image dimensions, display a neutral loading placeholder, and show an unavailable-image fallback on failure. The first four card images load eagerly; later images use the browser's lazy-loading hint. Preview images load eagerly. Image decoding is asynchronous, and custom fonts use `font-display: swap` so text can appear while fonts load.
+
+The image unit suite and `tests/flows/loading.jest.test.js` add 14 tests covering slow requests, failures, cached images, URL changes, and usable forms, likes, previews, and temperature controls while other resources remain pending.
+
+A separate Chrome check used the production build with delayed fixture APIs and images at 1440×1000 and 390×810. It verified skeleton replacement, usable forms/previews before responses, eager/lazy attributes, broken-image fallback, and no horizontal overflow on the narrow viewport. The first desktop card frame stayed 253×253px and the mobile preview frame stayed 343×343px before and after its portrait image loaded. This checks browser layout, not real iPhone performance or live API speed.
+
+All frontend API calls use a 15-second deadline covering the connection and response-body reading. The shared request helper combines that deadline with caller cancellation, then removes its timer and abort listener on completion. Timeouts show readable errors and release pending form/collection states. No request is retried automatically, including mutations whose server-side result may be uncertain after a timeout.
+
+Failed weather and clothing requests have separate Retry buttons in the existing page error area. Retrying clears that error and reloads only the affected data. Weather reuses the coordinates from its first request, and clothing retries preserve mutations made during the new request. `tests/flows/recovery.jest.test.js` covers independent retries, late timed-out results, draft retention, deletion dismissal, and verification timeouts. The hook suite also checks pending weather cleanup. A Chrome check at 390px verified both retry controls fit, weather/clothing recover independently, temperature controls work during a retry, and successful recovery clears the error.
 
 ## Backend commands — a different folder
 
@@ -66,15 +86,15 @@ Importing backend `app.js` starts neither a database connection nor `app.listen(
 
 ## Results and reports
 
-Verified on October 19, 2026:
+Frontend verified on October 20, 2026. Backend results below are from its separate October 19 verification; the backend was unchanged during these frontend refinements.
 
 | Check                           | Result                                                         |
 | ------------------------------- | -------------------------------------------------------------- |
-| Frontend Jest                   | 173 tests across 13 suites pass                                |
+| Frontend Jest                   | 217 tests across 20 suites pass                                |
 | Existing frontend Node tests    | 35 tests pass                                                  |
 | Frontend Vite security build    | 1 test passes                                                  |
 | Backend Jest/SuperTest/database | 252 tests across 13 suites pass                                |
-| Frontend coverage               | 99.13% lines, 90% branches, 98.85% functions                   |
+| Frontend coverage               | 99.32% lines, 91.45% branches, 98.96% functions                |
 | Backend coverage                | 98.66% lines, 99.01% branches, 100% functions                  |
 | Backend open handles            | Tests exit normally with `--detectOpenHandles`; no forced exit |
 
@@ -84,7 +104,9 @@ These are unit and integration tests, not a complete browser end-to-end suite. j
 
 ## Dependency audit
 
-Compatible audit fixes were applied in the testing branches. Production dependency audits report zero vulnerabilities in both projects. Development-only advisories remain in tooling dependencies, including Jest's transitive `sprintf-js` chain and the backend's nodemon tooling. No forced major downgrades were applied. Review `npm audit` when updating the tooling; these advisories and their available fixes can change.
+On October 20, 2026, the frontend's full `npm audit` reports zero vulnerabilities, including development dependencies. A scoped override makes `@istanbuljs/load-nyc-config` use `js-yaml` 4.3.2 or a compatible 4.x release, removing its old `argparse`/`sprintf-js` dependency chain without downgrading Jest. The loader uses the supported `load()` API; YAML configuration/extends parsing and the full test/coverage checks verify compatibility. Remove the override when upstream updates its dependency. Dependency advisories can change, so rerun `npm audit` when updating packages.
+
+Backend audit results are separate: its last production audit was clean, while development-tool advisories remained. This frontend audit does not modify the backend dependency tree.
 
 The backend worktree now validates signup, signin, profile, garment and item-ID requests with Celebrate/Joi before hashing or database work. Controllers forward failures to centralized error middleware, and Winston logs omit credentials, request/response bodies and raw exception messages. The validation suite proves invalid requests never reach those expensive operations, and logger tests inspect actual middleware output for sample secrets. See `se_project_express-tests/VALIDATION.md` for the full API constraints, middleware order and scoped dependency override.
 
@@ -96,6 +118,6 @@ The backend worktree now validates signup, signin, profile, garment and item-ID 
 - [Celebrate validation and error middleware](https://github.com/arb/celebrate)
 - [Express error handling](https://expressjs.com/en/guide/error-handling/)
 
-The flow suites are split into authentication, wardrobe, request failures and accessibility. Shared helpers live in `tests/fixtures/appFlows.js`. The Node app regressions are split into authentication/profile, wardrobe and dialogs/weather, with shared setup in `tests/fixtures/nodeApp.js`.
+The flow suites are split into authentication, wardrobe, request failures, accessibility, independent loading and timeout recovery. Shared helpers live in `tests/fixtures/appFlows.js`. The Node app regressions are split into authentication/profile, wardrobe and dialogs/weather, with shared setup in `tests/fixtures/nodeApp.js`.
 
-GitHub Actions runs frontend lint, formatting, all automated suites and the production build on pushes to `main`/`automated-tests` and pull requests targeting `main`, using Node.js 22.
+GitHub Actions runs frontend lint, formatting, all automated suites and the production build on pushes to `main`/`automated-tests` and pull requests targeting `main`, using Node.js 22. Successful builds are retained as commit-specific artifacts for seven days. The Pages job deploys that verified artifact only from `main` when the public HTTPS API variable and Pages settings are configured. Workflow YAML, verification dependencies, matching artifact names, and ten backend-address validation cases passed local checks; a hosted deployment has not been performed for these changes.

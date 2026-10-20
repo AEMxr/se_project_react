@@ -3,7 +3,7 @@ import "./WeatherCard.css";
 import CurrentTemperatureUnitContext from "../../../contexts/CurrentTemperatureUnitContext.js";
 import { useContext } from "react";
 
-function WeatherCard({ temperature, condition, time }) {
+function WeatherCard({ temperature, condition, time, isLoading = false }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   const weatherImage = weatherConditions.find(
@@ -16,7 +16,7 @@ function WeatherCard({ temperature, condition, time }) {
     : `${import.meta.env.BASE_URL}weatherConditions/daySunny.svg`;
 
   return (
-    <section className="weather-card">
+    <section className="weather-card" aria-busy={isLoading}>
       <img
         className="weather-card__image"
         src={imageSrc}

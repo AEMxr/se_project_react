@@ -49,7 +49,7 @@ describe("Async failures and stale responses", () => {
     await act(async () => held.resolve(response({ token: "token:account-a" })));
     expect(localStorage.getItem("jwt")).toBeNull();
     expect(
-      screen.queryByRole("link", { name: "Go to profile" }),
+      screen.queryByRole("link", { name: /^Go to profile:/ }),
     ).not.toBeInTheDocument();
   });
 
