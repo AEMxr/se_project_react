@@ -33,11 +33,11 @@ TripleTen/
 
 Keep the database, backend, and frontend running. These are separate processes:
 
-| Terminal                                          | Folder               | Process                    |
-| ------------------------------------------------- | -------------------- | -------------------------- |
-| A, if MongoDB is not already running as a service | Any folder           | MongoDB                    |
-| B                                                 | `se_project_express` | Express API on port 3001   |
-| C                                                 | `se_project_react`   | Vite frontend on port 3000 |
+| Terminal                                          | Folder                     | Process                    |
+| ------------------------------------------------- | -------------------------- | -------------------------- |
+| A, if MongoDB is not already running as a service | Any folder                 | MongoDB                    |
+| B                                                 | `se_project_express-tests` | Express API on port 3001   |
+| C                                                 | `se_project_react`         | Vite frontend on port 3000 |
 
 ### A. Database
 
@@ -55,12 +55,14 @@ Keep this terminal running. The backend's database configuration is documented i
 Open another terminal **in the backend folder**:
 
 ```bash
-cd ~/Documents/TripleTen/se_project_express
+cd ~/Documents/TripleTen/se_project_express-tests
 npm ci
 npm run dev
 ```
 
-The API should listen at `http://localhost:3001`. Starting the frontend does not start Express or MongoDB.
+This branch needs the updated backend in the separate `se_project_express-tests` worktree, including its `/weather` endpoint. The API should listen at `http://localhost:3001`. Stop another backend using port 3001 before starting it. Starting the frontend does not start Express or MongoDB.
+
+The OpenWeather key belongs only in the backend's ignored `.env.local` as `OPEN_WEATHER_API_KEY`. Existing local settings were migrated there. For a fresh setup, copy the backend's `.env.example` to its `.env.local` and set the key there. See [weather setup](docs/weather-security.dev.md).
 
 ### C. Frontend
 
@@ -72,13 +74,7 @@ npm ci
 cp -n .env.example .env.local
 ```
 
-Set your own key in `.env.local`:
-
-```dotenv
-VITE_OPEN_WEATHER_KEY=your_openweather_key
-```
-
-Only the placeholder `.env.example` belongs in Git. Local `.env` files and generated `project_dump.txt` snapshots are ignored. If a key was previously committed, create a replacement in your [OpenWeather API keys](https://home.openweathermap.org/api_keys) account page, update `.env.local`, and delete the exposed key. Removing a tracked file does not erase earlier Git history.
+The frontend needs no OpenWeather key. Its optional `.env.local` contains only the public API address, `VITE_API_BASE_URL`. Local environment files and generated `project_dump.txt` snapshots are ignored by Git; only placeholder templates belong in version control.
 
 Then run:
 
@@ -90,7 +86,7 @@ Open `http://127.0.0.1:3000`. Restart Vite after changing environment values. St
 
 Run only this frontend on port 3000. Stop the frontend from the optional `bug fixes and code refinement` worktree before starting the course version. The course server binds to `127.0.0.1` and fails if that address and port are occupied, rather than silently choosing another port. Use the explicit address above to avoid mixing worktrees through `localhost`. A first visit to this address may require signing in again because browser storage is separate from `localhost`.
 
-The optional `VITE_API_BASE_URL` overrides the default `http://localhost:3001`. The OpenWeather key is browser-facing configuration; Vite includes `VITE_` variables in the frontend build.
+The optional `VITE_API_BASE_URL` overrides the default `http://localhost:3001`. Weather requests go through Express, and the frontend build excludes weather credentials. For deployment, use an HTTPS API address and configure the key on the backend host.
 
 ## Commands
 
@@ -101,6 +97,7 @@ The optional `VITE_API_BASE_URL` overrides the default `http://localhost:3001`. 
 | `npm test`                   | Run automated regression checks with mocked API responses |
 | `npm run test:jest`          | Run isolated Jest unit and user-flow suites               |
 | `npm run test:jest:coverage` | Generate Jest coverage reports                            |
+| `npm run test:security`      | Verify real Vite builds exclude weather credentials       |
 | `npm run test:all`           | Run both the original regression suite and Jest           |
 | `npm run format`             | Apply Prettier formatting                                 |
 | `npm run format:check`       | Check formatting without editing                          |

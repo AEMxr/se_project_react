@@ -143,7 +143,9 @@ describe("useWeather lifecycle", () => {
     fetch.mockImplementation(fixture().fetch);
     const { result } = renderHook(() => useWeather());
     await waitFor(() => expect(result.current.isLoading).toBe(false));
-    expect(fetch.mock.calls[0][0].searchParams.get("lat")).toBe("40.7128");
+    expect(new URL(fetch.mock.calls[0][0]).searchParams.get("lat")).toBe(
+      "40.7128",
+    );
   });
   test("falls back on deadline and ignores a location callback that arrives later", async () => {
     jest.useFakeTimers();

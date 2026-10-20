@@ -1,5 +1,3 @@
-export const API_KEY = import.meta.env.VITE_OPEN_WEATHER_KEY;
-export const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
 export const DEFAULT_COORDS = { latitude: 40.7128, longitude: -74.006 };
 export const NAME_MIN_LENGTH = 2;
 export const NAME_MAX_LENGTH = 30;

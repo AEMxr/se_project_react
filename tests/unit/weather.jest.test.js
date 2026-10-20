@@ -1,4 +1,4 @@
-import { describe, expect, jest, test } from "@jest/globals";
+import { describe, expect, test } from "@jest/globals";
 import { fetchWeather, getWeatherType } from "../../src/utils/weatherApi.js";
 import { jsonResponse } from "../fixtures/response.js";
 
@@ -29,7 +29,7 @@ describe("getWeatherType", () => {
 });
 
 describe("fetchWeather", () => {
-  test("requests imperial weather with fixture credentials and normalizes the result", async () => {
+  test("requests weather from Express without exposing credentials and normalizes the result", async () => {
     const controller = new AbortController();
     fetch.mockResolvedValue(jsonResponse(weather));
     await expect(
@@ -40,21 +40,23 @@ describe("fetchWeather", () => {
       condition: "Sunny",
       time: "day",
     });
-    const [url, options] = fetch.mock.calls[0];
-    expect(url.origin).toBe("https://api.openweathermap.org");
+    const [input, options] = fetch.mock.calls[0];
+    const url = new URL(input);
+    expect(url.origin).toBe("http://localhost:3001");
+    expect(url.pathname).toBe("/weather");
     expect(Object.fromEntries(url.searchParams)).toEqual({
       lat: "49.28",
       lon: "-123.12",
-      units: "imperial",
-      appid: "test-only-key",
     });
     expect(options.signal).toBe(controller.signal);
+    expect(options.headers).toBeUndefined();
   });
   test("uses default coordinates when none are supplied", async () => {
     fetch.mockResolvedValue(jsonResponse(weather));
     await fetchWeather();
-    expect(fetch.mock.calls[0][0].searchParams.get("lat")).toBe("40.7128");
-    expect(fetch.mock.calls[0][0].searchParams.get("lon")).toBe("-74.006");
+    const url = new URL(fetch.mock.calls[0][0]);
+    expect(url.searchParams.get("lat")).toBe("40.7128");
+    expect(url.searchParams.get("lon")).toBe("-74.006");
   });
   test.each([
     ["Clouds", "Cloudy"],
@@ -109,22 +111,9 @@ describe("fetchWeather", () => {
     fetch.mockRejectedValue(error);
     await expect(fetchWeather()).rejects.toBe(error);
   });
-  test("rejects a missing key before making a request", async () => {
-    let request;
-    try {
-      jest.isolateModules(() => {
-        jest.doMock("../../src/utils/constants.js", () => ({
-          ...jest.requireActual("../../src/utils/constants.js"),
-          API_KEY: "",
-        }));
-        request = require("../../src/utils/weatherApi.js").fetchWeather();
-      });
-      await expect(request).rejects.toMatchObject({
-        userMessage: "Weather is unavailable. Please try again later.",
-      });
-      expect(fetch).not.toHaveBeenCalled();
-    } finally {
-      jest.dontMock("../../src/utils/constants.js");
-    }
+  test("preserves abort errors so cancelled requests do not become user-facing failures", async () => {
+    const error = new DOMException("Request cancelled", "AbortError");
+    fetch.mockRejectedValue(error);
+    await expect(fetchWeather()).rejects.toBe(error);
   });
 });

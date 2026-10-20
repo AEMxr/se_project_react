@@ -24,7 +24,9 @@ The existing Node regression suite is preserved as `npm test`. Run everything wi
 npm run test:all
 ```
 
-These frontend tests work without Vite, Express, MongoDB, or a real weather key. Fetch is blocked by default, and each request test supplies a mock. The Jest transformer uses the existing esbuild dependency to support JSX, ES modules, and fixed test-only Vite environment values. Styling was not changed. The frontend request helper now reads Celebrate's validation details so existing form alerts show specific field errors while preserving drafts and allowing retry.
+The frontend Jest/Node regression tests work without running Vite, Express, MongoDB, or a real weather key. Fetch is blocked by default, and each request test supplies a mock. The Jest transformer uses the existing esbuild dependency to support JSX, ES modules, and fixed test-only Vite environment values. Styling was not changed. The frontend request helper reads Celebrate's validation details so existing form alerts show specific field errors while preserving drafts and allowing retry.
+
+`npm run test:security` runs an actual Vite build in memory with fake private and legacy weather keys. It proves the public API address reaches client code and neither key does, even if an old weather environment variable is present. This check is included in `npm run test:all`. The weather API now calls Express's public `/weather` endpoint with coordinates only. See [weather security and setup](weather-security.dev.md).
 
 ## Suites and the 20 standalone functions
 
@@ -70,9 +72,10 @@ Verified on October 19, 2026:
 | ------------------------------- | -------------------------------------------------------------- |
 | Frontend Jest                   | 173 tests across 10 suites pass                                |
 | Existing frontend Node tests    | 35 tests pass                                                  |
-| Backend Jest/SuperTest/database | 187 tests across 7 suites pass                                 |
-| Frontend coverage               | 99.08% lines, 89.77% branches, 98.80% functions                |
-| Backend coverage                | 98.17% lines, 99.18% branches, 100% functions                  |
+| Frontend Vite security build    | 1 test passes                                                  |
+| Backend Jest/SuperTest/database | 234 tests across 10 suites pass                                |
+| Frontend coverage               | 99.08% lines, 89.67% branches, 98.78% functions                |
+| Backend coverage                | 98.59% lines, 98.93% branches, 100% functions                  |
 | Backend open handles            | Tests exit normally with `--detectOpenHandles`; no forced exit |
 
 Both Jest configurations enforce minimum global coverage: 90% lines/statements, 85% branches, and 95% functions. Open `coverage/jest/index.html` in the frontend or `coverage/index.html` in the backend after a coverage run. Reports are ignored by Git, ESLint, and formatting checks where applicable.

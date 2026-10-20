@@ -5,6 +5,7 @@
 ```bash
 npm run lint
 npm test
+npm run test:security
 npm run format:check
 npm run build
 ```
@@ -14,6 +15,8 @@ The automated suite checks the frontend with mocked APIs. It does not create acc
 ## With Express and MongoDB running
 
 Use two test accounts so ownership can be checked.
+
+On `automated-tests`, run Express from `../se_project_express-tests` so `/weather` is available. The weather key stays in that backend's ignored `.env.local`; the frontend needs no weather credential. See [weather setup](weather-security.dev.md).
 
 Open the course frontend at `http://127.0.0.1:3000`, with the optional worktree's frontend stopped. The add-garment form should contain Name, Image URL, and weather radios, with no photo picker or color option. Randomize should appear at widths of 430px or less, including 390px, and be hidden on larger screens.
 

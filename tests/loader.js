@@ -22,7 +22,6 @@ export async function load(url, context, nextLoad) {
         "import.meta.env": JSON.stringify({
           PROD: false,
           BASE_URL: "/",
-          VITE_OPEN_WEATHER_KEY: "test-only-key",
           VITE_API_BASE_URL: "http://localhost:3001",
         }),
       },

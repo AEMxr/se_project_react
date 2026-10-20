@@ -526,9 +526,7 @@ test("weather geolocation has a deadline and falls back once", async () => {
     await act(async () => {
       await new Promise((resolve) => originalTimer(resolve, 10));
     });
-    const requests = api.calls.filter(
-      (call) => call.url.hostname === "api.openweathermap.org",
-    );
+    const requests = api.calls.filter((call) => call.path === "/weather");
     assert.equal(requests.length, 1);
     assert.equal(requests[0].url.searchParams.get("lat"), "40.7128");
     assert.ok(query(".main__headliner").textContent.includes("70°F"));
@@ -540,7 +538,7 @@ test("weather geolocation has a deadline and falls back once", async () => {
 test("weather pending does not display garments from all temperature categories", async () => {
   const held = deferred();
   api.intercept((call) =>
-    call.url.hostname === "api.openweathermap.org" ? held.promise : undefined,
+    call.path === "/weather" ? held.promise : undefined,
   );
   await mount(App);
   assert.equal(all(".card").length, 0);

@@ -25,8 +25,6 @@ module.exports = {
         "import.meta.env.VITE_API_BASE_URL": JSON.stringify(
           "http://localhost:3001",
         ),
-        "import.meta.env.VITE_OPEN_WEATHER_KEY":
-          JSON.stringify("test-only-key"),
       },
     });
     return { code: result.code, map: result.map };

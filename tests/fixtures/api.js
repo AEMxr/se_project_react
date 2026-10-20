@@ -74,7 +74,7 @@ export function fixture() {
     calls.push(call);
     const custom = intercept(call);
     if (custom !== undefined) return custom;
-    if (url.hostname === "api.openweathermap.org")
+    if (call.path === "/weather" && method === "GET")
       return response({
         name: "Vancouver",
         main: { temp: 70 },
