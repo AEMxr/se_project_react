@@ -12,14 +12,14 @@ export default function ItemModal({ item, onClose, onOpenConfirm }) {
   if (!item) return null;
   return createPortal(
     <div
-      className="item-modal__overlay"
+      className="item-modal"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
     >
       <div
         ref={dialogRef}
-        className="item-modal"
+        className="item-modal__dialog"
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}

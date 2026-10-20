@@ -23,11 +23,11 @@ export default function Main({
   const filteredItems = clothingItems.filter(
     (item) => weatherType && item.weather === weatherType,
   );
-  let itemsToDisplay = filteredItems;
-  if (selection?.weatherKey === weatherKey) {
-    const selectedIds = new Set(selection.ids);
-    itemsToDisplay = filteredItems.filter((item) => selectedIds.has(item._id));
-  }
+  const selectedIds =
+    selection?.weatherKey === weatherKey ? new Set(selection.ids) : null;
+  const itemsToDisplay = selectedIds
+    ? filteredItems.filter((item) => selectedIds.has(item._id))
+    : filteredItems;
   function handleRandomize() {
     if (!filteredItems.length) return;
     const { selectedItems } = buildOutfit({

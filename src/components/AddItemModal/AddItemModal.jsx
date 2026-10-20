@@ -80,7 +80,7 @@ export default function AddItemModal({ isOpen, onAddItem, onCloseModal }) {
           {VALID_WEATHER_TYPES.map((type) => (
             <label
               key={type}
-              className={`modal__weather-radio interactive${form.weather === type ? " modal__weather-radio--active" : ""}`}
+              className={`modal__weather-radio interactive${form.weather === type ? " modal__weather-radio_active" : ""}`}
             >
               <input
                 type="radio"

@@ -1,6 +1,5 @@
 import ModalWithForm from "./ModalWithForm.jsx";
 import useFormSubmit from "../../hooks/useFormSubmit.js";
-import "./DeleteConfirmationModal.css";
 
 export default function DeleteConfirmationModal({
   isOpen,
@@ -24,18 +23,20 @@ export default function DeleteConfirmationModal({
       hideSubmit
       errorMessage={errorMessage}
     >
-      <p className="del-modal__subtitle">This action is irreversible.</p>
-      <div className="del-modal__actions">
+      <p className="modal__confirmation-subtitle">
+        This action is irreversible.
+      </p>
+      <div className="modal__confirmation-actions">
         <button
           type="submit"
-          className="del-modal__confirm interactive"
+          className="modal__confirm interactive"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Deleting..." : "Yes, delete item"}
         </button>
         <button
           type="button"
-          className="del-modal__cancel interactive"
+          className="modal__cancel interactive"
           onClick={onCancel}
           disabled={isSubmitting}
         >

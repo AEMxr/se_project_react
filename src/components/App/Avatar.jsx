@@ -15,7 +15,7 @@ export default function Avatar({ name = "", avatar, className = "" }) {
   const initial = name.trim().charAt(0).toUpperCase() || "?";
   return (
     <span
-      className={`avatar avatar__placeholder ${className}`}
+      className={`avatar avatar_placeholder ${className}`}
       role="img"
       aria-label={`${name} avatar`}
     >

@@ -26,7 +26,8 @@ globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 const { createRoot } = await import("react-dom/client");
 const { createElement } = await import("react");
 
-let root;
+const testState = {};
+
 export { deferred, response, fixture } from "./fixtures/api.js";
 export function setGeolocation(
   handler = (callback) =>
@@ -38,16 +39,16 @@ export function setGeolocation(
   });
 }
 export async function mount(Component) {
-  root = createRoot(document.getElementById("root"));
+  testState.root = createRoot(document.getElementById("root"));
   await act(async () => {
-    root.render(createElement(Component));
+    testState.root.render(createElement(Component));
   });
 }
 export async function cleanup() {
-  if (root)
+  if (testState.root)
     await act(async () => {
-      root.unmount();
-      root = null;
+      testState.root.unmount();
+      testState.root = null;
     });
   for (const child of [...document.body.children])
     if (child.id !== "root") child.remove();
@@ -77,7 +78,7 @@ export async function input(name, value) {
 export async function settle(callback = () => {}) {
   await act(async () => {
     callback();
-    for (let count = 0; count < 12; count += 1) await Promise.resolve();
+    for (const _ of Array(12)) await Promise.resolve();
   });
 }
 export async function login(email = "a@example.com") {

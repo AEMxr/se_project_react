@@ -3,7 +3,7 @@
   flex-shrink: 0;
   object-fit: cover;
 }
-.avatar__placeholder {
+.avatar_placeholder {
   display: inline-flex;
   align-items: center;
   justify-content: center;

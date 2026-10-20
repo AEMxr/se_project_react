@@ -25,6 +25,12 @@ Reviewed against the supplied Project 14 instructions and criteria on October 16
 
 ## Before submission
 
-Run the [live-backend checklist](submission-checklist.md) with Express and MongoDB running. The automated tests and browser checks use mocked responses; they do not certify persistence in your database or a deployed backend. The layout checks cover the listed widths and observed defects, rather than a complete pixel comparison of every Figma screen.
+Run the [live-backend checklist](submission-checklist.dev.md) with Express and MongoDB running. The automated tests and browser checks use mocked responses; they do not certify persistence in your database or a deployed backend. The layout checks cover the listed widths and observed defects, rather than a complete pixel comparison of every Figma screen.
 
 The frontend README includes the backend repository link, and that GitHub repository was publicly accessible at review time. Submit the frontend version containing this branch's fixes.
+
+## October 19 refinement
+
+Required state stays in App. Authentication, clothing request lifecycles and modal controls now have focused custom hooks, with dialog rendering in AppModals. BEM modifiers use one underscore convention, and CSS remains grouped by block. The declarations, dimensions and colors are preserved. Constant bindings replace reassigned local variables; mutable request/fixture data remains explicit in objects or refs.
+
+The backend now requires a private JWT secret, provides an idempotent setup command, and hides diagnostic routes outside explicit development/test mode. Fresh-clone instructions use ordinary repository folders. The weather proxy is documented as a deliberate deviation from the rubric's frontend-key placement. Live two-account checks and the GitHub-hosted course job remain separate verification steps.

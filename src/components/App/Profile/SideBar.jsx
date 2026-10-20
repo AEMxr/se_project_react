@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import CurrentUserContext from "../../../contexts/CurrentUserContext.js";
 import Avatar from "../Avatar.jsx";
-import "./Profile.css";
+import "./SideBar.css";
 
 export default function SideBar({ onLogout, onEditProfile }) {
   const user = useContext(CurrentUserContext);

@@ -1,0 +1,46 @@
+.clothes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  width: 100%;
+  margin-top: 16px;
+}
+.clothes__header {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.clothes__title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 24px;
+}
+.clothes__add {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 20px;
+  line-height: 24px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.clothes__status {
+  margin: 0;
+  font-size: 16px;
+  line-height: 22px;
+}
+.clothes__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+  gap: 20px;
+}
+@media (max-width: 767px) {
+  .clothes__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+}

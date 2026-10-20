@@ -1,10 +1,5 @@
 export function deferred() {
-  let resolve, reject;
-  const promise = new Promise((yes, no) => {
-    resolve = yes;
-    reject = no;
-  });
-  return { promise, resolve, reject };
+  return Promise.withResolvers();
 }
 export function response(body, status = 200) {
   return {
@@ -59,7 +54,8 @@ export function fixture() {
     ],
   };
   const calls = [];
-  let intercept = () => undefined;
+  const testState = {};
+  testState.intercept = () => undefined;
   const fetch = async (input, options = {}) => {
     const url = new URL(String(input));
     const method = options.method || "GET";
@@ -72,7 +68,7 @@ export function fixture() {
       headers: options.headers || {},
     };
     calls.push(call);
-    const custom = intercept(call);
+    const custom = testState.intercept(call);
     if (custom !== undefined) return custom;
     if (call.path === "/weather" && method === "GET")
       return response({
@@ -153,7 +149,7 @@ export function fixture() {
     calls,
     fetch,
     intercept: (handler) => {
-      intercept = handler;
+      testState.intercept = handler;
     },
   };
 }

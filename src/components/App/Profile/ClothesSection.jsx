@@ -1,5 +1,5 @@
 import ItemCard from "../Main/ItemCard.jsx";
-import "./Profile.css";
+import "./ClothesSection.css";
 
 export default function ClothesSection({
   items,

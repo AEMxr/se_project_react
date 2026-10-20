@@ -24,14 +24,14 @@ export default function MobileMenu({
 
   return createPortal(
     <div
-      className="mobile-menu__overlay"
+      className="mobile-menu"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
     >
       <div
         ref={dialogRef}
-        className="mobile-menu"
+        className="mobile-menu__dialog"
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}

@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 export default function useCurrentDate() {
   const [date, setDate] = useState(() => new Date());
   useEffect(() => {
-    let timer;
+    const timer = { id: null };
     function refreshDate() {
-      clearTimeout(timer);
+      clearTimeout(timer.id);
       const now = new Date();
       setDate(now);
       const midnight = new Date(now);
       midnight.setHours(24, 0, 0, 0);
-      timer = setTimeout(refreshDate, midnight.getTime() - now.getTime());
+      timer.id = setTimeout(refreshDate, midnight.getTime() - now.getTime());
     }
     function handleVisibilityChange() {
       if (document.visibilityState === "visible") refreshDate();
@@ -18,7 +18,7 @@ export default function useCurrentDate() {
     refreshDate();
     document.addEventListener("visibilitychange", handleVisibilityChange);
     return () => {
-      clearTimeout(timer);
+      clearTimeout(timer.id);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);

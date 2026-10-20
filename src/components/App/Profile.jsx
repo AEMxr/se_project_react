@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
+import "./Profile/Profile.css";
 import SideBar from "./Profile/SideBar.jsx";
 import ClothesSection from "./Profile/ClothesSection.jsx";
 

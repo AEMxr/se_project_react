@@ -69,3 +69,36 @@
     padding: 1px 8px;
   }
 }
+
+.card__like {
+  flex-shrink: 0;
+  pointer-events: auto;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 24px;
+  line-height: 1;
+}
+.card__like_active {
+  color: #000;
+}
+.card__like-error {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4px;
+  border-radius: 4px;
+  background: #fff;
+  color: #c00;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  overflow-wrap: anywhere;
+}

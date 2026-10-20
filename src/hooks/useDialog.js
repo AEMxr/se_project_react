@@ -3,6 +3,18 @@ import { useEffect, useRef } from "react";
 const FOCUSABLE_SELECTOR =
   'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
+function disableBackground(element, background) {
+  const parent = element.parentElement;
+  if (!parent || parent === document.documentElement) return;
+  for (const sibling of parent.children) {
+    if (sibling !== element && !sibling.hasAttribute("inert")) {
+      sibling.setAttribute("inert", "");
+      background.push(sibling);
+    }
+  }
+  disableBackground(parent, background);
+}
+
 export default function useDialog(isOpen, onClose) {
   const dialogRef = useRef(null);
   const closeRef = useRef(onClose);
@@ -16,19 +28,7 @@ export default function useDialog(isOpen, onClose) {
     const previousFocus = document.activeElement;
     const previousOverflow = document.body.style.overflow;
     const background = [];
-    let ancestor = dialog;
-    while (
-      ancestor.parentElement &&
-      ancestor.parentElement !== document.documentElement
-    ) {
-      for (const sibling of ancestor.parentElement.children) {
-        if (sibling !== ancestor && !sibling.hasAttribute("inert")) {
-          sibling.setAttribute("inert", "");
-          background.push(sibling);
-        }
-      }
-      ancestor = ancestor.parentElement;
-    }
+    disableBackground(dialog, background);
     document.body.style.overflow = "hidden";
 
     function getFocusableElements() {

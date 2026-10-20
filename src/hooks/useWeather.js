@@ -20,33 +20,31 @@ export default function useWeather() {
 
   useEffect(() => {
     const controller = new AbortController();
-    let started = false;
-    let disposed = false;
-    let timer;
+    const request = { started: false };
+    const timer = setTimeout(loadWeather, GEOLOCATION_TIMEOUT_MS);
 
     function loadWeather(
       latitude = DEFAULT_COORDS.latitude,
       longitude = DEFAULT_COORDS.longitude,
     ) {
-      if (started || disposed) return;
-      started = true;
+      if (request.started || controller.signal.aborted) return;
+      request.started = true;
       clearTimeout(timer);
       fetchWeather(latitude, longitude, { signal: controller.signal })
         .then((data) => {
-          if (!disposed) setWeather(data);
+          if (!controller.signal.aborted) setWeather(data);
         })
         .catch((error) => {
-          if (!disposed && error?.name !== "AbortError")
+          if (!controller.signal.aborted && error?.name !== "AbortError")
             setErrorMessage(
               "Weather is unavailable. Please try refreshing the page.",
             );
         })
         .finally(() => {
-          if (!disposed) setIsLoading(false);
+          if (!controller.signal.aborted) setIsLoading(false);
         });
     }
 
-    timer = setTimeout(loadWeather, GEOLOCATION_TIMEOUT_MS);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) =>
@@ -57,7 +55,6 @@ export default function useWeather() {
     } else loadWeather();
 
     return () => {
-      disposed = true;
       clearTimeout(timer);
       controller.abort();
     };

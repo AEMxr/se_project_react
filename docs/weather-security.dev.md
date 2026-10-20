@@ -1,6 +1,6 @@
 # Weather credentials stay on the server
 
-The `automated-tests` branches use the Express worktree at `../se_project_express-tests` for weather. The original backend checkout and optional iPhone worktree are unchanged.
+Use matching `automated-tests` branches from both repositories. Fresh clones use the ordinary `se_project_react` and `se_project_express` folders described in the README. Local development changes remain isolated in the `se_project_express-tests` worktree; the original backend and optional iPhone worktrees are unchanged.
 
 The browser requests `GET /weather?lat=...&lon=...` from Express. Express adds its private OpenWeather key when requesting the fixed HTTPS provider endpoint, then returns only the city, temperature, condition and sunrise/sunset timestamps needed by the existing UI. The browser does not send or receive an OpenWeather key.
 
@@ -15,6 +15,7 @@ In the backend terminal:
 ```bash
 cd ~/Documents/TripleTen/se_project_express-tests
 npm ci
+npm run setup:env
 npm run dev
 ```
 
@@ -25,7 +26,7 @@ cd ~/Documents/TripleTen/se_project_react
 npm run dev
 ```
 
-For a fresh checkout, copy the backend's `.env.example` to its `.env.local`, then set `OPEN_WEATHER_API_KEY` there. Node loads that file during normal startup; tests skip it entirely. Restart Express after changing the key.
+For a fresh checkout, run `npm run setup:env` in the backend to generate its private JWT secret and ignored `.env.local`, then set `OPEN_WEATHER_API_KEY` there. Node loads that file during normal startup; tests skip it entirely. Restart Express after changing the key.
 
 The frontend `.env.local` only needs `VITE_API_BASE_URL` when using a different API address. Its Vite configuration exposes only that public address, including when an old weather variable accidentally remains in the local environment.
 
@@ -45,7 +46,7 @@ Cache entries, pending requests and request limits are held per server process. 
 
 ## Deployment
 
-Deploy the updated backend as well as the frontend. Set `OPEN_WEATHER_API_KEY` in the backend host's secret environment configuration. Build the frontend with `VITE_API_BASE_URL` pointing to the HTTPS backend URL. GitHub Pages serves only the frontend and cannot run this Express endpoint.
+Deploy the updated backend as well as the frontend. Set `OPEN_WEATHER_API_KEY` and a private random `JWT_SECRET` in the backend host's secret environment configuration. Build the frontend with `VITE_API_BASE_URL` pointing to the HTTPS backend URL. GitHub Pages serves only the frontend and cannot run this Express endpoint.
 
 If the hosting platform uses a reverse proxy, configure Express's `trust proxy` for that platform's documented topology so client-IP limits work correctly. Do not enable unrestricted proxy trust.
 

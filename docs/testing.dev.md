@@ -24,7 +24,7 @@ The existing Node regression suite is preserved as `npm test`. Run everything wi
 npm run test:all
 ```
 
-The frontend Jest/Node regression tests work without running Vite, Express, MongoDB, or a real weather key. Fetch is blocked by default, and each request test supplies a mock. The Jest transformer uses the existing esbuild dependency to support JSX, ES modules, and fixed test-only Vite environment values. Styling was not changed. The frontend request helper reads Celebrate's validation details so existing form alerts show specific field errors while preserving drafts and allowing retry.
+The frontend Jest/Node regression tests work without running Vite, Express, MongoDB, or a real weather key. Fetch is blocked by default, and each request test supplies a mock. The Jest transformer uses the existing esbuild dependency to support JSX, ES modules, and fixed test-only Vite environment values. BEM names and stylesheet ownership were standardized without changing CSS declarations. The frontend request helper reads Celebrate's validation details so existing form alerts show specific field errors while preserving drafts and allowing retry.
 
 `npm run test:security` runs an actual Vite build in memory with fake private and legacy weather keys. It proves the public API address reaches client code and neither key does, even if an old weather environment variable is present. This check is included in `npm run test:all`. The weather API now calls Express's public `/weather` endpoint with coordinates only. See [weather security and setup](weather-security.dev.md).
 
@@ -41,7 +41,7 @@ The frontend Jest/Node regression tests work without running Vite, Express, Mong
 | `tests/unit/weather.jest.test.js`       | `fetchWeather`, `getWeatherType`                                                                                                                                                                                                           |
 | `tests/unit/outfitBuilder.jest.test.js` | `buildOutfit` with controlled randomness                                                                                                                                                                                                   |
 | `tests/unit/hooks.jest.test.js`         | Form state, touched fields, submission guards/retries, midnight updates, geolocation deadlines, cleanup                                                                                                                                    |
-| `tests/flows/app.jest.test.js`          | Registration and auto-login, restored sessions, protected routes, two-account ownership, profile editing, garment creation/deletion, likes, stale responses, failures, dialogs, keyboard focus, mobile menu, unit switching, randomization |
+| `tests/flows/*.jest.test.js`            | Registration and auto-login, restored sessions, protected routes, two-account ownership, profile editing, garment creation/deletion, likes, stale responses, failures, dialogs, keyboard focus, mobile menu, unit switching, randomization |
 
 Suites group related work with `describe`; parameterized tests cover boundaries and invalid input. Network success and failure paths, draft retention, duplicate requests, input normalization, and stale results have explicit assertions. The original Node suite adds further overlapping-request regression coverage.
 
@@ -70,12 +70,12 @@ Verified on October 19, 2026:
 
 | Check                           | Result                                                         |
 | ------------------------------- | -------------------------------------------------------------- |
-| Frontend Jest                   | 173 tests across 10 suites pass                                |
+| Frontend Jest                   | 173 tests across 13 suites pass                                |
 | Existing frontend Node tests    | 35 tests pass                                                  |
 | Frontend Vite security build    | 1 test passes                                                  |
-| Backend Jest/SuperTest/database | 234 tests across 10 suites pass                                |
-| Frontend coverage               | 99.08% lines, 89.67% branches, 98.78% functions                |
-| Backend coverage                | 98.59% lines, 98.93% branches, 100% functions                  |
+| Backend Jest/SuperTest/database | 252 tests across 13 suites pass                                |
+| Frontend coverage               | 99.13% lines, 90% branches, 98.85% functions                   |
+| Backend coverage                | 98.66% lines, 99.01% branches, 100% functions                  |
 | Backend open handles            | Tests exit normally with `--detectOpenHandles`; no forced exit |
 
 Both Jest configurations enforce minimum global coverage: 90% lines/statements, 85% branches, and 95% functions. Open `coverage/jest/index.html` in the frontend or `coverage/index.html` in the backend after a coverage run. Reports are ignored by Git, ESLint, and formatting checks where applicable.
@@ -95,3 +95,7 @@ The backend worktree now validates signup, signin, profile, garment and item-ID 
 - [MongoDB test runner integration](https://typegoose.github.io/mongodb-memory-server/docs/guides/integration-examples/test-runners/)
 - [Celebrate validation and error middleware](https://github.com/arb/celebrate)
 - [Express error handling](https://expressjs.com/en/guide/error-handling/)
+
+The flow suites are split into authentication, wardrobe, request failures and accessibility. Shared helpers live in `tests/fixtures/appFlows.js`. The Node app regressions are split into authentication/profile, wardrobe and dialogs/weather, with shared setup in `tests/fixtures/nodeApp.js`.
+
+GitHub Actions runs frontend lint, formatting, all automated suites and the production build on pushes to `main`/`automated-tests` and pull requests targeting `main`, using Node.js 22.

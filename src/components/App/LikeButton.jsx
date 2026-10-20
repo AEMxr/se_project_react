@@ -7,7 +7,7 @@ import {
 } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 import { getErrorMessage } from "../../utils/errors.js";
-import "./LikeButton.css";
+import "./Main/ItemCard.css";
 
 export default function LikeButton({ item, onCardLike }) {
   const user = useContext(CurrentUserContext);
@@ -54,7 +54,7 @@ export default function LikeButton({ item, onCardLike }) {
   return (
     <>
       <button
-        className={`card__like interactive${isLiked ? " card__like--active" : ""}`}
+        className={`card__like interactive${isLiked ? " card__like_active" : ""}`}
         type="button"
         onClick={handleLike}
         disabled={isPending}

@@ -1,0 +1,36 @@
+name: Frontend checks
+
+on:
+  push:
+    branches: [main, automated-tests]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the frontend
+        uses: actions/checkout@v4
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --no-fund --no-audit
+      - name: Check source and formatting
+        run: |
+          npm run lint
+          npm run format:check
+      - name: Run regression and client-build security checks
+        run: |
+          npm test
+          npm run test:jest:coverage
+          npm run test:security
+      - name: Build for production
+        run: npm run build

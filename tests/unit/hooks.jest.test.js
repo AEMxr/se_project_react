@@ -40,16 +40,17 @@ describe("useFormSubmit request lifecycle", () => {
     const request = jest.fn(() => held.promise);
     const success = jest.fn();
     const { result } = renderHook(() => useFormSubmit(true));
-    let pending;
+    const testState = {};
+
     act(() => {
-      pending = result.current.submitForm(request, success);
+      testState.pending = result.current.submitForm(request, success);
       result.current.submitForm(request, success);
     });
     await waitFor(() => expect(request).toHaveBeenCalledTimes(1));
     expect(result.current.isSubmitting).toBe(true);
     await act(async () => {
       held.resolve("saved");
-      await pending;
+      await testState.pending;
     });
     expect(success).toHaveBeenCalledWith("saved");
     expect(result.current.isSubmitting).toBe(false);
@@ -76,15 +77,19 @@ describe("useFormSubmit request lifecycle", () => {
     const { result, rerender } = renderHook(({ open }) => useFormSubmit(open), {
       initialProps: { open: true },
     });
-    let pending;
+    const testState = {};
+
     act(() => {
-      pending = result.current.submitForm(() => held.promise, success);
+      testState.pending = result.current.submitForm(
+        () => held.promise,
+        success,
+      );
     });
     rerender({ open: false });
     rerender({ open: true });
     await act(async () => {
       held.resolve("old result");
-      await pending;
+      await testState.pending;
     });
     expect(success).not.toHaveBeenCalled();
     expect(result.current.isSubmitting).toBe(false);
@@ -149,9 +154,10 @@ describe("useWeather lifecycle", () => {
   });
   test("falls back on deadline and ignores a location callback that arrives later", async () => {
     jest.useFakeTimers();
-    let locationCallback;
+    const testState = {};
+
     navigator.geolocation.getCurrentPosition = (success) => {
-      locationCallback = success;
+      testState.locationCallback = success;
     };
     fetch.mockImplementation(fixture().fetch);
     const { result } = renderHook(() => useWeather());
@@ -159,7 +165,7 @@ describe("useWeather lifecycle", () => {
     await act(async () => jest.advanceTimersByTimeAsync(5000));
     expect(result.current.isLoading).toBe(false);
     await act(async () =>
-      locationCallback({ coords: { latitude: 1, longitude: 2 } }),
+      testState.locationCallback({ coords: { latitude: 1, longitude: 2 } }),
     );
     expect(fetch).toHaveBeenCalledTimes(1);
   });

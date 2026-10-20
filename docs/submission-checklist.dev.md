@@ -4,8 +4,7 @@
 
 ```bash
 npm run lint
-npm test
-npm run test:security
+npm run test:all
 npm run format:check
 npm run build
 ```
@@ -16,7 +15,7 @@ The automated suite checks the frontend with mocked APIs. It does not create acc
 
 Use two test accounts so ownership can be checked.
 
-On `automated-tests`, run Express from `../se_project_express-tests` so `/weather` is available. The weather key stays in that backend's ignored `.env.local`; the frontend needs no weather credential. See [weather setup](weather-security.dev.md).
+Use matching `automated-tests` revisions for both repositories so `/weather` is available. The README describes ordinary clone folders; the existing local backend development worktree is `../se_project_express-tests`. Run `npm run setup:env` in the chosen backend folder before its first normal start. The weather key stays in that backend's ignored `.env.local`; the frontend needs no weather credential. See [weather setup](weather-security.dev.md).
 
 Open the course frontend at `http://127.0.0.1:3000`, with the optional worktree's frontend stopped. The add-garment form should contain Name, Image URL, and weather radios, with no photo picker or color option. Randomize should appear at widths of 430px or less, including 390px, and be hidden on larger screens.
 
@@ -39,7 +38,9 @@ The main page shows garments from every account that match the temperature categ
 
 - The frontend README links to the backend repository.
 - The backend repository is public.
-- Include the course frontend branch with these fixes.
+- Publish the matching frontend and backend revisions.
+- Check the backend GitHub Actions results.
+- Explain the documented server-side weather-key deviation from the rubric in the submission notes.
 - Keep optional phone/photo features in their separate worktree.
 
 Public frontend hosting and the mobile randomizer are not required for Project 14.

@@ -11,14 +11,14 @@ export default function FormField({
   const invalid = isTouched && !isValid;
   return (
     <label
-      className={`modal__form-label${invalid ? " modal__form-label--invalid" : ""}`}
+      className={`modal__form-label${invalid ? " modal__form-label_invalid" : ""}`}
       htmlFor={id}
     >
       {label}
       <input
         {...inputProps}
         id={id}
-        className={`modal__input${invalid ? " modal__input--invalid" : ""}`}
+        className={`modal__input${invalid ? " modal__input_invalid" : ""}`}
         required
         aria-invalid={invalid}
         aria-describedby={invalid ? `${id}-error` : undefined}

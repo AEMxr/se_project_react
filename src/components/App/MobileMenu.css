@@ -1,4 +1,4 @@
-.mobile-menu__overlay {
+.mobile-menu {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -10,7 +10,7 @@
   padding: 16px;
   overflow-y: auto;
 }
-.mobile-menu {
+.mobile-menu__dialog {
   background: #fff;
   border-radius: 16px;
   width: 100%;

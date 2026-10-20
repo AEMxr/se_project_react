@@ -61,14 +61,14 @@
   font: inherit;
   background: transparent;
 }
-.modal__input--invalid {
+.modal__input_invalid {
   border-bottom-color: #ff4d00;
   color: #ff4d00;
 }
-.modal__form-label--invalid {
+.modal__form-label_invalid {
   color: #ff4d00;
 }
-.modal__input--invalid::placeholder {
+.modal__input_invalid::placeholder {
   color: #ff4d00;
   opacity: 1;
 }
@@ -93,7 +93,7 @@
   gap: 8px;
   opacity: 0.5;
 }
-.modal__weather-radio--active {
+.modal__weather-radio_active {
   opacity: 1;
 }
 .modal__actions {
@@ -135,4 +135,45 @@
     width: calc(100vw - 32px);
     border-radius: 20px 20px 0 0;
   }
+}
+
+.modal_type_confirm-delete .modal__content {
+  width: 670px;
+  min-height: 280px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.modal_type_confirm-delete .modal__title {
+  margin: 0 20px 24px;
+  font-size: 20px;
+  line-height: 24px;
+}
+.modal__confirmation-subtitle {
+  margin: 0;
+  font-size: 20px;
+  line-height: 24px;
+}
+.modal__confirmation-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.modal__confirm,
+.modal__cancel {
+  background: none;
+  border: none;
+  font-size: 20px;
+  line-height: 24px;
+  padding: 0;
+}
+.modal__confirm {
+  color: #ff4d00;
+}
+.modal__cancel {
+  color: #000;
 }

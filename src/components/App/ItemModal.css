@@ -1,4 +1,4 @@
-.item-modal__overlay {
+.item-modal {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.8);
@@ -9,7 +9,7 @@
   padding: 16px;
   box-sizing: border-box;
 }
-.item-modal {
+.item-modal__dialog {
   width: 498px;
   max-width: 100%;
   max-height: calc(100dvh - 32px);
@@ -79,7 +79,7 @@
   flex-shrink: 0;
 }
 @media (max-width: 767px) {
-  .item-modal {
+  .item-modal__dialog {
     max-width: 343px;
   }
   .item-modal__content {
