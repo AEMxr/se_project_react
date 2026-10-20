@@ -10,7 +10,7 @@ import {
 import { handleResponse } from "./request.js";
 import { createUserError } from "./errors.js";
 
-const OWM_TO_APP_CONDITION = {
+const OPEN_WEATHER_MAP_TO_APP_CONDITION = {
   Clear: "Sunny",
   Clouds: "Cloudy",
   Rain: "Rain",
@@ -41,7 +41,8 @@ export function fetchWeather(
   return handleResponse(fetch(url, { signal })).then((data) => {
     if (!Number.isFinite(data?.main?.temp))
       throw new Error("Invalid weather response");
-    const condition = OWM_TO_APP_CONDITION[data.weather?.[0]?.main] || "Sunny";
+    const condition =
+      OPEN_WEATHER_MAP_TO_APP_CONDITION[data.weather?.[0]?.main] || "Sunny";
     const time =
       data.dt >= data.sys?.sunrise && data.dt < data.sys?.sunset
         ? "day"

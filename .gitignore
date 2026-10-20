@@ -13,6 +13,14 @@ dist-ssr
 coverage/
 *.local
 
+# Local environment settings; keep only the placeholder template tracked.
+.env
+.env.*
+!.env.example
+
+# Generated source snapshots may include local configuration.
+project_dump.txt
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

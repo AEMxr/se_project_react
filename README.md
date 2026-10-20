@@ -78,6 +78,8 @@ Set your own key in `.env.local`:
 VITE_OPEN_WEATHER_KEY=your_openweather_key
 ```
 
+Only the placeholder `.env.example` belongs in Git. Local `.env` files and generated `project_dump.txt` snapshots are ignored. If a key was previously committed, create a replacement in your [OpenWeather API keys](https://home.openweathermap.org/api_keys) account page, update `.env.local`, and delete the exposed key. Removing a tracked file does not erase earlier Git history.
+
 Then run:
 
 ```bash

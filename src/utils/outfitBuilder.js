@@ -58,9 +58,12 @@ export function buildOutfit({ items, weatherType, tempF, weatherCondition }) {
 
   const outfit = {};
   const reasons = {};
-  const t = (n, fallback = Infinity) => n ?? fallback;
+  const temperatureForComparison = tempF ?? Infinity;
 
-  if (weatherType === "cold" || t(tempF) < COLD_HEAD_TEMPERATURE_F) {
+  if (
+    weatherType === "cold" ||
+    temperatureForComparison < COLD_HEAD_TEMPERATURE_F
+  ) {
     if (categories.head.length) {
       outfit.head = pick(categories.head);
       reasons.head = `Selected: ${outfit.head.name} - Cold weather protection needed`;
@@ -72,7 +75,8 @@ export function buildOutfit({ items, weatherType, tempF, weatherCondition }) {
   }
 
   if (
-    (weatherType === "cold" && t(tempF) < EXTREME_COLD_TEMPERATURE_F) ||
+    (weatherType === "cold" &&
+      temperatureForComparison < EXTREME_COLD_TEMPERATURE_F) ||
     ["dusty", "windy"].includes((weatherCondition || "").toLowerCase())
   ) {
     if (categories.face.length) {
@@ -99,7 +103,8 @@ export function buildOutfit({ items, weatherType, tempF, weatherCondition }) {
   }
 
   const needsOuterLayer =
-    weatherType === "cold" || t(tempF) < OUTER_LAYER_TEMPERATURE_F;
+    weatherType === "cold" ||
+    temperatureForComparison < OUTER_LAYER_TEMPERATURE_F;
   if (needsOuterLayer) {
     if (categories.topOuter.length) {
       const outerTop = pick(categories.topOuter);
@@ -115,7 +120,8 @@ export function buildOutfit({ items, weatherType, tempF, weatherCondition }) {
 
   const bottomLayers = [];
   const needsBottomBase =
-    weatherType === "cold" || t(tempF) < BASE_LAYER_TEMPERATURE_F;
+    weatherType === "cold" ||
+    temperatureForComparison < BASE_LAYER_TEMPERATURE_F;
   if (needsBottomBase) {
     if (categories.bottomBase.length) {
       const baseBottom = pick(categories.bottomBase);
@@ -159,7 +165,10 @@ export function buildOutfit({ items, weatherType, tempF, weatherCondition }) {
     }`;
   }
 
-  if (weatherType === "cold" || t(tempF) < GLOVE_TEMPERATURE_F) {
+  if (
+    weatherType === "cold" ||
+    temperatureForComparison < GLOVE_TEMPERATURE_F
+  ) {
     if (categories.hands.length) {
       outfit.hands = pick(categories.hands);
       reasons.hands = `Selected: ${outfit.hands.name} - Hand protection for ${tempF}°F`;
@@ -181,7 +190,8 @@ export function buildOutfit({ items, weatherType, tempF, weatherCondition }) {
     outfit.accessories = [...(outfit.accessories || []), hasUmbrella];
     reasons.accessories = `Selected: ${hasUmbrella.name} - Rain protection`;
   } else if (
-    (/sunny/.test(lowerCond) || t(tempF) >= WARM_TEMPERATURE_F) &&
+    (/sunny/.test(lowerCond) ||
+      temperatureForComparison >= WARM_TEMPERATURE_F) &&
     hasSunglasses
   ) {
     outfit.accessories = [...(outfit.accessories || []), hasSunglasses];
