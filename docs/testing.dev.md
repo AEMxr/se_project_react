@@ -24,7 +24,7 @@ The existing Node regression suite is preserved as `npm test`. Run everything wi
 npm run test:all
 ```
 
-These frontend tests work without Vite, Express, MongoDB, or a real weather key. Fetch is blocked by default, and each request test supplies a mock. The Jest transformer uses the existing esbuild dependency to support JSX, ES modules, and fixed test-only Vite environment values. Application source files and styling were not changed for Jest.
+These frontend tests work without Vite, Express, MongoDB, or a real weather key. Fetch is blocked by default, and each request test supplies a mock. The Jest transformer uses the existing esbuild dependency to support JSX, ES modules, and fixed test-only Vite environment values. Styling was not changed. The frontend request helper now reads Celebrate's validation details so existing form alerts show specific field errors while preserving drafts and allowing retry.
 
 ## Suites and the 20 standalone functions
 
@@ -64,15 +64,15 @@ Importing backend `app.js` starts neither a database connection nor `app.listen(
 
 ## Results and reports
 
-Verified on October 18, 2026:
+Verified on October 19, 2026:
 
 | Check                           | Result                                                         |
 | ------------------------------- | -------------------------------------------------------------- |
-| Frontend Jest                   | 163 tests across 10 suites pass                                |
+| Frontend Jest                   | 173 tests across 10 suites pass                                |
 | Existing frontend Node tests    | 35 tests pass                                                  |
-| Backend Jest/SuperTest/database | 123 tests across 5 suites pass                                 |
-| Frontend coverage               | 99.08% lines, 89.60% branches, 98.80% functions                |
-| Backend coverage                | 95.40% lines, 91.05% branches, 100% functions                  |
+| Backend Jest/SuperTest/database | 187 tests across 7 suites pass                                 |
+| Frontend coverage               | 99.08% lines, 89.77% branches, 98.80% functions                |
+| Backend coverage                | 98.17% lines, 99.18% branches, 100% functions                  |
 | Backend open handles            | Tests exit normally with `--detectOpenHandles`; no forced exit |
 
 Both Jest configurations enforce minimum global coverage: 90% lines/statements, 85% branches, and 95% functions. Open `coverage/jest/index.html` in the frontend or `coverage/index.html` in the backend after a coverage run. Reports are ignored by Git, ESLint, and formatting checks where applicable.
@@ -83,8 +83,12 @@ These are unit and integration tests, not a complete browser end-to-end suite. j
 
 Compatible audit fixes were applied in the testing branches. Production dependency audits report zero vulnerabilities in both projects. Development-only advisories remain in tooling dependencies, including Jest's transitive `sprintf-js` chain and the backend's nodemon tooling. No forced major downgrades were applied. Review `npm audit` when updating the tooling; these advisories and their available fixes can change.
 
+The backend worktree now validates signup, signin, profile, garment and item-ID requests with Celebrate/Joi before hashing or database work. Controllers forward failures to centralized error middleware, and Winston logs omit credentials, request/response bodies and raw exception messages. The validation suite proves invalid requests never reach those expensive operations, and logger tests inspect actual middleware output for sample secrets. See `se_project_express-tests/VALIDATION.md` for the full API constraints, middleware order and scoped dependency override.
+
 ## References
 
 - [Jest code transformation](https://jestjs.io/docs/code-transformation)
 - [SuperTest documentation](https://github.com/forwardemail/supertest)
 - [MongoDB test runner integration](https://typegoose.github.io/mongodb-memory-server/docs/guides/integration-examples/test-runners/)
+- [Celebrate validation and error middleware](https://github.com/arb/celebrate)
+- [Express error handling](https://expressjs.com/en/guide/error-handling/)

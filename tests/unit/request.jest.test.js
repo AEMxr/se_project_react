@@ -21,6 +21,65 @@ describe("handleResponse", () => {
       ),
     ).rejects.toMatchObject({ status: 409, message: "Duplicate email" });
   });
+  test("displays Celebrate's validation details instead of its generic message", async () => {
+    await expect(
+      handleResponse(
+        Promise.resolve(
+          jsonResponse(
+            {
+              message: "Validation failed",
+              validation: {
+                body: { message: '  "avatar" must be a valid image URL  ' },
+                params: {
+                  message: '"itemId" must contain 24 hexadecimal characters',
+                },
+              },
+            },
+            400,
+          ),
+        ),
+      ),
+    ).rejects.toMatchObject({
+      status: 400,
+      message:
+        '"avatar" must be a valid image URL "itemId" must contain 24 hexadecimal characters',
+    });
+  });
+  test.each([
+    null,
+    [],
+    "invalid",
+    {},
+    { body: null },
+    { body: { message: 1 } },
+    { body: { message: " " } },
+  ])(
+    "falls back safely for malformed validation details (%p)",
+    async (validation) => {
+      await expect(
+        handleResponse(
+          Promise.resolve(
+            jsonResponse({ message: "Invalid data", validation }, 400),
+          ),
+        ),
+      ).rejects.toMatchObject({ status: 400, message: "Invalid data" });
+    },
+  );
+  test("does not replace non-validation server errors with validation metadata", async () => {
+    await expect(
+      handleResponse(
+        Promise.resolve(
+          jsonResponse(
+            {
+              message: "Service unavailable",
+              validation: { body: { message: "Ignore this" } },
+            },
+            503,
+          ),
+        ),
+      ),
+    ).rejects.toMatchObject({ status: 503, message: "Service unavailable" });
+  });
   test.each([{}, null, { message: "  " }, { message: 123 }])(
     "uses a readable fallback when an error body has no useful message (%p)",
     async (body) => {

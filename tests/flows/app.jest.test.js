@@ -145,6 +145,55 @@ describe("Authentication and protected navigation", () => {
 });
 
 describe("Profile editing and garments", () => {
+  test("server validation errors explain the field and keep the garment draft for correction", async () => {
+    await start("token:account-a");
+    api.intercept((call) =>
+      call.path === "/items" && call.method === "POST"
+        ? response(
+            {
+              message: "Validation failed",
+              validation: {
+                body: {
+                  source: "body",
+                  keys: ["imageUrl"],
+                  message: '"imageUrl" must be a valid HTTP or HTTPS image URL',
+                },
+              },
+            },
+            400,
+          )
+        : undefined,
+    );
+    await user.click(
+      await screen.findByRole("button", { name: /Add Clothes/ }),
+    );
+    const dialog = await fillGarment();
+    await user.click(
+      within(dialog).getByRole("button", { name: "Add garment" }),
+    );
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      '"imageUrl" must be a valid HTTP or HTTPS image URL',
+    );
+    expect(within(dialog).getByLabelText("Name", { exact: true })).toHaveValue(
+      "New sweater",
+    );
+    expect(within(dialog).getByLabelText("Image", { exact: true })).toHaveValue(
+      "https://example.com/new.jpg",
+    );
+    expect(
+      within(dialog).getByRole("button", { name: "Add garment" }),
+    ).toBeEnabled();
+    expect(localStorage.getItem("jwt")).toBe("token:account-a");
+    expect(api.db.items).toHaveLength(3);
+    api.intercept(() => undefined);
+    await user.click(
+      within(dialog).getByRole("button", { name: "Add garment" }),
+    );
+    expect(
+      await screen.findByRole("button", { name: "View New sweater" }),
+    ).toBeVisible();
+  });
+
   test("profile edits start with current values and persist through reload", async () => {
     const view = await start("token:account-a");
     await profile();
