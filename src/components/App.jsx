@@ -48,6 +48,7 @@ function App() {
   const authActions = useAuthentication({
     currentUser,
     authRequestId,
+    pendingDeleteId,
     modalRef: modalActions.modalRef,
     setCurrentUser,
     setIsLoggedIn,
@@ -64,6 +65,7 @@ function App() {
     setClothingItems,
     setIsItemsLoading,
     setItemsError,
+    assertCurrentSession: authActions.assertCurrentSession,
     handleProtectedRequestError: authActions.handleProtectedRequestError,
   });
   const {

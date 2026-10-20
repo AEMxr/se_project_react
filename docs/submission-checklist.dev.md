@@ -16,7 +16,7 @@ The full Jest run already includes the accessibility suites; use `npm run test:a
 
 Use two test accounts so ownership can be checked.
 
-Use the integrated frontend on `main` with the backend's `automated-tests` revision so `/weather` is available. The README describes ordinary clone folders; the existing local backend development worktree is `../se_project_express-tests`. Run `npm run setup:env` in the chosen backend folder before its first normal start. The weather key stays in that backend's ignored `.env.local`; the frontend needs no weather credential. See [weather setup](weather-security.dev.md).
+Use `main` in both repositories so `/weather` is available. The README describes ordinary clone folders; the local backend checkout is `../se_project_express`. Run `npm run setup:env` in the backend folder before its first normal start. The weather key stays in that backend's ignored `.env.local`; the frontend needs no weather credential. See [weather setup](weather-security.dev.md).
 
 Open the course frontend at `http://127.0.0.1:3000`, with the optional worktree's frontend stopped. The add-garment form should contain Name, Image URL, and weather radios, with no photo picker or color option. Randomize should appear at widths of 430px or less, including 390px, and be hidden on larger screens.
 

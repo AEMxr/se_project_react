@@ -1,0 +1,44 @@
+# October 20 audit follow-up
+
+Compared both supplied ChatGPT reports with the local frontend and backend on October 20, 2026. The reports describe uploaded ZIP snapshots with the earlier backend implementation. The current backend already contained the weather proxy, private signing configuration, request validation and automated database tests. A new report should inspect the current files or freshly pushed revisions.
+
+At the final remote check, backend `origin/main` still pointed to `975f7e0`; local backend `main` was `0ab36b0` plus these uncommitted follow-up fixes. Frontend `main` was `0423500` plus its uncommitted fixes and documentation. Local corrections do not reach GitHub until committed and pushed.
+
+## Findings and corrections
+
+| Reported finding                              | Current result                                                                                                                                                                                                                                                                                    |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hardcoded JWT signing secret                  | Already corrected: startup requires a private environment value of at least 32 characters. Normal local startup loads the ignored server environment file; Jest uses separate fixtures.                                                                                                           |
+| Missing `/weather`                            | Already implemented. The actual frontend weather function successfully called Express and the live provider during this follow-up.                                                                                                                                                                |
+| Public production diagnostics                 | Already restricted to explicit development/test mode. A production-mode HTTP check returned 404.                                                                                                                                                                                                  |
+| Weak signup password validation               | Plaintext signup passwords are validated before bcrypt/database work, including an eight-character minimum and string type. Mongoose stores a hash, so a hash-schema length check would not enforce plaintext strength.                                                                           |
+| Environment files not ignored                 | Both repositories exclude `.env` and `.env.*`, with only the harmless `.env.example` exception. No real environment file or `.old` backup is tracked.                                                                                                                                             |
+| Missing environment setup                     | `npm run setup:env` exists and generates a private secret while preserving existing weather settings.                                                                                                                                                                                             |
+| Missing backend tests                         | The backend has 286 tests across 14 suites, including SuperTest with real disposable MongoDB.                                                                                                                                                                                                     |
+| Unknown routes return 401                     | Fixed: authentication now belongs to the known protected routes. Unknown paths, including paths beneath `/users` and `/items`, return 404. Known protected routes still return 401 without a token.                                                                                               |
+| Avatar required despite fallback              | Kept the course URL forms. The fallback handles failed images or missing existing profile data; it does not make the signup field optional. README now explains this.                                                                                                                             |
+| Frontend function coverage below its gate     | The original native esbuild/Jest setup passes at 98.96% function coverage. No threshold was lowered or alternate transformer used.                                                                                                                                                                |
+| Unrestricted browser origins                  | Added an explicit allowlist for localhost, loopback and the existing Pages origin. Optional `CLIENT_ORIGINS` replaces that list. Invalid origin configuration fails startup; rejected origins receive 403. Authentication still protects private operations independently of CORS.                |
+| Missing abuse protections/headers             | Added Helmet, independent signin/signup quotas before controller work, and an explicit 100 KiB JSON limit. Local HTTP is not upgraded to HTTPS; production enables HSTS.                                                                                                                          |
+| Stale garment successes after session changes | Fixed create/like/delete success paths to assert the current session before state updates. Pending likes/deletes belong to their originating request, so an old completion cannot release a newer request's guard. Added 11 regressions covering logout, account switching and token replacement. |
+| Backup/generated artifacts                    | Verified tracked files exclude old backups and private configuration. Source verification copies excluded Git metadata, dependencies, generated assets and environment files.                                                                                                                     |
+
+## Verification
+
+- Frontend: 228 Jest tests across 21 suites, 35 Node regressions and one build-security test pass. Lint, formatting, the original coverage gate and the production build pass after a clean native `npm ci`.
+- Frontend coverage: 99.47% lines, 92% branches and 98.96% functions.
+- Backend: 286 tests across 14 suites pass after a clean native `npm ci`; coverage is 98.78% lines, 99.12% branches and 100% functions. Lint and formatting also pass. New HTTP tests cover route authentication, unknown paths, origins/preflights, security headers, JSON bounds and independent auth quotas.
+- Backend formatting now explicitly accepts the checkout's line endings through `.prettierrc.json`, avoiding false Windows-only documentation failures.
+- The production backend dependency audit reports zero advisories for the checked lockfile. Existing development-tool advisories are documented separately in the backend testing guide.
+
+The separate integration check bundled the actual frontend `auth.js`, `api.js`, `weatherApi.js` and request helper with their real transport, pointed them at Express on a temporary loopback port, and connected Express to an owned MongoDB process with a unique test database. It verified signup/signin, bad credentials, public garment loading, creation, two-account ownership rejection, persisted likes/unlikes, persisted profile changes, deletion, unknown routes, production diagnostic guards and a live weather response. It closed its listener and database afterward. It did not connect to the normal user database.
+
+The official course collection was inspected for quota compatibility: it contains eight signup requests and six signin requests. This is not a claim that the remote course grader has run on these new changes.
+
+## Before submission
+
+Commit and push the matching frontend and backend revisions, then check GitHub Actions for those commits. Keep the optional phone/photo worktree separate. Real iPhone behavior, a hosted deployment and a complete visual comparison of every Figma screen are outside this verification. The course weather-key placement remains the architectural deviation described in README.
+
+Do not distribute a development folder containing `node_modules`, `.git`, private environment files or old generated snapshots for another audit. Export the intended current source revision instead.
+
+References: [Express security guidance](https://expressjs.com/en/advanced/best-practice-security.html), [CORS configuration and limits](https://expressjs.com/en/resources/middleware/cors/), [Helmet](https://helmet.js.org/), [express-rate-limit configuration](https://express-rate-limit.mintlify.app/reference/configuration).

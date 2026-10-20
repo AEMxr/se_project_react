@@ -11,6 +11,7 @@ import {
 export default function useAuthentication({
   currentUser,
   authRequestId,
+  pendingDeleteId,
   modalRef,
   setCurrentUser,
   setIsLoggedIn,
@@ -29,6 +30,7 @@ export default function useAuthentication({
 
   function handleLogout(message = "") {
     authRequestId.current += 1;
+    pendingDeleteId.current = null;
     localStorage.removeItem("jwt");
     modalRef.current = "";
     setCurrentUser(null);

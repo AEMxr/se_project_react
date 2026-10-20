@@ -1,6 +1,6 @@
 # Automated testing
 
-The frontend testing changes were prepared on `automated-tests` and integrated into `main` in `se_project_react`. Backend changes are isolated in the sibling `se_project_express-tests` worktree on its own `automated-tests` branch. The original backend and the optional iPhone worktree are unchanged.
+The frontend and backend testing changes were prepared on their respective `automated-tests` branches and integrated into `main` in `se_project_react` and `se_project_express`. The optional iPhone worktree remains separate and unchanged.
 
 ## Frontend commands — Git Bash
 
@@ -70,7 +70,7 @@ Failed weather and clothing requests have separate Retry buttons in the existing
 From Git Bash:
 
 ```bash
-cd ~/Documents/TripleTen/se_project_express-tests
+cd ~/Documents/TripleTen/se_project_express
 npm test
 npm run test:coverage
 npm run test:handles
@@ -86,16 +86,16 @@ Importing backend `app.js` starts neither a database connection nor `app.listen(
 
 ## Results and reports
 
-Frontend verified on October 20, 2026. Backend results below are from its separate October 19 verification; the backend was unchanged during these frontend refinements.
+Frontend verified on October 20, 2026. Backend lint, formatting and all 286 tests with coverage were reverified on October 20 before merging its tested revision into `main`.
 
 | Check                           | Result                                                         |
 | ------------------------------- | -------------------------------------------------------------- |
-| Frontend Jest                   | 217 tests across 20 suites pass                                |
+| Frontend Jest                   | 228 tests across 21 suites pass                                |
 | Existing frontend Node tests    | 35 tests pass                                                  |
 | Frontend Vite security build    | 1 test passes                                                  |
-| Backend Jest/SuperTest/database | 252 tests across 13 suites pass                                |
-| Frontend coverage               | 99.32% lines, 91.45% branches, 98.96% functions                |
-| Backend coverage                | 98.66% lines, 99.01% branches, 100% functions                  |
+| Backend Jest/SuperTest/database | 286 tests across 14 suites pass                                |
+| Frontend coverage               | 99.47% lines, 92% branches, 98.96% functions                   |
+| Backend coverage                | 98.78% lines, 99.12% branches, 100% functions                  |
 | Backend open handles            | Tests exit normally with `--detectOpenHandles`; no forced exit |
 
 Both Jest configurations enforce minimum global coverage: 90% lines/statements, 85% branches, and 95% functions. Open `coverage/jest/index.html` in the frontend or `coverage/index.html` in the backend after a coverage run. Reports are ignored by Git, ESLint, and formatting checks where applicable.
@@ -108,7 +108,7 @@ On October 20, 2026, the frontend's full `npm audit` reports zero vulnerabilitie
 
 Backend audit results are separate: its last production audit was clean, while development-tool advisories remained. This frontend audit does not modify the backend dependency tree.
 
-The backend worktree now validates signup, signin, profile, garment and item-ID requests with Celebrate/Joi before hashing or database work. Controllers forward failures to centralized error middleware, and Winston logs omit credentials, request/response bodies and raw exception messages. The validation suite proves invalid requests never reach those expensive operations, and logger tests inspect actual middleware output for sample secrets. See `se_project_express-tests/VALIDATION.md` for the full API constraints, middleware order and scoped dependency override.
+The backend now validates signup, signin, profile, garment and item-ID requests with Celebrate/Joi before hashing or database work. Controllers forward failures to centralized error middleware, and Winston logs omit credentials, request/response bodies and raw exception messages. The validation suite proves invalid requests never reach those expensive operations, and logger tests inspect actual middleware output for sample secrets. See `se_project_express/VALIDATION.md` for the full API constraints, middleware order and scoped dependency override.
 
 ## References
 
@@ -121,3 +121,5 @@ The backend worktree now validates signup, signin, profile, garment and item-ID 
 The flow suites are split into authentication, wardrobe, request failures, accessibility, independent loading and timeout recovery. Shared helpers live in `tests/fixtures/appFlows.js`. The Node app regressions are split into authentication/profile, wardrobe and dialogs/weather, with shared setup in `tests/fixtures/nodeApp.js`.
 
 GitHub Actions runs frontend lint, formatting, all automated suites and the production build on pushes to `main`/`automated-tests` and pull requests targeting `main`, using Node.js 22. Successful builds are retained as commit-specific artifacts for seven days. The Pages job deploys that verified artifact only from `main` when the public HTTPS API variable and Pages settings are configured. Workflow YAML, verification dependencies, matching artifact names, and ten backend-address validation cases passed local checks; a hosted deployment has not been performed for these changes.
+
+The [October 20 audit follow-up](audit-follow-up.dev.md) records 11 additional session-mutation regressions, 34 backend HTTP-security regressions, clean native installations and a real frontend-to-Express/MongoDB/weather verification.

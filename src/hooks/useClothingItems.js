@@ -16,10 +16,11 @@ export default function useClothingItems({
   setClothingItems,
   setIsItemsLoading,
   setItemsError,
+  assertCurrentSession,
   handleProtectedRequestError,
 }) {
   const changedItemIds = useRef(new Set());
-  const pendingLikes = useRef(new Set());
+  const pendingLikes = useRef(new Map());
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
     const controller = new AbortController();
@@ -59,6 +60,7 @@ export default function useClothingItems({
     const requestId = authRequestId.current;
     return createItem(values, token)
       .then((created) => {
+        assertCurrentSession(token, requestId);
         const item = normalizeItem(created);
         changedItemIds.current.add(item._id);
         setClothingItems((previous) => [
@@ -77,9 +79,11 @@ export default function useClothingItems({
       );
     const token = localStorage.getItem("jwt");
     const requestId = authRequestId.current;
-    pendingDeleteId.current = id;
+    const deletion = { id };
+    pendingDeleteId.current = deletion;
     return removeItem(id, token)
       .then(() => {
+        assertCurrentSession(token, requestId);
         changedItemIds.current.add(id);
         setClothingItems((previous) =>
           previous.filter((item) => item._id !== id),
@@ -88,20 +92,24 @@ export default function useClothingItems({
       })
       .catch((error) => handleProtectedRequestError(error, token, requestId))
       .finally(() => {
-        pendingDeleteId.current = null;
+        if (pendingDeleteId.current === deletion)
+          pendingDeleteId.current = null;
       });
   }
 
   function handleCardLike({ id, isLiked }) {
-    if (pendingLikes.current.has(id))
+    const token = localStorage.getItem("jwt");
+    const requestId = authRequestId.current;
+    const pending = pendingLikes.current.get(id);
+    if (pending?.token === token && pending?.requestId === requestId)
       return Promise.reject(
         createUserError("This item is still updating. Please try again."),
       );
-    const token = localStorage.getItem("jwt");
-    const requestId = authRequestId.current;
-    pendingLikes.current.add(id);
+    const mutation = { token, requestId };
+    pendingLikes.current.set(id, mutation);
     return toggleItemLike(id, isLiked, token)
       .then((updated) => {
+        assertCurrentSession(token, requestId);
         changedItemIds.current.add(id);
         setClothingItems((previous) =>
           previous.map((item) =>
@@ -111,7 +119,8 @@ export default function useClothingItems({
       })
       .catch((error) => handleProtectedRequestError(error, token, requestId))
       .finally(() => {
-        pendingLikes.current.delete(id);
+        if (pendingLikes.current.get(id) === mutation)
+          pendingLikes.current.delete(id);
       });
   }
 

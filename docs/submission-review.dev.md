@@ -34,3 +34,7 @@ The frontend README includes the backend repository link, and that GitHub reposi
 Required state stays in App. Authentication, clothing request lifecycles and modal controls now have focused custom hooks, with dialog rendering in AppModals. BEM modifiers use one underscore convention, and CSS remains grouped by block. The declarations, dimensions and colors are preserved. Constant bindings replace reassigned local variables; mutable request/fixture data remains explicit in objects or refs.
 
 The backend now requires a private JWT secret, provides an idempotent setup command, and hides diagnostic routes outside explicit development/test mode. Fresh-clone instructions use ordinary repository folders. The weather proxy is documented as a deliberate deviation from the rubric's frontend-key placement. Live two-account checks and the GitHub-hosted course job remain separate verification steps.
+
+## October 20 external-audit follow-up
+
+The supplied reports describe an older backend snapshot. Confirmed remaining issues with stale garment successes and anonymous unknown routes are corrected, alongside focused HTTP protections. See the [finding-by-finding review](audit-follow-up.dev.md) for current code evidence, native clean-install results and verification of the actual frontend API functions against Express, disposable MongoDB and live weather.

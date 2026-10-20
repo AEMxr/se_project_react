@@ -26,11 +26,11 @@ React functional components and hooks, React Router, Context, Vite, Fetch, valid
 
 ## Run locally in Git Bash
 
-Use Node.js 22 or newer and MongoDB Community Server. Use this frontend's `main` branch with the backend's `automated-tests` branch, which includes the required weather endpoint. From a parent folder, clone into ordinary sibling folders:
+Use Node.js 22 or newer and MongoDB Community Server. Use `main` in both repositories; the backend includes the required weather endpoint. From a parent folder, clone into ordinary sibling folders:
 
 ```bash
 git clone --branch main https://github.com/AEMxr/se_project_react.git
-git clone --branch automated-tests https://github.com/AEMxr/se_project_express.git
+git clone --branch main https://github.com/AEMxr/se_project_express.git
 ```
 
 Keep the database, backend, and frontend running as separate processes:
@@ -89,6 +89,8 @@ Run one frontend on port 3000 and one backend on port 3001. Stop a running Vite 
 
 The supplied rubric describes a weather key in frontend `constants.js`. This version intentionally keeps the key in the backend and retrieves weather through `GET /weather`. The browser receives the same weather data needed for the course UI, without provider credentials. This is a documented architectural deviation for the reviewer.
 
+Registration and profile editing require an avatar URL, as in the course forms. The initial fallback handles broken image links or missing existing profile data.
+
 ## Engineering practices
 
 These practices guide the implementation; the links provide concrete examples rather than a claim that every module satisfies every principle:
@@ -140,6 +142,6 @@ For hosted releases, enable GitHub Actions as the Pages publishing source and se
 
 ## Verification
 
-Automated frontend tests use fixture accounts and mocked API responses, without changing a real database. See [the testing guide](docs/testing.dev.md) for Jest suites, coverage, and the backend's SuperTest/database tests. Before submitting, follow [the submission checklist](docs/submission-checklist.dev.md) against your running backend to confirm persistence and two-account ownership.
+Automated frontend tests use fixture accounts and mocked API responses, without changing a real database. See [the testing guide](docs/testing.dev.md) for Jest suites, coverage, and the backend's SuperTest/database tests. The [October 20 audit follow-up](docs/audit-follow-up.dev.md) records clean native installations and a separate check of the actual frontend API functions against Express, disposable MongoDB, and live weather. Before submitting, follow [the submission checklist](docs/submission-checklist.dev.md) against your running backend to confirm browser behavior and your local configuration.
 
 Built by Anthony Malcuit for TripleTen.
